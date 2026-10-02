@@ -1,13 +1,24 @@
 export type FestivalId = "diwali" | "eid" | "newYear" | "rakhi" | "holi" | "independenceDay";
 
-const AMAZON_AFFILIATE_TAG = "replace-with-your-amazon-tag";
+// Set NEXT_PUBLIC_AMAZON_TAG after joining Amazon Associates India.
+const AMAZON_AFFILIATE_TAG = process.env.NEXT_PUBLIC_AMAZON_TAG;
+
+export type PriceRange = { min?: number; max?: number };
+
+// Amazon's price filter takes paise, e.g. p_36:-49999 is "below ₹500".
+function amazonSearch(term: string, price?: PriceRange) {
+  const params = new URLSearchParams({ k: term });
+  if (price) {
+    const min = price.min === undefined ? "" : String(price.min * 100);
+    const max = price.max === undefined ? "" : String(price.max * 100 - 1);
+    params.set("rh", `p_36:${min}-${max}`);
+  }
+  if (AMAZON_AFFILIATE_TAG) params.set("tag", AMAZON_AFFILIATE_TAG);
+  return `https://www.amazon.in/s?${params}`;
+}
 
 const RETAILERS = [
-  {
-    id: "amazon",
-    label: "Amazon",
-    search: (term: string) => `https://www.amazon.in/s?k=${encodeURIComponent(term)}&tag=${AMAZON_AFFILIATE_TAG}`,
-  },
+  { id: "amazon", label: "Amazon", search: amazonSearch },
   { id: "myntra", label: "Myntra", search: (term: string) => `https://www.myntra.com/search?q=${encodeURIComponent(term)}` },
   { id: "purplle", label: "Purplle", search: (term: string) => `https://www.purplle.com/search?q=${encodeURIComponent(term)}` },
   { id: "nykaa", label: "Nykaa", search: (term: string) => `https://www.nykaa.com/search/result/?q=${encodeURIComponent(term)}` },
@@ -16,7 +27,13 @@ const RETAILERS = [
   { id: "flipkart", label: "Flipkart", search: (term: string) => `https://www.flipkart.com/search?q=${encodeURIComponent(term)}` },
 ] as const;
 
-type RetailerId = (typeof RETAILERS)[number]["id"];
+export type RetailerId = (typeof RETAILERS)[number]["id"];
+
+// Only Amazon links carry the price range; other stores open a plain search.
+export function retailerSearch(id: RetailerId, term: string, price?: PriceRange) {
+  const retailer = RETAILERS.find((entry) => entry.id === id)!;
+  return { label: retailer.label, href: id === "amazon" ? amazonSearch(term, price) : retailer.search(term) };
+}
 export type ShoppingLink = { id: RetailerId; label: string; href: string };
 
 const SHOPPING_TERMS: Record<FestivalId, Record<RetailerId, string>> = {

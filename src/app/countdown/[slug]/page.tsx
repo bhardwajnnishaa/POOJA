@@ -6,7 +6,8 @@ import { LiveCountdown } from "@/components/LiveCountdown";
 import { QuoteMaker } from "@/components/QuoteMaker";
 import { ShareOptions } from "@/components/ShareOptions";
 import { SiteHeader } from "@/components/SiteHeader";
-import { AFFILIATE_LINKS } from "@/config/affiliates";
+import { AFFILIATE_LINKS, retailerSearch } from "@/config/affiliates";
+import { BUDGETS, GIFT_IDEAS } from "@/config/gift-ideas";
 import { getCalendarData } from "@/lib/calendar-data";
 import {
   FESTIVAL_INFO,
@@ -37,7 +38,14 @@ const ISO_DATE = new Intl.DateTimeFormat("en-CA", {
   day: "2-digit",
   timeZone: "Asia/Kolkata",
 });
+const SHORT_DATE = new Intl.DateTimeFormat("en-IN", {
+  weekday: "long",
+  day: "numeric",
+  month: "long",
+  timeZone: "Asia/Kolkata",
+});
 const UPCOMING_YEARS = 5;
+const ORDER_AHEAD_DAYS = 7;
 const DAY_MS = 24 * 60 * 60 * 1000;
 
 type PageProps = { params: Promise<{ slug: string }> };
@@ -124,6 +132,7 @@ export default async function FestivalPage({ params }: PageProps) {
   const target = nextEventTimestamp(festival, Date.now(), calendarDates);
   const year = indiaYear(target);
   const dateLabel = LONG_DATE.format(target);
+  const orderBy = target - ORDER_AHEAD_DAYS * DAY_MS;
   const faqs = faqsFor(festival, year, dateLabel, Math.floor((target - Date.now()) / DAY_MS));
   const otherFestivals = FESTIVAL_INFO.filter((other) => other.id !== festival.id);
   const structuredData = {
@@ -181,9 +190,37 @@ export default async function FestivalPage({ params }: PageProps) {
           <span className="event-icon"><ShoppingBag aria-hidden="true" /></span>
           <div>
             <h2 id="festival-shop-heading">{festival.name} gift ideas</h2>
-            <p>Shop {festival.name} gifts and essentials on popular Indian stores.</p>
+            <p>Ready-made ideas by budget, so you spend less time searching.</p>
           </div>
         </div>
+        {orderBy > Date.now() ? (
+          <p className="gift-order-note">
+            <b>Order by {SHORT_DATE.format(orderBy)}</b> to have gifts arrive before {festival.name}. Delivery times vary by seller and pin code.
+          </p>
+        ) : null}
+        <div className="gift-budgets">
+          {BUDGETS.map((budget) => (
+            <div className="gift-budget" key={budget.id}>
+              <h3>{budget.label}</h3>
+              {GIFT_IDEAS[festival.id][budget.id].map((idea) => {
+                const link = retailerSearch(idea.store, idea.term, budget.price);
+                return (
+                  <article className="gift-card" key={idea.name}>
+                    <h4>{idea.name}</h4>
+                    <p>{idea.why}</p>
+                    <a href={link.href} rel="sponsored noopener noreferrer" target="_blank">
+                      See options on {link.label} <ArrowUpRight aria-hidden="true" />
+                    </a>
+                  </article>
+                );
+              })}
+            </div>
+          ))}
+        </div>
+        <p className="gift-pair-note">
+          Found a gift? <a href="#quote-studio">Write a {festival.name} wish</a> to send with it.
+        </p>
+        <h3 className="gift-more-heading">Browse more {festival.name} shopping</h3>
         <nav className="festival-shop-list" aria-label={`Stores for ${festival.name}`}>
           {AFFILIATE_LINKS[festival.id].map((link) => (
             <a
@@ -197,6 +234,9 @@ export default async function FestivalPage({ params }: PageProps) {
             </a>
           ))}
         </nav>
+        <p className="gift-disclosure">
+          Amazon links open with your budget already applied. On other stores, sort by price. We may earn a small commission when you buy through these links, at no extra cost to you.
+        </p>
       </section>
 
       <section className="festival-details">
