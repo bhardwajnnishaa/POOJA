@@ -4,9 +4,9 @@ import { Clock3, Sparkles } from "lucide-react";
 export function SiteHeader({ active }: { active: "countdown" | "calendar" }) {
   return (
     <header className="site-header">
-      <Link className="brand" href="/" aria-label="The Celebration Calendar home">
+      <Link className="brand" href="/" aria-label="Festive Clock home">
         <span className="brand-mark"><Sparkles aria-hidden="true" /></span>
-        <span>The Celebration <b>Calendar</b></span>
+        <span>Festive <b>Clock</b></span>
       </Link>
       <nav aria-label="Main navigation">
         <Link className={`nav-link ${active === "countdown" ? "nav-link-active" : ""}`} href="/">Countdowns</Link>

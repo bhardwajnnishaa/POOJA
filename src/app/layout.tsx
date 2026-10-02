@@ -5,7 +5,7 @@ import "./globals.css";
 const CUELINKS_CID = process.env.NEXT_PUBLIC_CUELINKS_CID;
 
 export const metadata: Metadata = {
-  title: "The Celebration Calendar | Indian Festive Countdown",
+  title: "Festive Clock | Indian Festival Countdown",
   description:
     "A live countdown to India's biggest festivals and celebrations. Share the excitement and get ready for what is next.",
 };
