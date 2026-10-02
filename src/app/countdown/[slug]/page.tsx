@@ -38,6 +38,7 @@ const ISO_DATE = new Intl.DateTimeFormat("en-CA", {
   timeZone: "Asia/Kolkata",
 });
 const UPCOMING_YEARS = 5;
+const DAY_MS = 24 * 60 * 60 * 1000;
 
 type PageProps = { params: Promise<{ slug: string }> };
 
@@ -56,6 +57,35 @@ function upcomingDates(festival: FestivalInfo, target: number, calendarDates: Ca
     .map((year) => ({ year, timestamp: eventTimestamp(festival, year, calendarDates) }));
 }
 
+function faqsFor(festival: FestivalInfo, year: number, dateLabel: string, daysLeft: number) {
+  const { name, otherName, moonDependent } = festival;
+  const verb = moonDependent ? "is expected on" : "falls on";
+  const moonNote = moonDependent ? " The final date depends on the moon sighting." : "";
+  const moonNoteHinglish = moonDependent ? " Sahi taareekh chaand dikhne par tay hoti hai." : "";
+  const faqs = [
+    { question: `When is ${name} ${year}?`, answer: `${name} ${year} ${verb} ${dateLabel} in India.${moonNote}` },
+    { question: `${name} ${year} kab hai?`, answer: `${name} ${year} ${dateLabel} ko hai.${moonNoteHinglish}` },
+    {
+      question: `How many days are left for ${name}?`,
+      answer: daysLeft > 0
+        ? `About ${daysLeft} ${daysLeft === 1 ? "day is" : "days are"} left until ${name} ${year}. The live countdown above shows the exact time.`
+        : `${name} ${year} is less than a day away. The live countdown above shows the exact time.`,
+    },
+    {
+      question: `${name} mein kitne din baki hain?`,
+      answer: daysLeft > 0
+        ? `${name} ${year} mein lagbhag ${daysLeft} din baki hain. Upar diya live countdown sahi samay dikhata hai.`
+        : `${name} ${year} mein ek din se bhi kam samay baki hai. Upar diya live countdown sahi samay dikhata hai.`,
+    },
+    { question: `Why is ${name} celebrated?`, answer: festival.about.join(" ") },
+    { question: `${name} kyon manate hain?`, answer: festival.aboutHinglish },
+  ];
+  if (otherName) {
+    faqs.splice(2, 0, { question: `When is ${otherName} ${year}?`, answer: `${otherName} (${name}) ${year} ${verb} ${dateLabel} in India.${moonNote}` });
+  }
+  return faqs;
+}
+
 export function generateStaticParams() {
   return FESTIVAL_INFO.map((festival) => ({ slug: festival.slug }));
 }
@@ -66,8 +96,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const target = nextEventTimestamp(festival, Date.now(), await loadCalendarDates());
   const year = indiaYear(target);
-  const title = `${festival.name} ${year} Countdown: How Many Days Left?`;
-  const description = `Live countdown to ${festival.name} ${year} on ${LONG_DATE.format(target)}. See the days, hours and minutes left, and upcoming ${festival.name} dates in India.`;
+  const title = `${festival.name} ${year} Date & Countdown: How Many Days Left?`;
+  const alsoCalled = festival.otherName ? ` (${festival.otherName})` : "";
+  const description = `${festival.name}${alsoCalled} ${year} date: ${LONG_DATE.format(target)}. Live countdown of days left, ${festival.name} wishes and quotes, gift ideas and upcoming dates in India.`;
 
   return {
     title,
@@ -93,6 +124,7 @@ export default async function FestivalPage({ params }: PageProps) {
   const target = nextEventTimestamp(festival, Date.now(), calendarDates);
   const year = indiaYear(target);
   const dateLabel = LONG_DATE.format(target);
+  const faqs = faqsFor(festival, year, dateLabel, Math.floor((target - Date.now()) / DAY_MS));
   const otherFestivals = FESTIVAL_INFO.filter((other) => other.id !== festival.id);
   const structuredData = {
     "@context": "https://schema.org",
@@ -106,12 +138,25 @@ export default async function FestivalPage({ params }: PageProps) {
     location: { "@type": "Place", name: "India", address: { "@type": "PostalAddress", addressCountry: "IN" } },
     url: `${SITE_URL}${festivalPath(festival)}`,
   };
+  const faqData = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: { "@type": "Answer", text: faq.answer },
+    })),
+  };
 
   return (
     <main>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqData).replace(/</g, "\\u003c") }}
       />
       <SiteHeader active="countdown" />
 
@@ -127,7 +172,7 @@ export default async function FestivalPage({ params }: PageProps) {
         </div>
         <a className="write-quote-link festival-quote-link" href="#quote-studio">
           <WandSparkles aria-hidden="true" />
-          Write a {festival.name} quote
+          Write {festival.name} wishes
         </a>
       </section>
 
@@ -135,8 +180,8 @@ export default async function FestivalPage({ params }: PageProps) {
         <div className="festival-shop-heading">
           <span className="event-icon"><ShoppingBag aria-hidden="true" /></span>
           <div>
-            <h2 id="festival-shop-heading">Shop for {festival.name}</h2>
-            <p>Searches on popular Indian stores, picked for {festival.name}.</p>
+            <h2 id="festival-shop-heading">{festival.name} gift ideas</h2>
+            <p>Shop {festival.name} gifts and essentials on popular Indian stores.</p>
           </div>
         </div>
         <nav className="festival-shop-list" aria-label={`Stores for ${festival.name}`}>
@@ -173,6 +218,22 @@ export default async function FestivalPage({ params }: PageProps) {
         </article>
       </section>
 
+      <section className="festival-faq" aria-labelledby="festival-faq-heading">
+        <h2 id="festival-faq-heading">{festival.name} {year}: questions and answers</h2>
+        <dl>
+          {faqs.map((faq) => (
+            <div key={faq.question}>
+              <dt>{faq.question}</dt>
+              <dd>{faq.answer}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <div className="festival-wishes-heading">
+        <h2>{festival.name} wishes and quotes</h2>
+        <p>Write a {festival.name} wish in English, Hindi or Hinglish, then share it on WhatsApp.</p>
+      </div>
       <QuoteMaker selectedEvent={festival.name} />
 
       <nav className="festival-more" aria-label="Other festival countdowns">

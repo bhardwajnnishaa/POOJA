@@ -14,7 +14,10 @@ export type FestivalInfo = {
   theme: string;
   icon: "diya" | "moon" | "confetti" | "thread" | "colors" | "flag";
   moonDependent: boolean;
+  // Another name people search for, e.g. "Raksha Bandhan" for Rakhi.
+  otherName?: string;
   about: string[];
+  aboutHinglish: string;
 };
 
 export const FESTIVAL_INFO: FestivalInfo[] = [
@@ -29,11 +32,13 @@ export const FESTIVAL_INFO: FestivalInfo[] = [
     theme: "saffron",
     icon: "diya",
     moonDependent: false,
+    otherName: "Deepavali",
     about: [
       "Diwali, also called Deepavali, is the Hindu festival of lights.",
       "Families light diyas, draw rangoli and perform Lakshmi Puja in the evening.",
       "The date follows the Hindu lunar calendar. It usually falls in October or November.",
     ],
+    aboutHinglish: "Diwali roshni ka tyohar hai. Is din log diye jalate hain, rangoli banate hain aur shaam ko Lakshmi Puja karte hain.",
   },
   {
     id: "eid",
@@ -46,11 +51,13 @@ export const FESTIVAL_INFO: FestivalInfo[] = [
     theme: "jade",
     icon: "moon",
     moonDependent: true,
+    otherName: "Eid ul-Fitr",
     about: [
       "Eid al-Fitr marks the end of Ramadan, the Islamic month of fasting.",
       "It begins on the first day of Shawwal with Eid prayers, festive meals and visits to family.",
       "The exact date depends on the sighting of the new moon. It can shift by a day in India.",
     ],
+    aboutHinglish: "Eid al-Fitr Ramzan ke roze poore hone ki khushi mein manai jaati hai. Log Eid ki namaz padhte hain aur apno se milte hain.",
   },
   {
     id: "newYear",
@@ -67,6 +74,7 @@ export const FESTIVAL_INFO: FestivalInfo[] = [
       "New Year's Day falls on 1 January and starts the Gregorian calendar year.",
       "Across India, people welcome it with midnight countdowns, fireworks and time with family and friends.",
     ],
+    aboutHinglish: "New Year 1 January ko naye saal ki shuruaat ka jashn hai. Log raat 12 baje countdown karke naye saal ka swagat karte hain.",
   },
   {
     id: "rakhi",
@@ -79,11 +87,13 @@ export const FESTIVAL_INFO: FestivalInfo[] = [
     theme: "rose",
     icon: "thread",
     moonDependent: false,
+    otherName: "Raksha Bandhan",
     about: [
       "Raksha Bandhan, or Rakhi, celebrates the bond between brothers and sisters.",
       "A sister ties a rakhi on her brother's wrist, and he promises to protect her.",
       "It falls on the full moon (Purnima) of the Hindu month of Shravan, usually in August.",
     ],
+    aboutHinglish: "Raksha Bandhan bhai-behen ke pyaar ka tyohar hai. Behen bhai ki kalai par rakhi baandhti hai aur bhai uski raksha ka vaada karta hai.",
   },
   {
     id: "holi",
@@ -101,6 +111,7 @@ export const FESTIVAL_INFO: FestivalInfo[] = [
       "On the night before, people light the Holika Dahan bonfire.",
       "On Holi day, friends and families play with coloured powder and water. It falls in February or March.",
     ],
+    aboutHinglish: "Holi rangon ka tyohar hai aur basant ke aane ki khushi mein manaya jaata hai. Ek raat pehle Holika Dahan hota hai.",
   },
   {
     id: "independenceDay",
@@ -118,6 +129,7 @@ export const FESTIVAL_INFO: FestivalInfo[] = [
       "It marks the end of British rule in 1947.",
       "The Prime Minister hoists the national flag at the Red Fort in Delhi and addresses the nation.",
     ],
+    aboutHinglish: "15 August 1947 ko Bharat British raaj se azaad hua tha. Is din Pradhan Mantri Lal Qile par tiranga phehrate hain aur desh ko sambodhit karte hain.",
   },
 ];
 
