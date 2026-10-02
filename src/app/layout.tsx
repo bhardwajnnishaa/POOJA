@@ -24,6 +24,7 @@ export const metadata: Metadata = {
     locale: "en_IN",
   },
   twitter: { card: "summary_large_image" },
+  verification: { google: "TUYM3ZuWHVfd1iWV29VLGH6r9jByemFy828_VDvj2iU" },
 };
 
 export const viewport: Viewport = {
