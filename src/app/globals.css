@@ -464,3 +464,22 @@ button.month-day:hover, a.month-day:hover { background: #ece9df; }
   .festival-faq dl { grid-template-columns: 1fr; gap: 0; }
   .festival-wishes-heading { padding: 36px 16px 0; }
 }
+
+.gift-order-note { margin: 0 0 20px; padding: 12px 14px; border-left: 3px solid var(--saffron); background: #faefe2; color: #4a4038; font-size: 14px; line-height: 1.6; }
+.gift-order-note b { color: var(--ink); }
+.gift-budgets { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.gift-budget h3 { margin: 0 0 10px; padding-bottom: 8px; border-bottom: 2px solid var(--saffron); color: #304339; font-size: 14px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.gift-card { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; padding: 14px; border: 1px solid var(--line); background: #fcfaf5; }
+.gift-card h4 { margin: 0; font-family: var(--serif); font-size: 18px; font-weight: 500; }
+.gift-card p { margin: 0; color: #4d564c; font-size: 13px; line-height: 1.6; }
+.gift-card a { display: inline-flex; align-self: flex-start; align-items: center; gap: 5px; margin-top: 4px; color: #b5651f; font-size: 13px; font-weight: 700; }
+.gift-card a:hover { text-decoration: underline; }
+.gift-card a svg { width: 13px; height: 13px; }
+.gift-pair-note { margin: 8px 0 24px; color: var(--muted); font-size: 14px; }
+.gift-pair-note a { color: #46624d; font-weight: 700; text-decoration: underline; }
+.gift-more-heading { margin: 0 0 12px; color: #304339; font-size: 15px; font-weight: 700; }
+.gift-disclosure { margin: 16px 0 0; color: #6a7066; font-size: 12px; line-height: 1.6; }
+
+@media (max-width: 860px) {
+  .gift-budgets { grid-template-columns: 1fr; gap: 6px; }
+}
