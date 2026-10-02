@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowUpRight, Sparkles } from "lucide-react";
+import { ArrowUpRight, ShoppingBag, Sparkles, WandSparkles } from "lucide-react";
 import { LiveCountdown } from "@/components/LiveCountdown";
+import { QuoteMaker } from "@/components/QuoteMaker";
 import { ShareOptions } from "@/components/ShareOptions";
 import { SiteHeader } from "@/components/SiteHeader";
+import { AFFILIATE_LINKS } from "@/config/affiliates";
 import { getCalendarData } from "@/lib/calendar-data";
 import {
   FESTIVAL_INFO,
@@ -123,6 +125,33 @@ export default async function FestivalPage({ params }: PageProps) {
         <div className="festival-share">
           <ShareOptions message={`Counting down to ${festival.name} on ${dateLabel}!`} />
         </div>
+        <a className="write-quote-link festival-quote-link" href="#quote-studio">
+          <WandSparkles aria-hidden="true" />
+          Write a {festival.name} quote
+        </a>
+      </section>
+
+      <section className="festival-shop" aria-labelledby="festival-shop-heading">
+        <div className="festival-shop-heading">
+          <span className="event-icon"><ShoppingBag aria-hidden="true" /></span>
+          <div>
+            <h2 id="festival-shop-heading">Shop for {festival.name}</h2>
+            <p>Searches on popular Indian stores, picked for {festival.name}.</p>
+          </div>
+        </div>
+        <nav className="festival-shop-list" aria-label={`Stores for ${festival.name}`}>
+          {AFFILIATE_LINKS[festival.id].map((link) => (
+            <a
+              className={`shopping-retailer marketplace-${link.id}`}
+              href={link.href}
+              key={link.id}
+              rel="sponsored noopener noreferrer"
+              target="_blank"
+            >
+              <span>{link.label}</span><ArrowUpRight aria-hidden="true" />
+            </a>
+          ))}
+        </nav>
       </section>
 
       <section className="festival-details">
@@ -143,6 +172,8 @@ export default async function FestivalPage({ params }: PageProps) {
           {festival.moonDependent ? <p className="festival-note">Dates are expected dates. The final date depends on the moon sighting.</p> : null}
         </article>
       </section>
+
+      <QuoteMaker selectedEvent={festival.name} />
 
       <nav className="festival-more" aria-label="Other festival countdowns">
         <h2>More festival countdowns</h2>
