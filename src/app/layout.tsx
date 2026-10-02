@@ -6,18 +6,18 @@ import "./globals.css";
 const CUELINKS_CID = process.env.NEXT_PUBLIC_CUELINKS_CID;
 
 const DESCRIPTION =
-  "A live countdown to India's biggest festivals and celebrations. Share the excitement and get ready for what is next.";
+  "Live countdowns to Diwali, Holi, Eid, Rakhi, Independence Day and New Year. Check Indian festival dates, days left, wishes and gift ideas.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} | Indian Festival Countdown`,
+    default: `${SITE_NAME} | Indian Festival Countdown & Dates`,
     template: `%s | ${SITE_NAME}`,
   },
   description: DESCRIPTION,
   applicationName: SITE_NAME,
   openGraph: {
-    title: `${SITE_NAME} | Indian Festival Countdown`,
+    title: `${SITE_NAME} | Indian Festival Countdown & Dates`,
     description: DESCRIPTION,
     siteName: SITE_NAME,
     type: "website",
