@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowUpRight, ShoppingBag, Sparkles, WandSparkles } from "lucide-react";
+import { GiftIdeas } from "@/components/GiftIdeas";
 import { LiveCountdown } from "@/components/LiveCountdown";
 import { QuoteMaker } from "@/components/QuoteMaker";
 import { ShareOptions } from "@/components/ShareOptions";
@@ -102,11 +103,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const festival = festivalBySlug((await params).slug);
   if (!festival) return {};
 
-  const target = nextEventTimestamp(festival, Date.now(), await loadCalendarDates());
+  const calendarDates = await loadCalendarDates();
+  const target = nextEventTimestamp(festival, Date.now(), calendarDates);
   const year = indiaYear(target);
   const title = `${festival.name} ${year} Date & Countdown: How Many Days Left?`;
   const alsoCalled = festival.otherName ? ` (${festival.otherName})` : "";
-  const description = `${festival.name}${alsoCalled} ${year} date: ${LONG_DATE.format(target)}. Live countdown of days left, ${festival.name} wishes and quotes, gift ideas and upcoming dates in India.`;
+  const dateText = hasKnownDate(festival, year, calendarDates) ? ` date: ${LONG_DATE.format(target)}.` : ".";
+  const description = `${festival.name}${alsoCalled} ${year}${dateText} Live countdown of days left, ${festival.name} wishes and quotes, gift ideas and upcoming dates in India.`;
 
   return {
     title,
@@ -132,8 +135,10 @@ export default async function FestivalPage({ params }: PageProps) {
   const target = nextEventTimestamp(festival, Date.now(), calendarDates);
   const year = indiaYear(target);
   const dateLabel = LONG_DATE.format(target);
+  // Without a known date for this year, show no countdown rather than a wrong one.
+  const dateKnown = hasKnownDate(festival, year, calendarDates);
   const orderBy = target - ORDER_AHEAD_DAYS * DAY_MS;
-  const faqs = faqsFor(festival, year, dateLabel, Math.floor((target - Date.now()) / DAY_MS));
+  const faqs = dateKnown ? faqsFor(festival, year, dateLabel, Math.floor((target - Date.now()) / DAY_MS)) : [];
   const otherFestivals = FESTIVAL_INFO.filter((other) => other.id !== festival.id);
   const structuredData = {
     "@context": "https://schema.org",
@@ -159,25 +164,35 @@ export default async function FestivalPage({ params }: PageProps) {
 
   return (
     <main>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqData).replace(/</g, "\\u003c") }}
-      />
+      {dateKnown ? (
+        <>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }}
+          />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(faqData).replace(/</g, "\\u003c") }}
+          />
+        </>
+      ) : null}
       <SiteHeader active="countdown" />
 
       <section className={`festival-hero event-card-${festival.theme}`}>
         <div className="eyebrow"><span className="eyebrow-line" /> {festival.subtitle.toUpperCase()}</div>
         <h1>{festival.name} {year} Countdown</h1>
-        <p className="festival-date">
-          {festival.name} {year} {festival.moonDependent ? "is expected on" : "falls on"} <b>{dateLabel}</b> in India.
-        </p>
-        <LiveCountdown target={target} name={festival.name} />
+        {dateKnown ? (
+          <>
+            <p className="festival-date">
+              {festival.name} {year} {festival.moonDependent ? "is expected on" : "falls on"} <b>{dateLabel}</b> in India.
+            </p>
+            <LiveCountdown target={target} name={festival.name} />
+          </>
+        ) : (
+          <p className="festival-date">The {festival.name} {year} date will be added here soon.</p>
+        )}
         <div className="festival-share">
-          <ShareOptions message={`Counting down to ${festival.name} on ${dateLabel}!`} />
+          <ShareOptions message={dateKnown ? `Counting down to ${festival.name} on ${dateLabel}!` : `Getting ready for ${festival.name} ${year}!`} />
         </div>
         <a className="write-quote-link festival-quote-link" href="#quote-studio">
           <WandSparkles aria-hidden="true" />
@@ -193,30 +208,22 @@ export default async function FestivalPage({ params }: PageProps) {
             <p>Ready-made ideas by budget, so you spend less time searching.</p>
           </div>
         </div>
-        {orderBy > Date.now() ? (
+        {dateKnown && orderBy > Date.now() ? (
           <p className="gift-order-note">
             <b>Order by {SHORT_DATE.format(orderBy)}</b> to have gifts arrive before {festival.name}. Delivery times vary by seller and pin code.
           </p>
         ) : null}
-        <div className="gift-budgets">
-          {BUDGETS.map((budget) => (
-            <div className="gift-budget" key={budget.id}>
-              <h3>{budget.label}</h3>
-              {GIFT_IDEAS[festival.id][budget.id].map((idea) => {
-                const link = retailerSearch(idea.store, idea.term, budget.price);
-                return (
-                  <article className="gift-card" key={idea.name}>
-                    <h4>{idea.name}</h4>
-                    <p>{idea.why}</p>
-                    <a href={link.href} rel="sponsored noopener noreferrer" target="_blank">
-                      See options on {link.label} <ArrowUpRight aria-hidden="true" />
-                    </a>
-                  </article>
-                );
-              })}
-            </div>
-          ))}
-        </div>
+        <GiftIdeas
+          festivalName={festival.name}
+          budgets={BUDGETS.map((budget) => ({
+            id: budget.id,
+            label: budget.label,
+            ideas: GIFT_IDEAS[festival.id][budget.id].map((idea) => {
+              const link = retailerSearch(idea.store, idea.term, budget.price);
+              return { name: idea.name, why: idea.why, href: link.href, storeLabel: link.label };
+            }),
+          }))}
+        />
         <p className="gift-pair-note">
           Found a gift? <a href="#quote-studio">Write a {festival.name} wish</a> to send with it.
         </p>
@@ -258,7 +265,7 @@ export default async function FestivalPage({ params }: PageProps) {
         </article>
       </section>
 
-      <section className="festival-faq" aria-labelledby="festival-faq-heading">
+      {faqs.length > 0 ? <section className="festival-faq" aria-labelledby="festival-faq-heading">
         <h2 id="festival-faq-heading">{festival.name} {year}: questions and answers</h2>
         <dl>
           {faqs.map((faq) => (
@@ -268,7 +275,7 @@ export default async function FestivalPage({ params }: PageProps) {
             </div>
           ))}
         </dl>
-      </section>
+      </section> : null}
 
       <div className="festival-wishes-heading">
         <h2>{festival.name} wishes and quotes</h2>

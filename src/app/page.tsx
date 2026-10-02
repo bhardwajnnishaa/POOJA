@@ -7,13 +7,18 @@ import {
   ArrowUpRight,
   CalendarDays,
   Check,
+  Coins,
   Flame,
+  Flower2,
   Heart,
+  MoonStar,
   PartyPopper,
   Search,
   ShoppingBag,
   Sparkles,
   Star,
+  Sun,
+  TreePine,
   WandSparkles,
 } from "lucide-react";
 import { AFFILIATE_LINKS, type FestivalId, type ShoppingLink } from "@/config/affiliates";
@@ -22,6 +27,8 @@ import { ShareOptions } from "@/components/ShareOptions";
 import {
   FESTIVAL_INFO,
   festivalPath,
+  hasKnownDate,
+  indiaYear,
   nextEventTimestamp,
   type CalendarDates,
   type FestivalInfo,
@@ -33,6 +40,8 @@ const FESTIVALS: Festival[] = FESTIVAL_INFO.map((festival) => ({
   ...festival,
   shoppingLinks: AFFILIATE_LINKS[festival.id],
 }));
+
+const HOME_EVENT_LIMIT = 6;
 
 const INDIA_DATE_FORMATTER = new Intl.DateTimeFormat("en-IN", {
   day: "numeric",
@@ -64,6 +73,21 @@ function Icon({ icon }: { icon: Festival["icon"] }) {
   }
   if (icon === "colors") {
     return <Sparkles aria-hidden="true" />;
+  }
+  if (icon === "lotus") {
+    return <Flower2 aria-hidden="true" />;
+  }
+  if (icon === "sun") {
+    return <Sun aria-hidden="true" />;
+  }
+  if (icon === "coins") {
+    return <Coins aria-hidden="true" />;
+  }
+  if (icon === "moonrise") {
+    return <MoonStar aria-hidden="true" />;
+  }
+  if (icon === "tree") {
+    return <TreePine aria-hidden="true" />;
   }
   return <span className="flag-mark" aria-hidden="true">✳</span>;
 }
@@ -231,6 +255,7 @@ export default function Home() {
   const [showFavorites, setShowFavorites] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [shoppingEventId, setShoppingEventId] = useState<FestivalId | null>(null);
+  const [showAllEvents, setShowAllEvents] = useState(false);
 
   useEffect(() => {
     const update = () => setNow(Date.now());
@@ -282,12 +307,16 @@ export default function Home() {
   }, []);
 
   const matchingEvents = FESTIVALS.filter((event) => {
-    const matchesSearch = `${event.name} ${event.subtitle}`.toLowerCase().includes(searchQuery.trim().toLowerCase());
-    return matchesSearch && (!showFavorites || favoriteIds.includes(event.id));
+    const matchesSearch = `${event.name} ${event.otherName ?? ""} ${event.subtitle}`.toLowerCase().includes(searchQuery.trim().toLowerCase());
+    // Skip lunar festivals whose next date we do not hold yet.
+    const hasNextDate = hasKnownDate(event, indiaYear(nextEventTimestamp(event, now, calendarDates)), calendarDates);
+    return hasNextDate && matchesSearch && (!showFavorites || favoriteIds.includes(event.id));
   });
   const visibleEvents = matchingEvents.toSorted((first, second) => nextEventTimestamp(first, now, calendarDates) - nextEventTimestamp(second, now, calendarDates));
   const shoppingEvent = FESTIVALS.find((event) => event.id === shoppingEventId) ?? visibleEvents[0] ?? FESTIVALS[0];
-  const countdownItems = visibleEvents.flatMap((event, index) => [
+  const isFiltering = showFavorites || searchQuery.trim() !== "";
+  const shownEvents = showAllEvents || isFiltering ? visibleEvents : visibleEvents.slice(0, HOME_EVENT_LIMIT);
+  const countdownItems = shownEvents.flatMap((event, index) => [
     <CountdownCard
       key={event.id}
       event={event}
@@ -306,7 +335,7 @@ export default function Home() {
         }
       }}
     />,
-    ...((index + 1) % 2 === 0 && index < visibleEvents.length - 1 ? [<AdSlot key={`ad-${index}`} square />] : []),
+    ...((index + 1) % 2 === 0 && index < shownEvents.length - 1 ? [<AdSlot key={`ad-${index}`} square />] : []),
   ]);
 
   return (
@@ -371,7 +400,14 @@ export default function Home() {
         </div>
         {countdownItems.length > 0 ? (
           <div className="countdown-layout">
-            <div className="countdown-grid">{countdownItems}</div>
+            <div>
+              <div className="countdown-grid">{countdownItems}</div>
+              {!isFiltering && visibleEvents.length > HOME_EVENT_LIMIT ? (
+                <button className="show-all-events" type="button" aria-expanded={showAllEvents} onClick={() => setShowAllEvents(!showAllEvents)}>
+                  {showAllEvents ? "Show fewer festivals" : `Show all ${visibleEvents.length} festivals`}
+                </button>
+              ) : null}
+            </div>
             <ShoppingSidebar event={shoppingEvent} onEventChange={setShoppingEventId} />
           </div>
         ) : (

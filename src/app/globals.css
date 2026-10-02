@@ -467,8 +467,12 @@ button.month-day:hover, a.month-day:hover { background: #ece9df; }
 
 .gift-order-note { margin: 0 0 20px; padding: 12px 14px; border-left: 3px solid var(--saffron); background: #faefe2; color: #4a4038; font-size: 14px; line-height: 1.6; }
 .gift-order-note b { color: var(--ink); }
-.gift-budgets { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-.gift-budget h3 { margin: 0 0 10px; padding-bottom: 8px; border-bottom: 2px solid var(--saffron); color: #304339; font-size: 14px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.gift-budget-picker { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.gift-budget-picker span { color: #304339; font-size: 14px; font-weight: 700; }
+.gift-budget-picker select { min-height: 42px; min-width: 200px; padding: 0 12px; border: 1px solid #cfc6b6; background: #fffdf8; color: var(--ink); font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
+.gift-budget-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.gift-budget-list[hidden] { display: none; }
+.gift-budget-list .gift-card { margin-bottom: 0; }
 .gift-card { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; padding: 14px; border: 1px solid var(--line); background: #fcfaf5; }
 .gift-card h4 { margin: 0; font-family: var(--serif); font-size: 18px; font-weight: 500; }
 .gift-card p { margin: 0; color: #4d564c; font-size: 13px; line-height: 1.6; }
@@ -481,5 +485,9 @@ button.month-day:hover, a.month-day:hover { background: #ece9df; }
 .gift-disclosure { margin: 16px 0 0; color: #6a7066; font-size: 12px; line-height: 1.6; }
 
 @media (max-width: 860px) {
-  .gift-budgets { grid-template-columns: 1fr; gap: 6px; }
+  .gift-budget-list { grid-template-columns: 1fr; }
+  .gift-budget-picker select { flex: 1; min-width: 0; }
 }
+
+.show-all-events { display: block; width: 100%; min-height: 44px; margin-top: 14px; border: 1px solid #bdcabb; background: #fcfaf5; color: #43624d; cursor: pointer; font-size: 14px; font-weight: 700; }
+.show-all-events:hover { background: #e8eee5; }

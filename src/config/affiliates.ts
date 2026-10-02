@@ -1,4 +1,6 @@
-export type FestivalId = "diwali" | "eid" | "newYear" | "rakhi" | "holi" | "independenceDay";
+import type { FestivalId } from "@/types/calendar";
+
+export type { FestivalId };
 
 // Set NEXT_PUBLIC_AMAZON_TAG after joining Amazon Associates India.
 const AMAZON_AFFILIATE_TAG = process.env.NEXT_PUBLIC_AMAZON_TAG;
@@ -67,6 +69,46 @@ const SHOPPING_TERMS: Record<FestivalId, Record<RetailerId, string>> = {
     nykaa: "tricolour makeup", meesho: "tricolour decorations", ajio: "Independence Day outfits",
     flipkart: "India tricolour accessories",
   },
+  navratri: {
+    amazon: "Navratri puja samagri and decoration", myntra: "Navratri chaniya choli", purplle: "Navratri makeup",
+    nykaa: "festive makeup", meesho: "Navratri chaniya choli and dandiya", ajio: "Navratri ethnic wear",
+    flipkart: "dandiya sticks and Navratri decor",
+  },
+  dussehra: {
+    amazon: "Dussehra puja items and gifts", myntra: "Dussehra ethnic wear", purplle: "festive beauty gifts",
+    nykaa: "festive makeup gifts", meesho: "Dussehra ethnic outfits", ajio: "festive ethnic wear",
+    flipkart: "Dussehra gifts",
+  },
+  karwaChauth: {
+    amazon: "Karwa Chauth thali set", myntra: "Karwa Chauth saree", purplle: "Karwa Chauth makeup",
+    nykaa: "bridal makeup kit", meesho: "Karwa Chauth saree and thali", ajio: "Karwa Chauth ethnic wear",
+    flipkart: "Karwa Chauth gifts for wife",
+  },
+  dhanteras: {
+    amazon: "Dhanteras silver coin and utensils", myntra: "festive jewellery", purplle: "festive beauty gifts",
+    nykaa: "festive gift sets", meesho: "Dhanteras puja items", ajio: "festive ethnic wear",
+    flipkart: "Dhanteras kitchen utensils",
+  },
+  bhaiDooj: {
+    amazon: "Bhai Dooj gifts for brother", myntra: "men ethnic kurta", purplle: "Bhai Dooj gifts for sister",
+    nykaa: "gift sets for sister", meesho: "Bhai Dooj tilak thali", ajio: "men festive wear",
+    flipkart: "Bhai Dooj gift hamper",
+  },
+  chhath: {
+    amazon: "Chhath puja samagri and soop", myntra: "cotton saree", purplle: "festive beauty",
+    nykaa: "festive skincare", meesho: "Chhath puja saree", ajio: "festive ethnic wear",
+    flipkart: "Chhath puja items",
+  },
+  guruNanak: {
+    amazon: "Sikh religious books and gifts", myntra: "men kurta pyjama", purplle: "festive beauty",
+    nykaa: "festive gift sets", meesho: "Gurpurab outfits", ajio: "festive ethnic wear",
+    flipkart: "Gurpurab gifts",
+  },
+  christmas: {
+    amazon: "Christmas tree and decorations", myntra: "Christmas party outfits", purplle: "Christmas beauty gifts",
+    nykaa: "Christmas gift sets", meesho: "Christmas decorations", ajio: "Christmas party wear",
+    flipkart: "Christmas gifts and decorations",
+  },
 };
 
 function linksForEvent(event: FestivalId): ShoppingLink[] {
@@ -77,11 +119,6 @@ function linksForEvent(event: FestivalId): ShoppingLink[] {
   }));
 }
 
-export const AFFILIATE_LINKS: Record<FestivalId, ShoppingLink[]> = {
-  diwali: linksForEvent("diwali"),
-  eid: linksForEvent("eid"),
-  newYear: linksForEvent("newYear"),
-  rakhi: linksForEvent("rakhi"),
-  holi: linksForEvent("holi"),
-  independenceDay: linksForEvent("independenceDay"),
-};
+export const AFFILIATE_LINKS = Object.fromEntries(
+  (Object.keys(SHOPPING_TERMS) as FestivalId[]).map((id) => [id, linksForEvent(id)]),
+) as Record<FestivalId, ShoppingLink[]>;
