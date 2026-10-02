@@ -215,7 +215,7 @@ export default async function CalendarPage({
       <QuoteMaker eventNames={eventNames} selectedEvent={selectedEvent} />
 
       <footer className="site-footer calendar-footer">
-        <Link className="brand footer-brand" href="/"><span className="brand-mark"><Sparkles aria-hidden="true" /></span><span>The Celebration <b>Calendar</b></span></Link>
+        <Link className="brand footer-brand" href="/"><span className="brand-mark"><Sparkles aria-hidden="true" /></span><span>Festive <b>Clock</b></span></Link>
         <p><Clock3 aria-hidden="true" /> India Standard Time · Updated every six hours</p>
         <a href="#month-calendar" className="back-to-top"><ArrowDownRight aria-hidden="true" /> Back to months</a>
       </footer>
