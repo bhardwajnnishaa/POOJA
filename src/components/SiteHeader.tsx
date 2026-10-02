@@ -1,0 +1,18 @@
+import Link from "next/link";
+import { Clock3, Sparkles } from "lucide-react";
+
+export function SiteHeader({ active }: { active: "countdown" | "calendar" }) {
+  return (
+    <header className="site-header">
+      <Link className="brand" href="/" aria-label="The Celebration Calendar home">
+        <span className="brand-mark"><Sparkles aria-hidden="true" /></span>
+        <span>The Celebration <b>Calendar</b></span>
+      </Link>
+      <nav aria-label="Main navigation">
+        <Link className={`nav-link ${active === "countdown" ? "nav-link-active" : ""}`} href="/">Countdowns</Link>
+        <Link className={`nav-link ${active === "calendar" ? "nav-link-active" : ""}`} href="/calendar">Calendar</Link>
+      </nav>
+      <span className="header-date"><Clock3 aria-hidden="true" /> Live in India</span>
+    </header>
+  );
+}
