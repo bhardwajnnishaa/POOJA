@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowDownRight, CalendarDays, ChevronRight, Clock3, Sparkles } from "lucide-react";
 import { QuoteMaker } from "@/components/QuoteMaker";
@@ -6,6 +7,12 @@ import { getCalendarData, type CalendarData } from "@/lib/calendar-data";
 import type { CalendarEntry } from "@/types/calendar";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Indian Festival Calendar",
+  description: "See upcoming Indian festivals and public holidays month by month, and write a greeting for each celebration.",
+  alternates: { canonical: "/calendar" },
+};
 
 const INDIA_DATE_PARTS = new Intl.DateTimeFormat("en-CA", {
   year: "numeric",

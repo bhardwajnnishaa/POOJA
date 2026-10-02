@@ -19,95 +19,20 @@ import {
 import { AFFILIATE_LINKS, type FestivalId, type ShoppingLink } from "@/config/affiliates";
 import { SiteHeader } from "@/components/SiteHeader";
 import { ShareOptions } from "@/components/ShareOptions";
+import {
+  FESTIVAL_INFO,
+  festivalPath,
+  nextEventTimestamp,
+  type CalendarDates,
+  type FestivalInfo,
+} from "@/lib/festivals";
 
-type CalendarDates = Partial<Record<FestivalId, Record<number, string>>>;
-type Festival = {
-  id: FestivalId;
-  name: string;
-  subtitle: string;
-  dateText: string;
-  month: number;
-  fallbackDay: number;
-  dates: Record<number, number>;
-  theme: string;
-  icon: "diya" | "moon" | "confetti" | "thread" | "colors" | "flag";
-  shoppingLinks: ShoppingLink[];
-};
+type Festival = FestivalInfo & { shoppingLinks: ShoppingLink[] };
 
-const FESTIVALS: Festival[] = [
-  {
-    id: "diwali",
-    name: "Diwali",
-    subtitle: "Festival of lights",
-    dateText: "Sun, Nov 8",
-    month: 11,
-    fallbackDay: 8,
-    dates: { 2025: 20, 2026: 8, 2027: 29, 2028: 17, 2029: 5, 2030: 26, 2031: 14, 2032: 2 },
-    theme: "saffron",
-    icon: "diya",
-    shoppingLinks: AFFILIATE_LINKS.diwali,
-  },
-  {
-    id: "eid",
-    name: "Eid al-Fitr",
-    subtitle: "A celebration of togetherness",
-    dateText: "Expected Mar 20",
-    month: 3,
-    fallbackDay: 20,
-    dates: { 2025: 31, 2026: 20, 2027: 10, 2028: 27, 2029: 15, 2030: 5, 2031: 26, 2032: 15 },
-    theme: "jade",
-    icon: "moon",
-    shoppingLinks: AFFILIATE_LINKS.eid,
-  },
-  {
-    id: "newYear",
-    name: "New Year",
-    subtitle: "A fresh page, a new beginning",
-    dateText: "Fri, Jan 1",
-    month: 1,
-    fallbackDay: 1,
-    dates: {},
-    theme: "blue",
-    icon: "confetti",
-    shoppingLinks: AFFILIATE_LINKS.newYear,
-  },
-  {
-    id: "rakhi",
-    name: "Rakhi",
-    subtitle: "A little thread, a lifetime of love",
-    dateText: "Fri, Aug 28",
-    month: 8,
-    fallbackDay: 28,
-    dates: { 2025: 9, 2026: 28, 2027: 17, 2028: 5, 2029: 24, 2030: 13, 2031: 2, 2032: 21 },
-    theme: "rose",
-    icon: "thread",
-    shoppingLinks: AFFILIATE_LINKS.rakhi,
-  },
-  {
-    id: "holi",
-    name: "Holi",
-    subtitle: "The festival of colours",
-    dateText: "Wed, Mar 4",
-    month: 3,
-    fallbackDay: 4,
-    dates: { 2025: 14, 2026: 4, 2027: 22, 2028: 11, 2029: 1, 2030: 20, 2031: 9, 2032: 27 },
-    theme: "coral",
-    icon: "colors",
-    shoppingLinks: AFFILIATE_LINKS.holi,
-  },
-  {
-    id: "independenceDay",
-    name: "Independence Day",
-    subtitle: "Celebrating the spirit of India",
-    dateText: "Sat, Aug 15",
-    month: 8,
-    fallbackDay: 15,
-    dates: {},
-    theme: "indigo",
-    icon: "flag",
-    shoppingLinks: AFFILIATE_LINKS.independenceDay,
-  },
-];
+const FESTIVALS: Festival[] = FESTIVAL_INFO.map((festival) => ({
+  ...festival,
+  shoppingLinks: AFFILIATE_LINKS[festival.id],
+}));
 
 const INDIA_DATE_FORMATTER = new Intl.DateTimeFormat("en-IN", {
   day: "numeric",
@@ -115,25 +40,6 @@ const INDIA_DATE_FORMATTER = new Intl.DateTimeFormat("en-IN", {
   year: "numeric",
   timeZone: "Asia/Kolkata",
 });
-function indiaYear(timestamp: number) {
-  return Number(new Intl.DateTimeFormat("en-IN", {
-    year: "numeric",
-    timeZone: "Asia/Kolkata",
-  }).format(timestamp));
-}
-
-function eventTimestamp(event: Festival, year: number, calendarDates: CalendarDates) {
-  const date = calendarDates[event.id]?.[year];
-  const month = date ? Number(date.slice(5, 7)) : event.month;
-  const day = date ? Number(date.slice(8, 10)) : event.dates[year] ?? event.fallbackDay;
-  return Date.UTC(year, month - 1, day, -5, -30);
-}
-
-function nextEventTimestamp(event: Festival, now: number, calendarDates: CalendarDates) {
-  const year = indiaYear(now);
-  const thisYear = eventTimestamp(event, year, calendarDates);
-  return thisYear > now ? thisYear : eventTimestamp(event, year + 1, calendarDates);
-}
 
 function eventDateLabel(timestamp: number) {
   return INDIA_DATE_FORMATTER.format(timestamp);
@@ -200,7 +106,7 @@ function CountdownCard({ event, now, calendarDates, isFavorite, isShoppingEvent,
       </div>
       <div className="event-heading-row">
         <div>
-          <h3>{event.name}</h3>
+          <h3><Link href={festivalPath(event)}>{event.name}</Link></h3>
           <p className="event-subtitle">{event.subtitle}</p>
         </div>
         <div className="event-card-controls">
