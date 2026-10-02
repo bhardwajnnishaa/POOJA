@@ -1,4 +1,18 @@
-export type FestivalId = "diwali" | "eid" | "newYear" | "rakhi" | "holi" | "independenceDay";
+export type FestivalId =
+  | "diwali"
+  | "eid"
+  | "newYear"
+  | "rakhi"
+  | "holi"
+  | "independenceDay"
+  | "navratri"
+  | "dussehra"
+  | "karwaChauth"
+  | "dhanteras"
+  | "bhaiDooj"
+  | "chhath"
+  | "guruNanak"
+  | "christmas";
 
 export type CalendarEntry = {
   date: string;

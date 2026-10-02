@@ -10,8 +10,63 @@ type LocalizedLanguage = Exclude<QuoteLanguage, "English">;
 type QuoteLength = "short" | "medium" | "long";
 type ToneQuotes = Record<QuoteTone, string[]>;
 
-const FESTIVAL_NAMES = ["Diwali", "Eid al-Fitr", "New Year", "Rakhi", "Holi", "Independence Day"];
+const FESTIVAL_NAMES = [
+  "Diwali",
+  "Eid al-Fitr",
+  "New Year",
+  "Rakhi",
+  "Holi",
+  "Independence Day",
+  "Navratri",
+  "Dussehra",
+  "Karwa Chauth",
+  "Dhanteras",
+  "Bhai Dooj",
+  "Chhath Puja",
+  "Guru Nanak Jayanti",
+  "Christmas",
+];
 const QUOTES: Record<string, Record<QuoteTone, string[]>> = {
+  Navratri: {
+    heartfelt: ["May Maa Durga bless your home with strength, peace and happiness this Navratri.", "Wishing you nine nights of devotion and a heart full of faith. Happy Navratri."],
+    poetic: ["Nine nights, nine forms of the Goddess, and one prayer: may light win every time.", "May the rhythm of the dandiya and the glow of the diya stay with you all year."],
+    playful: ["May your garba steps be graceful and your dandiya never miss a beat. Happy Navratri!", "Nine nights of dancing ahead. Charge your phone and rest your feet!"],
+  },
+  Dussehra: {
+    heartfelt: ["May the victory of good over evil inspire you in everything you do. Happy Dussehra.", "Wishing you the courage of Lord Rama and the blessings of Maa Durga this Vijayadashami."],
+    poetic: ["As Ravana burns tonight, may every worry turn to ash and every hope take flight.", "Truth may walk slowly, but it always arrives. Happy Vijayadashami."],
+    playful: ["May your troubles go up in smoke faster than Ravana tonight. Happy Dussehra!", "Wishing you a Dussehra with great fireworks and even better jalebis."],
+  },
+  "Karwa Chauth": {
+    heartfelt: ["May your bond grow stronger with every Karwa Chauth. Wishing you love and togetherness.", "May the moon rise early tonight and bless your marriage with joy for years to come."],
+    poetic: ["A day of patience, a night of moonlight, and a love that shines brighter than both.", "May the moon you wait for tonight reflect the love you share every day."],
+    playful: ["Wishing you an early moonrise and a very delicious dinner. Happy Karwa Chauth!", "May the moon be on time and the clouds stay away. Happy Karwa Chauth!"],
+  },
+  Dhanteras: {
+    heartfelt: ["May Goddess Lakshmi fill your home with wealth, health and happiness this Dhanteras.", "Wishing you prosperity that grows with every diya you light. Happy Dhanteras."],
+    poetic: ["May the first diya of Diwali light a path to good fortune in your home.", "Gold may shine, but may your home shine brighter with health and love."],
+    playful: ["May your shopping bags be full and your wallet still feel happy. Happy Dhanteras!", "Wishing you shiny new utensils and even shinier days ahead."],
+  },
+  "Bhai Dooj": {
+    heartfelt: ["May this Bhai Dooj bring you closer than ever. Wishing my sibling a long and happy life.", "A tilak, a prayer and a lifetime of love. Happy Bhai Dooj."],
+    poetic: ["Some bonds need no words. A little tilak says it all. Happy Bhai Dooj.", "Wherever life takes us, may we always come home to each other."],
+    playful: ["Happy Bhai Dooj! The tilak is ready, so where is my gift?", "To the sibling who annoys me most and loves me most: Happy Bhai Dooj!"],
+  },
+  "Chhath Puja": {
+    heartfelt: ["May Chhathi Maiya and Surya Dev bless your family with health and happiness.", "Wishing you a blessed Chhath Puja filled with faith and peace."],
+    poetic: ["As you offer arghya to the setting and rising sun, may every day bring new light.", "May the waters of the ghat carry your prayers and bring back blessings."],
+    playful: ["Wishing you a Chhath full of thekua, family and blessings!", "May your thekua be crispy and your prayers be answered. Happy Chhath Puja!"],
+  },
+  "Guru Nanak Jayanti": {
+    heartfelt: ["May the teachings of Guru Nanak Dev Ji guide you to kindness, truth and service.", "Wishing you and your family a blessed Gurpurab filled with peace."],
+    poetic: ["Ik Onkar: one light in every heart. May it shine through you today.", "May the light of Guru Nanak Dev Ji's words brighten every step you take."],
+    playful: ["Wishing you a joyful Gurpurab with warm langar and warmer hearts.", "May your day be full of kirtan, kindness and good company. Happy Gurpurab!"],
+  },
+  Christmas: {
+    heartfelt: ["Wishing you a Christmas full of love, peace and time with the people who matter most.", "May the joy of Christmas stay in your home all year. Merry Christmas."],
+    poetic: ["May the star on your tree remind you that light always finds its way.", "Carols, candles and quiet joy. Wishing you a gentle and merry Christmas."],
+    playful: ["May your cake be rich, your gifts be many and your Secret Santa be generous!", "Wishing you more cake than you can eat and more joy than you can hold. Merry Christmas!"],
+  },
   Diwali: {
     heartfelt: ["May every little light remind you how much brightness you bring to the people around you.", "Wishing you a home full of laughter, a heart full of hope, and a Diwali full of love."],
     poetic: ["May a thousand lamps make a sky of your home, and every wish find its way into the light.", "Where a diya glows, hope gathers. May yours shine on long after the night is through."],

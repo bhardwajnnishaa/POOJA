@@ -120,4 +120,140 @@ export const GIFT_IDEAS: Record<FestivalId, BudgetIdeas> = {
       { name: "Indian history book set", why: "A lasting gift for readers of any age.", store: "amazon", term: "indian history books set" },
     ],
   },
+  navratri: {
+    under500: [
+      { name: "Dandiya sticks", why: "Ready for garba and dandiya nights.", store: "amazon", term: "dandiya sticks" },
+      { name: "Puja samagri kit", why: "Everything needed for Ghatasthapana and daily puja.", store: "amazon", term: "navratri puja samagri kit" },
+      { name: "Oxidised jewellery", why: "Completes the garba look.", store: "amazon", term: "oxidised jewellery set for women" },
+    ],
+    under1000: [
+      { name: "Chaniya choli", why: "The classic outfit for garba nights.", store: "meesho", term: "chaniya choli" },
+      { name: "Men's kediyu kurta", why: "Traditional garba wear for men.", store: "amazon", term: "kediyu kurta for men" },
+      { name: "Brass kalash", why: "Used for Ghatasthapana on the first day.", store: "amazon", term: "brass kalash for puja" },
+    ],
+    premium: [
+      { name: "Designer chaniya choli", why: "A standout outfit for all nine nights.", store: "myntra", term: "lehenga choli" },
+      { name: "Durga idol", why: "A lasting piece for the home temple.", store: "amazon", term: "durga idol for home" },
+      { name: "Festive silk saree", why: "For Ashtami and Navami puja.", store: "myntra", term: "silk saree" },
+    ],
+  },
+  dussehra: {
+    under500: [
+      { name: "Puja thali set", why: "For Dussehra and Shastra puja at home.", store: "amazon", term: "puja thali set" },
+      { name: "Marigold toran", why: "A bright door decoration for the festival.", store: "amazon", term: "marigold toran door hanging" },
+      { name: "Kids' Ramayana book", why: "Tells children the story behind Dussehra.", store: "amazon", term: "ramayana book for kids" },
+    ],
+    under1000: [
+      { name: "Sweets gift box", why: "Shared with family and neighbours after Ravan dahan.", store: "amazon", term: "sweets gift box" },
+      { name: "Men's kurta", why: "A smart outfit for Dussehra celebrations.", store: "myntra", term: "men kurta" },
+      { name: "Women's ethnic suit", why: "A festive look for the day.", store: "myntra", term: "women ethnic suit" },
+    ],
+    premium: [
+      { name: "Ram Darbar idol", why: "A meaningful gift for the home temple.", store: "amazon", term: "ram darbar idol" },
+      { name: "Silk saree", why: "For Dussehra puja and visits to relatives.", store: "myntra", term: "silk saree" },
+      { name: "Dry fruit hamper", why: "A premium festive gift.", store: "amazon", term: "dry fruits hamper premium" },
+    ],
+  },
+  karwaChauth: {
+    under500: [
+      { name: "Karwa Chauth thali set", why: "With karwa, sieve and diya for the evening puja.", store: "amazon", term: "karwa chauth thali set" },
+      { name: "Glass bangles", why: "A traditional part of the Karwa Chauth look.", store: "amazon", term: "glass bangles set" },
+      { name: "Mehendi cones", why: "For mehendi the day before the fast.", store: "amazon", term: "natural mehendi cones" },
+    ],
+    under1000: [
+      { name: "Makeup kit", why: "For getting ready for the evening puja.", store: "nykaa", term: "makeup kit for women" },
+      { name: "Sargi gift box", why: "Dry fruits and sweets for the pre-dawn meal.", store: "amazon", term: "dry fruits gift box" },
+      { name: "Earrings", why: "A thoughtful gift from husband to wife.", store: "myntra", term: "women earrings" },
+    ],
+    premium: [
+      { name: "Red saree", why: "The traditional colour for Karwa Chauth.", store: "myntra", term: "red saree" },
+      { name: "Women's watch", why: "A lasting gift for your wife.", store: "amazon", term: "women watch" },
+      { name: "Gold-plated jewellery set", why: "Completes the festive look.", store: "amazon", term: "gold plated jewellery set for women" },
+    ],
+  },
+  dhanteras: {
+    under500: [
+      { name: "Steel utensils", why: "Buying new utensils on Dhanteras is a common tradition.", store: "amazon", term: "stainless steel utensils" },
+      { name: "Clay diyas", why: "The first diyas of Diwali are lit on Dhanteras.", store: "amazon", term: "clay diyas" },
+      { name: "Lakshmi Ganesh idol", why: "For Diwali puja two days later.", store: "amazon", term: "lakshmi ganesh idol small" },
+    ],
+    under1000: [
+      { name: "Brass diya", why: "A traditional metal purchase for the day.", store: "amazon", term: "brass diya" },
+      { name: "Copper water bottle", why: "A useful metal item for the home.", store: "amazon", term: "copper water bottle" },
+      { name: "Kitchen cookware", why: "New cookware for the festive season.", store: "amazon", term: "kitchen cookware set" },
+    ],
+    premium: [
+      { name: "Silver coin", why: "A traditional Dhanteras purchase.", store: "amazon", term: "silver coin" },
+      { name: "Gold coin", why: "Many families buy gold on Dhanteras.", store: "amazon", term: "gold coin" },
+      { name: "Kitchen appliance", why: "A useful upgrade for the home.", store: "amazon", term: "mixer grinder" },
+    ],
+  },
+  bhaiDooj: {
+    under500: [
+      { name: "Tilak thali", why: "With roli, chawal and diya for the tilak ceremony.", store: "amazon", term: "tilak thali set" },
+      { name: "Chocolate gift box", why: "A sweet gift for a brother or sister.", store: "amazon", term: "chocolate gift box" },
+      { name: "Greeting card", why: "A simple way to share your wishes.", store: "amazon", term: "greeting card for brother" },
+    ],
+    under1000: [
+      { name: "Wallet for brother", why: "A useful gift he will carry every day.", store: "amazon", term: "men leather wallet" },
+      { name: "Gift set for sister", why: "A popular return gift from brothers.", store: "nykaa", term: "gift set for women" },
+      { name: "Dry fruit box", why: "A festive gift the whole family can share.", store: "amazon", term: "dry fruits gift box" },
+    ],
+    premium: [
+      { name: "Wrist watch", why: "A lasting gift for a brother or sister.", store: "amazon", term: "wrist watch gift" },
+      { name: "Handbag for sister", why: "A stylish gift she will use often.", store: "myntra", term: "women handbag" },
+      { name: "Wireless earbuds", why: "A popular gift for any age.", store: "amazon", term: "wireless earbuds" },
+    ],
+  },
+  chhath: {
+    under500: [
+      { name: "Bamboo soop", why: "Used to offer arghya to the sun.", store: "amazon", term: "bamboo soop for chhath puja" },
+      { name: "Puja samagri kit", why: "Essentials for the four days of Chhath.", store: "amazon", term: "chhath puja samagri" },
+      { name: "Brass lota", why: "For offering water during arghya.", store: "amazon", term: "brass lota" },
+    ],
+    under1000: [
+      { name: "Cotton saree", why: "Comfortable for long rituals at the ghat.", store: "myntra", term: "cotton saree" },
+      { name: "Bamboo daura basket", why: "To carry offerings to the ghat.", store: "amazon", term: "bamboo basket daura" },
+      { name: "Men's dhoti kurta", why: "Traditional wear for the puja.", store: "amazon", term: "dhoti kurta for men" },
+    ],
+    premium: [
+      { name: "Silk saree", why: "A festive saree for the main day.", store: "myntra", term: "silk saree" },
+      { name: "Brass puja set", why: "A lasting set for every year's puja.", store: "amazon", term: "brass puja set" },
+      { name: "Dry fruit hamper", why: "A premium gift for the family.", store: "amazon", term: "dry fruits hamper premium" },
+    ],
+  },
+  guruNanak: {
+    under500: [
+      { name: "Gutka Sahib", why: "A respectful gift for daily prayer.", store: "amazon", term: "gutka sahib" },
+      { name: "Kids' book on Guru Nanak", why: "Shares Guru Nanak Dev Ji's teachings with children.", store: "amazon", term: "guru nanak book for kids" },
+      { name: "Diyas and candles", why: "Homes are lit up for Gurpurab.", store: "amazon", term: "clay diyas" },
+    ],
+    under1000: [
+      { name: "Kurta pyjama", why: "A neat outfit for the gurdwara.", store: "myntra", term: "men kurta pyjama" },
+      { name: "Women's salwar suit", why: "A festive outfit for Gurpurab.", store: "myntra", term: "women salwar suit" },
+      { name: "Steel kada", why: "A meaningful gift in Sikh tradition.", store: "amazon", term: "steel kada" },
+    ],
+    premium: [
+      { name: "Phulkari dupatta", why: "Punjab's traditional embroidered craft.", store: "amazon", term: "phulkari dupatta" },
+      { name: "Sikh history book set", why: "A lasting gift for readers.", store: "amazon", term: "sikh history books" },
+      { name: "Festive suit", why: "For Gurpurab celebrations with family.", store: "ajio", term: "women ethnic suit" },
+    ],
+  },
+  christmas: {
+    under500: [
+      { name: "Christmas ornaments", why: "Decorate the tree with the family.", store: "amazon", term: "christmas tree ornaments" },
+      { name: "Santa cap", why: "Fun for kids and office parties.", store: "amazon", term: "santa cap" },
+      { name: "Fairy lights", why: "Adds a warm glow to any room.", store: "amazon", term: "fairy lights" },
+    ],
+    under1000: [
+      { name: "Christmas tree", why: "The centrepiece of Christmas at home.", store: "amazon", term: "christmas tree" },
+      { name: "Plum cake hamper", why: "A classic Christmas treat to share.", store: "amazon", term: "plum cake gift box" },
+      { name: "Secret Santa gift", why: "Easy picks for office gift exchanges.", store: "amazon", term: "secret santa gift" },
+    ],
+    premium: [
+      { name: "Party outfit", why: "For Christmas parties and New Year's Eve.", store: "ajio", term: "party wear" },
+      { name: "Perfume gift set", why: "A premium gift for someone special.", store: "nykaa", term: "perfume gift set" },
+      { name: "Bluetooth speaker", why: "Carols and party music for the season.", store: "amazon", term: "bluetooth speaker" },
+    ],
+  },
 };
