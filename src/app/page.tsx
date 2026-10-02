@@ -487,7 +487,7 @@ export default function Home() {
       </section>
 
       <footer className="site-footer">
-        <a className="brand footer-brand" href="#home"><span className="brand-mark"><Sparkles aria-hidden="true" /></span><span>The Celebration <b>Calendar</b></span></a>
+        <a className="brand footer-brand" href="#home"><span className="brand-mark"><Sparkles aria-hidden="true" /></span><span>Festive <b>Clock</b></span></a>
         <p>Made for the moments that bring us together.</p>
         <a href="#home" className="back-to-top">Back to top ↑</a>
       </footer>
