@@ -451,17 +451,12 @@ button.month-day:hover, a.month-day:hover { background: #ece9df; }
 
 .festival-faq { width: min(100% - 64px, 1040px); margin: 0 auto; padding: 44px 0 48px; border-top: 1px solid var(--line); }
 .festival-faq h2, .festival-wishes-heading h2 { margin: 0 0 18px; font-family: var(--serif); font-size: 26px; font-weight: 500; letter-spacing: 0; }
-.festival-faq dl { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 40px; margin: 0; }
-.festival-faq dl > div { padding: 14px 0; border-bottom: 1px solid var(--line); }
-.festival-faq dt { color: var(--ink); font-size: 15px; font-weight: 700; }
-.festival-faq dd { margin: 6px 0 0; color: #454f46; font-size: 14px; line-height: 1.7; }
 .festival-wishes-heading { padding: 48px 32px 0; background: #e5ece2; text-align: center; }
 .festival-wishes-heading h2 { margin-bottom: 6px; }
 .festival-wishes-heading p { margin: 0; color: var(--muted); font-size: 14px; }
 
 @media (max-width: 640px) {
   .festival-faq { width: calc(100% - 32px); padding: 36px 0 40px; }
-  .festival-faq dl { grid-template-columns: 1fr; gap: 0; }
   .festival-wishes-heading { padding: 36px 16px 0; }
 }
 
@@ -491,3 +486,12 @@ button.month-day:hover, a.month-day:hover { background: #ece9df; }
 
 .show-all-events { display: block; width: 100%; min-height: 44px; margin-top: 14px; border: 1px solid #bdcabb; background: #fcfaf5; color: #43624d; cursor: pointer; font-size: 14px; font-weight: 700; }
 .show-all-events:hover { background: #e8eee5; }
+
+.faq-list { border-top: 1px solid var(--line); }
+.faq-list details { border-bottom: 1px solid var(--line); }
+.faq-list summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 15px 2px; color: var(--ink); cursor: pointer; font-size: 15px; font-weight: 700; list-style: none; }
+.faq-list summary::-webkit-details-marker { display: none; }
+.faq-list summary::after { flex: 0 0 auto; color: var(--saffron); content: "+"; font-size: 22px; font-weight: 400; line-height: 1; }
+.faq-list details[open] summary::after { content: "−"; }
+.faq-list summary:hover { color: #46624d; }
+.faq-list details p { margin: 0 2px 16px; color: #454f46; font-size: 14px; line-height: 1.7; }

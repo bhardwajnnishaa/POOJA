@@ -267,14 +267,14 @@ export default async function FestivalPage({ params }: PageProps) {
 
       {faqs.length > 0 ? <section className="festival-faq" aria-labelledby="festival-faq-heading">
         <h2 id="festival-faq-heading">{festival.name} {year}: questions and answers</h2>
-        <dl>
+        <div className="faq-list">
           {faqs.map((faq) => (
-            <div key={faq.question}>
-              <dt>{faq.question}</dt>
-              <dd>{faq.answer}</dd>
-            </div>
+            <details key={faq.question}>
+              <summary>{faq.question}</summary>
+              <p>{faq.answer}</p>
+            </details>
           ))}
-        </dl>
+        </div>
       </section> : null}
 
       <div className="festival-wishes-heading">
