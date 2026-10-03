@@ -33,6 +33,7 @@ import {
   type CalendarDates,
   type FestivalInfo,
 } from "@/lib/festivals";
+import { BrandMark } from "@/components/BrandMark";
 
 type Festival = FestivalInfo & { shoppingLinks: ShoppingLink[] };
 
@@ -429,7 +430,7 @@ export default function Home() {
       </section>
 
       <footer className="site-footer">
-        <a className="brand footer-brand" href="#home"><span className="brand-mark"><Sparkles aria-hidden="true" /></span><span>Festive <b>Clock</b></span></a>
+        <a className="brand footer-brand" href="#home"><BrandMark /><span>Festive <b>Clock</b></span></a>
         <p>Made for the moments that bring us together.</p>
         <a href="#home" className="back-to-top">Back to top ↑</a>
       </footer>

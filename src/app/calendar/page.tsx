@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowDownRight, CalendarDays, ChevronRight, Clock3, Sparkles } from "lucide-react";
+import { ArrowDownRight, CalendarDays, ChevronRight, Clock3 } from "lucide-react";
 import { QuoteMaker } from "@/components/QuoteMaker";
 import { SiteHeader } from "@/components/SiteHeader";
 import { getCalendarData, type CalendarData } from "@/lib/calendar-data";
 import type { CalendarEntry } from "@/types/calendar";
+import { BrandMark } from "@/components/BrandMark";
 
 export const dynamic = "force-dynamic";
 
@@ -222,7 +223,7 @@ export default async function CalendarPage({
       <QuoteMaker eventNames={eventNames} selectedEvent={selectedEvent} />
 
       <footer className="site-footer calendar-footer">
-        <Link className="brand footer-brand" href="/"><span className="brand-mark"><Sparkles aria-hidden="true" /></span><span>Festive <b>Clock</b></span></Link>
+        <Link className="brand footer-brand" href="/"><BrandMark /><span>Festive <b>Clock</b></span></Link>
         <p><Clock3 aria-hidden="true" /> India Standard Time · Updated every six hours</p>
         <a href="#month-calendar" className="back-to-top"><ArrowDownRight aria-hidden="true" /> Back to months</a>
       </footer>
