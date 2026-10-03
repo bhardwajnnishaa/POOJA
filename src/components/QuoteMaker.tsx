@@ -27,6 +27,16 @@ const FESTIVAL_NAMES = [
   "Christmas",
 ];
 const QUOTES: Record<string, Record<QuoteTone, string[]>> = {
+  Birthday: {
+    heartfelt: ["Happy birthday! May this year bring you good health, true happiness and everything your heart wishes for.", "Wishing you a birthday as warm and wonderful as you are."],
+    poetic: ["Another trip around the sun, another chapter full of light. Happy birthday.", "May every candle you blow out today light up a dream for the year ahead."],
+    playful: ["Happy birthday! Eat the cake, open the gifts and ignore the number.", "You're not getting older, just more experienced at eating cake. Happy birthday!"],
+  },
+  Anniversary: {
+    heartfelt: ["Happy anniversary! Thank you for every laugh, every hug and every day by my side.", "Wishing you both a lifetime of love, patience and happiness together."],
+    poetic: ["Year after year, the story only gets better. Happy anniversary.", "Two hearts, one journey, and many more beautiful chapters to come."],
+    playful: ["Happy anniversary to my favourite person to annoy forever!", "Another year of sharing the remote and the snacks. Happy anniversary!"],
+  },
   Navratri: {
     heartfelt: ["May Maa Durga bless your home with strength, peace and happiness this Navratri.", "Wishing you nine nights of devotion and a heart full of faith. Happy Navratri."],
     poetic: ["Nine nights, nine forms of the Goddess, and one prayer: may light win every time.", "May the rhythm of the dandiya and the glow of the diya stay with you all year."],
@@ -192,6 +202,8 @@ function quoteCollectionName(eventName: string) {
   if (/\bholi\b/i.test(eventName)) return "Holi";
   if (/new year/i.test(eventName)) return "New Year";
   if (/independence day/i.test(eventName)) return "Independence Day";
+  if (/birthday|janamdin|janmdin/i.test(eventName)) return "Birthday";
+  if (/anniversary|saalgirah/i.test(eventName)) return "Anniversary";
   return eventName;
 }
 
@@ -240,7 +252,7 @@ export function QuoteMaker({
     : "";
   const baseQuote = generatedQuote || `${dedication}${fallbackQuote}${includeEmoji ? " ✨" : ""}`;
   const quote = editedQuote ?? baseQuote;
-  const allEventNames = Array.from(new Set([...FESTIVAL_NAMES, ...eventNames]));
+  const allEventNames = Array.from(new Set([...FESTIVAL_NAMES, ...eventNames, ...(selectedEvent ? [selectedEvent] : [])]));
 
   useEffect(() => {
     if (selectedEvent) {

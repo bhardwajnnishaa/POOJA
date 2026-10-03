@@ -1,0 +1,207 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { Cake, CalendarHeart, Gift, HeartHandshake, Plus, Trash2, WandSparkles, X } from "lucide-react";
+import { retailerSearch } from "@/config/affiliates";
+import { BUDGETS, PERSONAL_GIFT_IDEAS } from "@/config/gift-ideas";
+import { GiftIdeas } from "@/components/GiftIdeas";
+import { ShareOptions } from "@/components/ShareOptions";
+import {
+  MAX_NAME_LENGTH,
+  MAX_PERSONAL_DATES,
+  PERSONAL_DATE_KINDS,
+  isPersonalDateToday,
+  loadPersonalDates,
+  nextPersonalDate,
+  savePersonalDates,
+  type PersonalDate,
+  type PersonalDateKind,
+} from "@/lib/personal-dates";
+
+const DATE_LABEL = new Intl.DateTimeFormat("en-IN", { weekday: "short", day: "numeric", month: "long", year: "numeric", timeZone: "Asia/Kolkata" });
+const KIND_STYLE: Record<PersonalDateKind, { theme: string; icon: typeof Cake }> = {
+  birthday: { theme: "coral", icon: Cake },
+  anniversary: { theme: "rose", icon: HeartHandshake },
+  other: { theme: "blue", icon: CalendarHeart },
+};
+
+function giftBudgets(kind: PersonalDateKind) {
+  return BUDGETS.map((budget) => ({
+    id: budget.id,
+    label: budget.label,
+    ideas: PERSONAL_GIFT_IDEAS[kind][budget.id].map((idea) => {
+      const link = retailerSearch(idea.store, idea.term, budget.price);
+      return { name: idea.name, why: idea.why, href: link.href, storeLabel: link.label };
+    }),
+  }));
+}
+
+function MyDateCard({ date, now, onDelete, onShared }: {
+  date: PersonalDate;
+  now: number;
+  onDelete: () => void;
+  onShared: () => void;
+}) {
+  const [showGifts, setShowGifts] = useState(false);
+  const { theme, icon: Icon } = KIND_STYLE[date.kind];
+  const target = nextPersonalDate(date, now);
+  const isToday = isPersonalDateToday(date, now);
+  const remaining = Math.max(0, Math.floor((target - now) / 1000));
+  const units = [
+    Math.floor(remaining / 86400),
+    Math.floor((remaining % 86400) / 3600),
+    Math.floor((remaining % 3600) / 60),
+    remaining % 60,
+  ].map((value) => String(value).padStart(2, "0"));
+  const kindLabel = PERSONAL_DATE_KINDS.find((kind) => kind.id === date.kind)?.label ?? "";
+
+  return (
+    <article className={`event-card my-date-card event-card-${theme}`}>
+      <div className="event-card-topline">
+        <span className="event-icon"><Icon aria-hidden="true" /></span>
+        <span className="event-kicker">My date · {kindLabel}</span>
+      </div>
+      <div className="event-heading-row">
+        <h3>{date.name}</h3>
+        <button className="my-date-delete" type="button" aria-label={`Delete ${date.name}`} title="Delete" onClick={onDelete}>
+          <Trash2 aria-hidden="true" />
+        </button>
+      </div>
+      <div className="event-date-line" suppressHydrationWarning>
+        <span className="live-dot" />
+        {DATE_LABEL.format(isToday ? now : target)}
+      </div>
+      {isToday ? (
+        <p className="my-date-today">🎉 It&apos;s today! Send your wishes.</p>
+      ) : (
+        <div className="timer" aria-label={`Time until ${date.name}`}>
+          {units.map((value, index) => (
+            <div className="timer-unit" key={index}>
+              <span className="timer-value" suppressHydrationWarning>{value}</span>
+              <span className="timer-label">{["Days", "Hours", "Minutes", "Seconds"][index]}</span>
+            </div>
+          ))}
+        </div>
+      )}
+      <div className="event-actions">
+        <button className="my-date-gifts-toggle" type="button" aria-expanded={showGifts} onClick={() => setShowGifts(!showGifts)}>
+          <Gift aria-hidden="true" /> {showGifts ? "Hide gift ideas" : "Gift ideas"}
+        </button>
+        {showGifts ? <GiftIdeas festivalName={date.name} budgets={giftBudgets(date.kind)} /> : null}
+        <ShareOptions message={isToday ? `Today is ${date.name}! 🎉` : `Counting down to ${date.name} on ${DATE_LABEL.format(target)}!`} onShared={onShared} />
+        <Link className="write-quote-link" href={`/calendar?event=${encodeURIComponent(date.name)}#quote-studio`}>
+          <WandSparkles aria-hidden="true" /> Write a wish
+        </Link>
+      </div>
+    </article>
+  );
+}
+
+export function MyDates({ now, onToast }: { now: number; onToast: (message: string) => void }) {
+  const [dates, setDates] = useState<PersonalDate[]>([]);
+  const [formOpen, setFormOpen] = useState(false);
+  const [name, setName] = useState("");
+  const [dateValue, setDateValue] = useState("");
+  const [kind, setKind] = useState<PersonalDateKind>("birthday");
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    setDates(loadPersonalDates());
+  }, []);
+
+  function update(next: PersonalDate[]) {
+    setDates(next);
+    if (!savePersonalDates(next)) onToast("Your browser blocked saving, so this date will be lost when you close the page.");
+  }
+
+  function closeForm() {
+    setFormOpen(false);
+    setName("");
+    setDateValue("");
+    setKind("birthday");
+    setError("");
+  }
+
+  function addDate(event: React.FormEvent) {
+    event.preventDefault();
+    const trimmed = name.trim();
+    const [, month, day] = dateValue.split("-").map(Number);
+    if (!trimmed) return setError("Please enter a name, for example “Mom’s birthday”.");
+    if (!month || !day) return setError("Please choose a date.");
+    if (dates.length >= MAX_PERSONAL_DATES) return setError(`You can save up to ${MAX_PERSONAL_DATES} dates.`);
+
+    update([...dates, { id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`, name: trimmed.slice(0, MAX_NAME_LENGTH), month, day, kind }]);
+    onToast(`${trimmed} added to My dates.`);
+    closeForm();
+  }
+
+  // A date that is today comes first, before the next upcoming one.
+  const sortKey = (date: PersonalDate) => (isPersonalDateToday(date, now) ? now : nextPersonalDate(date, now));
+  const sorted = dates.toSorted((first, second) => sortKey(first) - sortKey(second));
+
+  return (
+    <section className="my-dates" aria-labelledby="my-dates-heading">
+      <div className="my-dates-heading">
+        <div>
+          <h3 id="my-dates-heading">My dates</h3>
+          <p>Birthdays, anniversaries and your own special days. Saved only on this device.</p>
+        </div>
+        {!formOpen ? (
+          <button className="my-dates-add" type="button" onClick={() => setFormOpen(true)}>
+            <Plus aria-hidden="true" /> Add my date
+          </button>
+        ) : null}
+      </div>
+
+      {formOpen ? (
+        <form className="my-dates-form" onSubmit={addDate} noValidate>
+          <label>
+            <span>Name</span>
+            <input
+              type="text"
+              value={name}
+              maxLength={MAX_NAME_LENGTH}
+              placeholder="e.g. Mom's birthday"
+              onChange={(event) => setName(event.target.value)}
+              autoFocus
+            />
+          </label>
+          <label>
+            <span>Date</span>
+            <input type="date" value={dateValue} onChange={(event) => setDateValue(event.target.value)} />
+          </label>
+          <label>
+            <span>Type</span>
+            <select value={kind} onChange={(event) => setKind(event.target.value as PersonalDateKind)}>
+              {PERSONAL_DATE_KINDS.map((option) => <option key={option.id} value={option.id}>{option.label}</option>)}
+            </select>
+          </label>
+          <div className="my-dates-form-actions">
+            <button className="my-dates-save" type="submit">Save date</button>
+            <button className="my-dates-cancel" type="button" onClick={closeForm}><X aria-hidden="true" /> Cancel</button>
+          </div>
+          {error ? <p className="my-dates-error" role="alert">{error}</p> : null}
+          <p className="my-dates-form-note">The year does not matter. The countdown repeats every year.</p>
+        </form>
+      ) : null}
+
+      {sorted.length > 0 ? (
+        <div className="my-dates-grid">
+          {sorted.map((date) => (
+            <MyDateCard
+              date={date}
+              key={date.id}
+              now={now}
+              onDelete={() => {
+                update(dates.filter((entry) => entry.id !== date.id));
+                onToast(`${date.name} removed from My dates.`);
+              }}
+              onShared={() => onToast(`${date.name} message copied and ready to share.`)}
+            />
+          ))}
+        </div>
+      ) : null}
+    </section>
+  );
+}
