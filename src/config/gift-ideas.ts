@@ -1,4 +1,5 @@
 import type { FestivalId, PriceRange, RetailerId } from "@/config/affiliates";
+import type { PersonalDateKind } from "@/lib/personal-dates";
 
 export type BudgetId = "under500" | "under1000" | "premium";
 
@@ -254,6 +255,60 @@ export const GIFT_IDEAS: Record<FestivalId, BudgetIdeas> = {
       { name: "Party outfit", why: "For Christmas parties and New Year's Eve.", store: "ajio", term: "party wear" },
       { name: "Perfume gift set", why: "A premium gift for someone special.", store: "nykaa", term: "perfume gift set" },
       { name: "Bluetooth speaker", why: "Carols and party music for the season.", store: "amazon", term: "bluetooth speaker" },
+    ],
+  },
+};
+
+export const PERSONAL_GIFT_IDEAS: Record<PersonalDateKind, BudgetIdeas> = {
+  birthday: {
+    under500: [
+      { name: "Personalised mug", why: "Add their name or photo for a gift that feels personal.", store: "amazon", term: "personalised mug with photo" },
+      { name: "Chocolate hamper", why: "A sweet gift that suits any age.", store: "amazon", term: "chocolate gift hamper" },
+      { name: "Scented candle", why: "A warm, simple gift for friends.", store: "amazon", term: "scented candle gift" },
+    ],
+    under1000: [
+      { name: "Photo frame", why: "Frame a favourite memory together.", store: "amazon", term: "personalised photo frame" },
+      { name: "Indoor plant", why: "A living gift that lasts.", store: "amazon", term: "indoor plant gift" },
+      { name: "Perfume", why: "A popular birthday gift for adults.", store: "nykaa", term: "perfume" },
+    ],
+    premium: [
+      { name: "Smartwatch", why: "Useful every day.", store: "amazon", term: "smartwatch" },
+      { name: "Wireless earbuds", why: "A favourite with music lovers.", store: "amazon", term: "wireless earbuds" },
+      { name: "Leather wallet or handbag", why: "A stylish gift they will carry daily.", store: "myntra", term: "leather wallet" },
+    ],
+  },
+  anniversary: {
+    under500: [
+      { name: "Couple mug set", why: "A cute everyday reminder of each other.", store: "amazon", term: "couple mug set" },
+      { name: "Anniversary card", why: "Write your own words of love.", store: "amazon", term: "anniversary greeting card" },
+      { name: "Couple keychain", why: "A small gift you both carry.", store: "amazon", term: "couple keychain" },
+    ],
+    under1000: [
+      { name: "Couple photo frame", why: "Display a favourite photo of you two.", store: "amazon", term: "couple photo frame" },
+      { name: "Memory scrapbook", why: "Fill it with photos from your years together.", store: "amazon", term: "anniversary scrapbook" },
+      { name: "Photo lamp", why: "A glowing photo gift for the bedroom.", store: "amazon", term: "personalised photo lamp" },
+    ],
+    premium: [
+      { name: "Couple watch set", why: "Matching watches for both of you.", store: "amazon", term: "couple watch set" },
+      { name: "Pendant or jewellery", why: "A classic anniversary gift.", store: "amazon", term: "pendant for wife" },
+      { name: "Perfume gift set", why: "A premium gift for your partner.", store: "nykaa", term: "perfume gift set" },
+    ],
+  },
+  other: {
+    under500: [
+      { name: "Greeting card", why: "A simple way to share your wishes.", store: "amazon", term: "greeting card" },
+      { name: "Chocolates", why: "Always welcome.", store: "amazon", term: "chocolate gift box" },
+      { name: "Scented candle", why: "A warm gift for any occasion.", store: "amazon", term: "scented candle gift" },
+    ],
+    under1000: [
+      { name: "Photo frame", why: "Frame a special memory.", store: "amazon", term: "photo frame gift" },
+      { name: "Dry fruit box", why: "A thoughtful gift for family.", store: "amazon", term: "dry fruits gift box" },
+      { name: "Indoor plant", why: "A gift that keeps growing.", store: "amazon", term: "indoor plant gift" },
+    ],
+    premium: [
+      { name: "Smartwatch", why: "A useful gift for anyone.", store: "amazon", term: "smartwatch" },
+      { name: "Wireless earbuds", why: "A popular gift for any age.", store: "amazon", term: "wireless earbuds" },
+      { name: "Perfume gift set", why: "A premium gift for someone special.", store: "nykaa", term: "perfume gift set" },
     ],
   },
 };

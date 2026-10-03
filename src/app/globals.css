@@ -514,3 +514,46 @@ button.month-day:hover, a.month-day:hover { background: #ece9df; }
 @media (max-width: 1180px) and (min-width: 981px) {
   .countdown-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+
+.my-dates { width: min(100%, 1240px); margin: 0 auto 26px; padding: 18px 20px; border: 1px solid #e2dacb; border-left: 4px solid var(--saffron); background: #fcfaf5; }
+.my-dates-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.my-dates-heading h3 { margin: 0; font-family: var(--serif); font-size: 26px; font-weight: 600; }
+.my-dates-heading p { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
+.my-dates-add, .my-dates-save { display: inline-flex; min-height: 44px; flex: 0 0 auto; align-items: center; gap: 7px; padding: 0 18px; border: 0; background: var(--saffron); color: #fff; cursor: pointer; font-size: 15px; font-weight: 700; }
+.my-dates-add:hover, .my-dates-save:hover { background: #c96f22; }
+.my-dates-add svg { width: 18px; height: 18px; }
+.my-dates-form { display: grid; grid-template-columns: 2fr 1.2fr 1fr auto; gap: 12px; align-items: end; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line); }
+.my-dates-form label { display: flex; flex-direction: column; gap: 6px; color: #304339; font-size: 14px; font-weight: 700; }
+.my-dates-form input, .my-dates-form select { min-height: 44px; padding: 0 12px; border: 1px solid #cfc6b6; background: #fffdf8; color: var(--ink); font: inherit; font-size: 15px; font-weight: 500; }
+.my-dates-form-actions { display: flex; gap: 8px; }
+.my-dates-cancel { display: inline-flex; min-height: 44px; align-items: center; gap: 5px; padding: 0 14px; border: 1px solid #cfc6b6; background: transparent; color: #46624d; cursor: pointer; font-size: 14px; font-weight: 700; }
+.my-dates-cancel svg { width: 15px; height: 15px; }
+.my-dates-error { grid-column: 1 / -1; margin: 0; color: #a3341f; font-size: 14px; font-weight: 600; }
+.my-dates-form-note { grid-column: 1 / -1; margin: 0; color: var(--muted); font-size: 13px; }
+.my-dates-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 16px; }
+.my-date-card .event-heading-row h3 { overflow-wrap: anywhere; }
+.my-date-delete { display: grid; width: 34px; height: 34px; flex: 0 0 auto; place-items: center; border: 1px solid transparent; background: transparent; color: #7a7e72; cursor: pointer; }
+.my-date-delete:hover { border-color: #e3c9c2; background: #faeeea; color: #a3341f; }
+.my-date-delete svg { width: 17px; height: 17px; }
+.my-date-today { margin: 15px 0 0; padding: 14px 0; border-top: 1px solid #ede8dc; border-bottom: 1px solid #ede8dc; color: var(--event-color); font-family: var(--serif); font-size: 20px; text-align: center; }
+.my-date-gifts-toggle { display: inline-flex; width: 100%; min-height: 42px; align-items: center; justify-content: center; gap: 7px; border: 1px solid #e7c9a5; background: #faefe2; color: #8a4b17; cursor: pointer; font-size: 14px; font-weight: 700; }
+.my-date-gifts-toggle svg { width: 16px; height: 16px; }
+.my-date-card .gift-ideas { width: 100%; }
+.my-date-card .gift-budget-picker { flex-direction: column; align-items: stretch; gap: 6px; }
+.my-date-card .gift-budget-picker select { min-width: 0; }
+.my-date-card .gift-budget-list { grid-template-columns: 1fr; }
+
+@media (max-width: 980px) {
+  .my-dates-form { grid-template-columns: 1fr 1fr; }
+  .my-dates-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 640px) {
+  .my-dates { padding: 16px 14px; }
+  .my-dates-heading { flex-direction: column; align-items: stretch; }
+  .my-dates-heading h3 { font-size: 23px; }
+  .my-dates-add { justify-content: center; }
+  .my-dates-form { grid-template-columns: 1fr; }
+  .my-dates-form-actions > button { flex: 1; justify-content: center; }
+  .my-dates-grid { grid-template-columns: 1fr; }
+}

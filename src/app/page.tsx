@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import { AFFILIATE_LINKS, type FestivalId, type ShoppingLink } from "@/config/affiliates";
 import { SiteHeader } from "@/components/SiteHeader";
+import { MyDates } from "@/components/MyDates";
 import { ShareOptions } from "@/components/ShareOptions";
 import {
   FESTIVAL_INFO,
@@ -375,6 +376,7 @@ export default function Home() {
             </span>
           </p>
         </div>
+        <MyDates now={now} onToast={announceToast} />
         <div className="event-finder">
           <label className="event-search">
             <Search aria-hidden="true" />
