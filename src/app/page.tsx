@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import Link from "next/link";
 import {
   ArrowDownRight,
@@ -21,11 +21,17 @@ import {
   TreePine,
   WandSparkles,
 } from "lucide-react";
-import { AFFILIATE_LINKS, type FestivalId, type ShoppingLink } from "@/config/affiliates";
+import { AFFILIATE_LINKS, PERSONAL_SHOPPING_LINKS, type FestivalId, type ShoppingLink } from "@/config/affiliates";
 import { SiteHeader } from "@/components/SiteHeader";
 import { CountdownTimer } from "@/components/CountdownTimer";
-import { MyDates } from "@/components/MyDates";
-import { ShareOptions } from "@/components/ShareOptions";
+import { MyDates, PERSONAL_KIND_STYLE } from "@/components/MyDates";
+import {
+  PERSONAL_DATE_KINDS,
+  loadPersonalDates,
+  nextPersonalDate,
+  type PersonalDate,
+} from "@/lib/personal-dates";
+import { ShareButton } from "@/components/ShareButton";
 import {
   FESTIVAL_INFO,
   festivalPath,
@@ -95,7 +101,11 @@ function Icon({ icon }: { icon: Festival["icon"] }) {
   return <span className="flag-mark" aria-hidden="true">✳</span>;
 }
 
+// Ad placeholders stay hidden until real ads are set up, so the page is not cluttered with empty boxes.
+const SHOW_AD_SLOTS = process.env.NEXT_PUBLIC_SHOW_AD_SLOTS === "true";
+
 function AdSlot({ square = false }: { square?: boolean }) {
+  if (!SHOW_AD_SLOTS) return null;
   return (
     <aside
       aria-label="Advertisement"
@@ -122,7 +132,6 @@ function CountdownCard({ event, now, calendarDates, isFavorite, isShoppingEvent,
     <article className={`event-card event-card-${event.theme}`}>
       <div className="event-card-topline">
         <span className="event-icon"><Icon icon={event.icon} /></span>
-        <span className="event-kicker">A moment to look forward to</span>
       </div>
       <div className="event-heading-row">
         <div>
@@ -162,25 +171,48 @@ function CountdownCard({ event, now, calendarDates, isFavorite, isShoppingEvent,
       </div>
       <CountdownTimer target={target} label={`Time until ${event.name}`} />
       <div className="event-actions">
-        <ShareOptions
-          message={`Counting down to ${event.name} on ${eventDateLabel(target ?? Date.now())}!`}
-          onShared={() => announceToast(`${event.name} message copied and ready to share.`)}
-        />
-        <Link className="write-quote-link" href={`/calendar?event=${encodeURIComponent(event.name)}#quote-studio`}>
-          <WandSparkles aria-hidden="true" />
-          Write a quote for {event.name}
-        </Link>
+        <div className="card-action-row">
+          <ShareButton
+            message={`Counting down to ${event.name} on ${eventDateLabel(target)}!`}
+            onShared={() => announceToast(`${event.name} message ready to share.`)}
+          />
+          <Link className="write-quote-link" href={`/calendar?event=${encodeURIComponent(event.name)}#quote-studio`}>
+            <WandSparkles aria-hidden="true" />
+            Write a wish
+          </Link>
+        </div>
       </div>
     </article>
   );
 }
 
-function ShoppingSidebar({ event, onEventChange }: {
-  event: Festival;
-  onEventChange: (id: FestivalId) => void;
+type ShopTarget = { key: string; name: string; subtitle: string; theme: string; icon: ReactNode; links: ShoppingLink[] };
+
+function festivalTarget(event: Festival): ShopTarget {
+  return { key: event.id, name: event.name, subtitle: event.subtitle, theme: event.theme, icon: <Icon icon={event.icon} />, links: event.shoppingLinks };
+}
+
+function personalTarget(date: PersonalDate, now: number): ShopTarget {
+  const { theme, icon: KindIcon } = PERSONAL_KIND_STYLE[date.kind];
+  const kindLabel = PERSONAL_DATE_KINDS.find((kind) => kind.id === date.kind)?.label ?? "";
+  return {
+    key: `my:${date.id}`,
+    name: date.name,
+    subtitle: `${kindLabel} · ${eventDateLabel(nextPersonalDate(date, now))}`,
+    theme,
+    icon: <KindIcon aria-hidden="true" />,
+    links: PERSONAL_SHOPPING_LINKS[date.kind],
+  };
+}
+
+function ShoppingSidebar({ target, festivals, personal, onChange }: {
+  target: ShopTarget;
+  festivals: ShopTarget[];
+  personal: ShopTarget[];
+  onChange: (key: string) => void;
 }) {
   return (
-    <aside className={`shopping-sidebar event-card-${event.theme}`} aria-label="Shopping links for selected celebration">
+    <aside className={`shopping-sidebar event-card-${target.theme}`} aria-label="Shopping links for selected celebration">
       <div className="shopping-sidebar-heading">
         <span className="eyebrow"><span className="eyebrow-line" /> CELEBRATION EDIT</span>
         <h3>Shop the moment.</h3>
@@ -188,16 +220,23 @@ function ShoppingSidebar({ event, onEventChange }: {
       </div>
       <label className="shopping-event-picker">
         <span>Choose an event</span>
-        <select value={event.id} onChange={(changeEvent) => onEventChange(changeEvent.target.value as FestivalId)}>
-          {FESTIVALS.map((festival) => <option key={festival.id} value={festival.id}>{festival.name}</option>)}
+        <select value={target.key} onChange={(changeEvent) => onChange(changeEvent.target.value)}>
+          {personal.length > 0 ? (
+            <optgroup label="My dates">
+              {personal.map((option) => <option key={option.key} value={option.key}>{option.name}</option>)}
+            </optgroup>
+          ) : null}
+          <optgroup label="Festivals">
+            {festivals.map((option) => <option key={option.key} value={option.key}>{option.name}</option>)}
+          </optgroup>
         </select>
       </label>
       <div className="shopping-sidebar-event">
-        <span className="event-icon"><Icon icon={event.icon} /></span>
-        <span><b>{event.name}</b><small>{event.subtitle}</small></span>
+        <span className="event-icon">{target.icon}</span>
+        <span><b>{target.name}</b><small>{target.subtitle}</small></span>
       </div>
-      <nav className="shopping-retailer-list" aria-label={`Stores for ${event.name}`}>
-        {event.shoppingLinks.map((link) => (
+      <nav className="shopping-retailer-list" aria-label={`Stores for ${target.name}`}>
+        {target.links.map((link) => (
           <a
             className={`shopping-retailer marketplace-${link.id}`}
             href={link.href}
@@ -209,7 +248,7 @@ function ShoppingSidebar({ event, onEventChange }: {
           </a>
         ))}
       </nav>
-      <p className="shopping-sidebar-note">Searches are tailored for {event.name}.</p>
+      <p className="shopping-sidebar-note">Searches are tailored for {target.name}.</p>
     </aside>
   );
 }
@@ -243,7 +282,12 @@ export default function Home() {
   const [favoriteIds, setFavoriteIds] = useState<FestivalId[]>([]);
   const [showFavorites, setShowFavorites] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [shoppingEventId, setShoppingEventId] = useState<FestivalId | null>(null);
+  const [shoppingKey, setShoppingKey] = useState<string | null>(null);
+  const [personalDates, setPersonalDates] = useState<PersonalDate[]>([]);
+
+  useEffect(() => {
+    setPersonalDates(loadPersonalDates());
+  }, []);
   const [showAllEvents, setShowAllEvents] = useState(false);
 
   useEffect(() => {
@@ -303,7 +347,14 @@ export default function Home() {
     return hasNextDate && matchesSearch && (!showFavorites || favoriteIds.includes(event.id));
   });
   const visibleEvents = matchingEvents.toSorted((first, second) => nextEventTimestamp(first, now, calendarDates) - nextEventTimestamp(second, now, calendarDates));
-  const shoppingEvent = FESTIVALS.find((event) => event.id === shoppingEventId) ?? visibleEvents[0] ?? FESTIVALS[0];
+  const festivalTargets = FESTIVALS
+    .toSorted((first, second) => nextEventTimestamp(first, now, calendarDates) - nextEventTimestamp(second, now, calendarDates))
+    .map(festivalTarget);
+  const personalTargets = personalDates
+    .toSorted((first, second) => nextPersonalDate(first, now) - nextPersonalDate(second, now))
+    .map((date) => personalTarget(date, now));
+  const shoppingTarget = [...personalTargets, ...festivalTargets].find((target) => target.key === shoppingKey)
+    ?? festivalTargets.find((target) => target.key === (visibleEvents[0] ?? FESTIVALS[0]).id)!;
   const isFiltering = showFavorites || searchQuery.trim() !== "";
   const shownEvents = showAllEvents || isFiltering ? visibleEvents : visibleEvents.slice(0, HOME_EVENT_LIMIT);
   const countdownItems = shownEvents.flatMap((event, index) => [
@@ -313,8 +364,8 @@ export default function Home() {
       now={now}
       calendarDates={calendarDates}
       isFavorite={favoriteIds.includes(event.id)}
-      isShoppingEvent={shoppingEvent.id === event.id}
-      onSelectShop={setShoppingEventId}
+      isShoppingEvent={shoppingTarget.key === event.id}
+      onSelectShop={setShoppingKey}
       onToggleFavorite={(id) => {
         const next = favoriteIds.includes(id) ? favoriteIds.filter((favoriteId) => favoriteId !== id) : [...favoriteIds, id];
         setFavoriteIds(next);
@@ -325,12 +376,12 @@ export default function Home() {
         }
       }}
     />,
-    ...((index + 1) % 2 === 0 && index < shownEvents.length - 1 ? [<AdSlot key={`ad-${index}`} square />] : []),
+    ...(SHOW_AD_SLOTS && (index + 1) % 2 === 0 && index < shownEvents.length - 1 ? [<AdSlot key={`ad-${index}`} square />] : []),
   ]);
 
   return (
     <main>
-      <div className="top-ad-wrap"><AdSlot /></div>
+      {SHOW_AD_SLOTS ? <div className="top-ad-wrap"><AdSlot /></div> : null}
       <SiteHeader active="countdown" />
 
       <section className="intro" id="home">
@@ -357,14 +408,10 @@ export default function Home() {
           </div>
           <p className="section-side-note">
             <span className={`live-dot ${calendarStatus === "fallback" ? "live-dot-muted" : ""}`} />
-            <span>
-              Countdown updates every second<br />
-              {calendarStatus === "synced" ? "Festival dates sync every 6 hours" : calendarStatus === "syncing" ? "Checking public festival calendars" : "Calendar unavailable · showing saved dates"}<br />
-              All countdowns use India time
-            </span>
+            <span>Live countdowns · India time</span>
           </p>
         </div>
-        <MyDates now={now} onToast={announceToast} />
+        <MyDates dates={personalDates} onChange={setPersonalDates} now={now} onToast={announceToast} />
         <div className="event-finder">
           <label className="event-search">
             <Search aria-hidden="true" />
@@ -399,7 +446,7 @@ export default function Home() {
                 </button>
               ) : null}
             </div>
-            <ShoppingSidebar event={shoppingEvent} onEventChange={setShoppingEventId} />
+            <ShoppingSidebar target={shoppingTarget} festivals={festivalTargets} personal={personalTargets} onChange={setShoppingKey} />
           </div>
         ) : (
           <div className="events-empty">

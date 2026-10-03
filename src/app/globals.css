@@ -576,3 +576,27 @@ button.month-day:hover, a.month-day:hover { background: #ece9df; }
 .app-install-share { width: 100%; margin-top: 18px; padding-top: 24px; border-top: 1px solid var(--line); }
 .app-install-share h2 { margin: 0 0 6px; font-family: var(--serif); font-size: 24px; font-weight: 600; }
 .app-install-share p { margin: 0 0 14px; color: var(--muted); font-size: 15px; }
+
+/* One Share button next to Write a wish keeps each card short. */
+.card-action-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.card-action-row .write-quote-link { min-height: 44px; padding: 0 6px; font-size: 15px; }
+.share-button { display: inline-flex; min-height: 44px; align-items: center; justify-content: center; gap: 7px; border: 1px solid #b9cdb9; background: #eef4ec; color: #2f6b43; cursor: pointer; font-size: 15px; font-weight: 700; }
+.share-button:hover { background: #e1ecdf; }
+.share-button svg { width: 17px; height: 17px; }
+.share-button-options { grid-column: 1 / -1; order: 3; }
+
+/* Readability: nothing on the page smaller than 13px. */
+.eyebrow, .section-heading .eyebrow, .closing-note .eyebrow, .shopping-sidebar-heading .eyebrow { font-size: 13px; }
+.header-date { font-size: 13px; }
+.intro-description { max-width: 440px; font-size: 16px; }
+.intro-link { font-size: 15px; }
+.art-caption, .intro-footnote { font-size: 13px; }
+.event-kicker, .event-date-note { font-size: 13px; }
+.event-subtitle { font-size: 15px; }
+.event-date-line { font-size: 15px; }
+.timer-label { font-size: 13px; }
+.event-filter-group button, .open-calendar-link, .event-finder-note { font-size: 14px; }
+.section-side-note { font-size: 14px; }
+.closing-copy { font-size: 15px; }
+.site-footer > p, .back-to-top { font-size: 14px; }
+.event-filter-group button span { font-size: 13px; }

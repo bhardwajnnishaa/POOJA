@@ -1,19 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { Cake, CalendarHeart, Gift, HeartHandshake, Plus, Trash2, WandSparkles, X } from "lucide-react";
 import { retailerSearch } from "@/config/affiliates";
 import { BUDGETS, PERSONAL_GIFT_IDEAS } from "@/config/gift-ideas";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { GiftIdeas } from "@/components/GiftIdeas";
-import { ShareOptions } from "@/components/ShareOptions";
+import { ShareButton } from "@/components/ShareButton";
 import {
   MAX_NAME_LENGTH,
   MAX_PERSONAL_DATES,
   PERSONAL_DATE_KINDS,
   isPersonalDateToday,
-  loadPersonalDates,
   nextPersonalDate,
   savePersonalDates,
   type PersonalDate,
@@ -21,7 +20,7 @@ import {
 } from "@/lib/personal-dates";
 
 const DATE_LABEL = new Intl.DateTimeFormat("en-IN", { weekday: "short", day: "numeric", month: "long", year: "numeric", timeZone: "Asia/Kolkata" });
-const KIND_STYLE: Record<PersonalDateKind, { theme: string; icon: typeof Cake }> = {
+export const PERSONAL_KIND_STYLE: Record<PersonalDateKind, { theme: string; icon: typeof Cake }> = {
   birthday: { theme: "coral", icon: Cake },
   anniversary: { theme: "rose", icon: HeartHandshake },
   other: { theme: "blue", icon: CalendarHeart },
@@ -45,7 +44,7 @@ function MyDateCard({ date, now, onDelete, onShared }: {
   onShared: () => void;
 }) {
   const [showGifts, setShowGifts] = useState(false);
-  const { theme, icon: Icon } = KIND_STYLE[date.kind];
+  const { theme, icon: Icon } = PERSONAL_KIND_STYLE[date.kind];
   const target = nextPersonalDate(date, now);
   const isToday = isPersonalDateToday(date, now);
   const kindLabel = PERSONAL_DATE_KINDS.find((kind) => kind.id === date.kind)?.label ?? "";
@@ -76,29 +75,31 @@ function MyDateCard({ date, now, onDelete, onShared }: {
           <Gift aria-hidden="true" /> {showGifts ? "Hide gift ideas" : "Gift ideas"}
         </button>
         {showGifts ? <GiftIdeas festivalName={date.name} budgets={giftBudgets(date.kind)} /> : null}
-        <ShareOptions message={isToday ? `Today is ${date.name}! 🎉` : `Counting down to ${date.name} on ${DATE_LABEL.format(target)}!`} onShared={onShared} />
-        <Link className="write-quote-link" href={`/calendar?event=${encodeURIComponent(date.name)}#quote-studio`}>
-          <WandSparkles aria-hidden="true" /> Write a wish
-        </Link>
+        <div className="card-action-row">
+          <ShareButton message={isToday ? `Today is ${date.name}! 🎉` : `Counting down to ${date.name} on ${DATE_LABEL.format(target)}!`} onShared={onShared} />
+          <Link className="write-quote-link" href={`/calendar?event=${encodeURIComponent(date.name)}#quote-studio`}>
+            <WandSparkles aria-hidden="true" /> Write a wish
+          </Link>
+        </div>
       </div>
     </article>
   );
 }
 
-export function MyDates({ now, onToast }: { now: number; onToast: (message: string) => void }) {
-  const [dates, setDates] = useState<PersonalDate[]>([]);
+export function MyDates({ dates, onChange, now, onToast }: {
+  dates: PersonalDate[];
+  onChange: (dates: PersonalDate[]) => void;
+  now: number;
+  onToast: (message: string) => void;
+}) {
   const [formOpen, setFormOpen] = useState(false);
   const [name, setName] = useState("");
   const [dateValue, setDateValue] = useState("");
   const [kind, setKind] = useState<PersonalDateKind>("birthday");
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    setDates(loadPersonalDates());
-  }, []);
-
   function update(next: PersonalDate[]) {
-    setDates(next);
+    onChange(next);
     if (!savePersonalDates(next)) onToast("Your browser blocked saving, so this date will be lost when you close the page.");
   }
 

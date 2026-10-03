@@ -1,4 +1,5 @@
 import type { FestivalId } from "@/types/calendar";
+import type { PersonalDateKind } from "@/lib/personal-dates";
 
 export type { FestivalId };
 
@@ -122,3 +123,28 @@ function linksForEvent(event: FestivalId): ShoppingLink[] {
 export const AFFILIATE_LINKS = Object.fromEntries(
   (Object.keys(SHOPPING_TERMS) as FestivalId[]).map((id) => [id, linksForEvent(id)]),
 ) as Record<FestivalId, ShoppingLink[]>;
+
+const PERSONAL_SHOPPING_TERMS: Record<PersonalDateKind, Record<RetailerId, string>> = {
+  birthday: {
+    amazon: "birthday gifts", myntra: "birthday gift", purplle: "birthday gift set",
+    nykaa: "birthday gift set", meesho: "birthday gifts", ajio: "birthday gift",
+    flipkart: "birthday gifts",
+  },
+  anniversary: {
+    amazon: "anniversary gifts for couple", myntra: "anniversary gift", purplle: "anniversary gift set",
+    nykaa: "anniversary gift set", meesho: "anniversary gifts", ajio: "anniversary gift",
+    flipkart: "anniversary gifts",
+  },
+  other: {
+    amazon: "gift ideas", myntra: "gifts", purplle: "gift set",
+    nykaa: "gift sets", meesho: "gifts", ajio: "gifts",
+    flipkart: "gifts",
+  },
+};
+
+export const PERSONAL_SHOPPING_LINKS = Object.fromEntries(
+  (Object.keys(PERSONAL_SHOPPING_TERMS) as PersonalDateKind[]).map((kind) => [
+    kind,
+    RETAILERS.map((retailer) => ({ id: retailer.id, label: retailer.label, href: retailer.search(PERSONAL_SHOPPING_TERMS[kind][retailer.id]) })),
+  ]),
+) as Record<PersonalDateKind, ShoppingLink[]>;
