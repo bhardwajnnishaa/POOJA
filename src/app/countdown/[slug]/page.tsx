@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowUpRight, ShoppingBag, Sparkles, WandSparkles } from "lucide-react";
+import { ArrowUpRight, ShoppingBag, WandSparkles } from "lucide-react";
 import { GiftIdeas } from "@/components/GiftIdeas";
 import { LiveCountdown } from "@/components/LiveCountdown";
 import { QuoteMaker } from "@/components/QuoteMaker";
@@ -22,6 +22,7 @@ import {
   type FestivalInfo,
 } from "@/lib/festivals";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
+import { BrandMark } from "@/components/BrandMark";
 
 export const revalidate = 21600;
 export const dynamicParams = false;
@@ -296,7 +297,7 @@ export default async function FestivalPage({ params }: PageProps) {
       </nav>
 
       <footer className="site-footer">
-        <Link className="brand footer-brand" href="/"><span className="brand-mark"><Sparkles aria-hidden="true" /></span><span>Festive <b>Clock</b></span></Link>
+        <Link className="brand footer-brand" href="/"><BrandMark /><span>Festive <b>Clock</b></span></Link>
         <p>Made for the moments that bring us together.</p>
         <Link href="/calendar" className="back-to-top">Festival calendar →</Link>
       </footer>
