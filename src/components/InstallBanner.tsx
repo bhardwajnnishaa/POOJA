@@ -41,7 +41,7 @@ export function InstallBanner() {
     <aside className="install-banner" aria-labelledby="install-banner-title">
       <button className="install-banner-close" type="button" aria-label="Close" onClick={dismiss}><X aria-hidden="true" /></button>
       <BrandMark />
-      <h2 id="install-banner-title" className="install-banner-title">Add to Home Screen</h2>
+      <h2 id="install-banner-title" className="install-banner-title">Add to <em>Home Screen</em></h2>
       <p className="install-banner-sub">Get Festive Clock on your phone like an app. Free, nothing to download from a store.</p>
       {canPrompt ? (
         <button className="install-banner-button" type="button" onClick={() => void promptInstall()}>
