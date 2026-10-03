@@ -130,16 +130,16 @@ a { color: inherit; text-decoration: none; }
 .shopping-retailer.marketplace-ajio { border-left-color: #485b72; color: #30445a; }
 .shopping-retailer.marketplace-flipkart { border-left-color: #4778bb; color: #285b9f; }
 .shopping-sidebar-note { margin: 12px 0 0; color: #5c665a; font-size: 13px; line-height: 1.5; }
-.share-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; width: 100%; }
-.share-option { display: inline-flex; min-width: 0; min-height: 36px; align-items: center; justify-content: center; gap: 6px; padding: 0 5px; border: 1px solid #d8d8cf; background: #fbfaf5; color: #34483a; font-size: 11px; font-weight: 700; white-space: nowrap; transition: background .2s ease, border-color .2s ease, transform .15s ease; }
+.share-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; width: 100%; }
+.share-option { display: inline-flex; min-width: 0; min-height: 42px; align-items: center; justify-content: center; gap: 5px; padding: 0 4px; border: 1px solid #d8d8cf; background: #fbfaf5; color: #34483a; font-size: 14px; font-weight: 700; white-space: nowrap; transition: background .2s ease, border-color .2s ease, transform .15s ease; }
 .share-option:hover { transform: translateY(-1px); background: #f0f3ec; }
-.share-option svg { width: 14px; height: 14px; flex: 0 0 auto; }
-.share-option-whatsapp { border-bottom: 2px solid #4e9364; }
-.share-option-facebook { border-bottom: 2px solid #5278b8; }
-.share-option-telegram { border-bottom: 2px solid #3997b9; }
-.write-quote-link { display: inline-flex; min-height: 36px; align-items: center; justify-content: center; gap: 8px; border: 1px solid #d7dfd1; background: #f6f7f0; color: #46624d; font-size: 12px; font-weight: 700; transition: background .2s ease; }
+.share-option svg { width: 16px; height: 16px; flex: 0 0 auto; }
+.share-option-whatsapp { border-bottom: 3px solid #4e9364; color: #2f6b43; }
+.share-option-facebook { border-bottom: 3px solid #5278b8; color: #34589a; }
+.share-option-telegram { border-bottom: 3px solid #3997b9; color: #23718f; }
+.write-quote-link { display: inline-flex; min-height: 42px; align-items: center; justify-content: center; gap: 8px; border: 1px solid #d7dfd1; background: #f6f7f0; color: #46624d; font-size: 14px; font-weight: 700; transition: background .2s ease; }
 .write-quote-link:hover { background: #e8eee4; }
-.write-quote-link svg { width: 13px; height: 13px; }
+.write-quote-link svg { width: 15px; height: 15px; }
 .ad-slot-square { min-height: 0; aspect-ratio: 1 / 1; flex-direction: column; gap: 9px; background-color: #f7f4ec; }
 .ad-slot-square .ad-slot-label { max-width: calc(100% - 24px); font-size: 11px; }
 .ad-slot-square .ad-slot-note { right: 0; bottom: 11px; left: 0; text-align: center; }
@@ -498,3 +498,10 @@ button.month-day:hover, a.month-day:hover { background: #ece9df; }
 .faq-list details[open] summary::after { content: "−"; }
 .faq-list summary:hover { color: #46624d; }
 .faq-list details p { margin: 0 2px 16px; color: #454f46; font-size: 14px; line-height: 1.7; }
+
+/* Cards are narrow next to the shop box: stack each share icon above its label. */
+.event-card .share-option, .quote-actions .share-option { flex-direction: column; gap: 3px; min-height: 54px; padding: 6px 2px; }
+
+@media (max-width: 1180px) and (min-width: 981px) {
+  .countdown-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
