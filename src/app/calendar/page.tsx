@@ -141,7 +141,9 @@ function MonthCard({
   );
 }
 
+// Hidden until real ads are set up, matching the home page.
 function AdBanner() {
+  if (process.env.NEXT_PUBLIC_SHOW_AD_SLOTS !== "true") return null;
   return (
     <div className="top-ad-wrap">
       <aside aria-label="Advertisement" className="ad-slot ad-slot-banner">

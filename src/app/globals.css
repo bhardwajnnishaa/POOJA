@@ -379,7 +379,7 @@ button.month-day:hover, a.month-day:hover { background: #ece9df; }
   .calendar-intro { width: calc(100% - 36px); padding: 34px 0 27px; }
   .calendar-intro-row { align-items: flex-start; gap: 10px; margin-top: 15px; }
   .calendar-intro h1 { font-size: 43px; }
-  .calendar-intro-row > div:first-child > p { max-width: 310px; margin-top: 9px; font-size: 12px; }
+  .calendar-intro-row > div:first-child > p { max-width: 310px; margin-top: 9px; font-size: 16px; }
   .calendar-year-stamp { min-width: 105px; padding-top: 5px; font-size: 11px; }
   .calendar-year-stamp strong { font-size: 24px; }
   .calendar-section { padding: 34px 18px 48px; }
@@ -614,3 +614,58 @@ button.month-day:hover, a.month-day:hover { background: #ece9df; }
 .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 26px; width: min(100% - 32px, 1240px); margin: 0 auto; padding: 14px 0 28px; border-top: 1px solid var(--line); }
 .footer-links a { color: #46624d; font-size: 14px; font-weight: 700; }
 .footer-links a:hover { text-decoration: underline; }
+
+/* ---------- Phone comfort: readable text and easy-to-tap controls ---------- */
+@media (max-width: 640px) {
+  body { font-size: 16px; }
+
+  /* Small labels: never below 14px. */
+  .eyebrow, .section-heading .eyebrow, .closing-note .eyebrow, .shopping-sidebar-heading .eyebrow,
+  .timer-label, .event-kicker, .event-date-note, .header-date, .art-caption, .intro-footnote,
+  .month-card-kicker, .calendar-sync-state, .quote-ai-note, .quote-attribution,
+  .calendar-legend span, .festival-dates th, label small, .event-filter-group button span, .month-weekdays { font-size: 14px; }
+
+  /* Reading text: 16px. */
+  .intro-description, .event-subtitle, .event-date-line, .closing-copy, .site-footer > p,
+  .gift-disclosure, .gift-order-note, .gift-pair-note, .gift-card p, .shopping-sidebar-note,
+  .app-install-note, .calendar-source-note, .month-empty, .event-finder-note, .section-side-note,
+  .festival-details p, .faq-list details p, .festival-dates td, .my-dates-heading p,
+  .shopping-sidebar-heading > p, .shopping-sidebar-event small, .quote-intro p { font-size: 16px; }
+  .shopping-sidebar-event b, .faq-list summary, .gift-card h4 { font-size: 17px; }
+
+  /* Bigger countdown and headings. */
+  .timer-value { font-size: 30px; }
+  .event-heading-row h3 { font-size: 26px; }
+
+  /* Every button and link: 16px text and at least 44px tall. */
+  .write-quote-link, .share-button, .share-option, .quote-copy, .quote-edit-button, .quote-another,
+  .quote-generate, .my-date-gifts-toggle, .show-all-events, .open-calendar-link, .event-filter-group button,
+  .back-to-top, .app-install-open, .intro-link, .gift-card a, .my-dates-cancel, .festival-more a {
+    min-height: 44px; font-size: 16px;
+  }
+  .back-to-top, .app-install-open, .intro-link, .gift-card a { display: inline-flex; align-items: center; }
+  .card-action-row .write-quote-link, .share-button { font-size: 16px; }
+  .share-option { font-size: 15px; }
+  .footer-links a { display: inline-flex; min-height: 44px; align-items: center; font-size: 16px; }
+
+  /* Icon buttons on cards: full 44px touch area. */
+  .favorite-toggle, .shop-event-button, .my-date-delete { width: 44px; height: 44px; }
+  .favorite-toggle svg, .shop-event-button svg, .my-date-delete svg { width: 20px; height: 20px; }
+  .event-card-controls { gap: 2px; }
+
+  /* Inputs at 16px so iPhones do not zoom in when tapped. */
+  input, select, textarea { font-size: 16px !important; }
+  .event-search { min-height: 48px; }
+  .event-search input { min-height: 44px; }
+  .my-dates-form input, .my-dates-form select, .gift-budget-picker select, .shopping-event-picker select { min-height: 48px; }
+
+  .contact-email a { display: inline-block; padding: 8px 0; }
+
+  /* Calendar, festival page and quote maker labels with more specific rules. */
+  main .calendar-intro > .eyebrow, main .calendar-heading-row .eyebrow, main .calendar-year-stamp span,
+  main .festival-timer .timer-label, main .quote-field small { font-size: 14px; }
+  main .calendar-intro-row p, main .festival-shop-heading p, main .quote-emoji-toggle span,
+  main .festival-wishes-heading p { font-size: 16px; }
+  .header-date { font-size: 14px; }
+  .nav-link { min-height: 44px; }
+}
