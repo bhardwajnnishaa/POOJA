@@ -6,6 +6,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { getCalendarData, type CalendarData } from "@/lib/calendar-data";
 import type { CalendarEntry } from "@/types/calendar";
 import { BrandMark } from "@/components/BrandMark";
+import { FooterLinks } from "@/components/FooterLinks";
 
 export const dynamic = "force-dynamic";
 
@@ -227,6 +228,7 @@ export default async function CalendarPage({
         <p><Clock3 aria-hidden="true" /> India Standard Time · Updated every six hours</p>
         <a href="#month-calendar" className="back-to-top"><ArrowDownRight aria-hidden="true" /> Back to months</a>
       </footer>
+      <FooterLinks />
     </main>
   );
 }

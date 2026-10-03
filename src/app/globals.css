@@ -600,3 +600,17 @@ button.month-day:hover, a.month-day:hover { background: #ece9df; }
 .closing-copy { font-size: 15px; }
 .site-footer > p, .back-to-top { font-size: 14px; }
 .event-filter-group button span { font-size: 13px; }
+
+.info-page { width: min(100% - 32px, 760px); margin: 0 auto; padding: 44px 0 56px; }
+.info-page h1 { margin: 0 0 12px; font-family: var(--serif); font-size: clamp(32px, 6vw, 44px); font-weight: 600; line-height: 1.15; }
+.info-page-intro { margin: 0 0 24px; color: var(--muted); font-size: 18px; line-height: 1.6; }
+.info-page h2 { margin: 30px 0 10px; font-family: var(--serif); font-size: 24px; font-weight: 600; }
+.info-page p, .info-page li { color: #3d473f; font-size: 16px; line-height: 1.75; }
+.info-page p { margin: 0 0 10px; }
+.info-page ul { margin: 0 0 10px; padding-left: 22px; list-style: disc; }
+.info-page li::marker { color: var(--saffron); }
+.info-page a { color: #b5651f; font-weight: 700; text-decoration: underline; }
+.contact-email { padding: 16px 18px; border: 1px solid var(--line); border-left: 4px solid var(--saffron); background: #fcfaf5; font-size: 18px !important; }
+.footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 26px; width: min(100% - 32px, 1240px); margin: 0 auto; padding: 14px 0 28px; border-top: 1px solid var(--line); }
+.footer-links a { color: #46624d; font-size: 14px; font-weight: 700; }
+.footer-links a:hover { text-decoration: underline; }

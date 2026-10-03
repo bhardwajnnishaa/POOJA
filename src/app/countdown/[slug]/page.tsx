@@ -23,6 +23,7 @@ import {
 } from "@/lib/festivals";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import { BrandMark } from "@/components/BrandMark";
+import { FooterLinks } from "@/components/FooterLinks";
 
 export const revalidate = 21600;
 export const dynamicParams = false;
@@ -301,6 +302,7 @@ export default async function FestivalPage({ params }: PageProps) {
         <p>Made for the moments that bring us together.</p>
         <Link href="/calendar" className="back-to-top">Festival calendar →</Link>
       </footer>
+      <FooterLinks />
     </main>
   );
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { AppInstallPanel } from "@/components/AppInstallPanel";
 import { BrandMark } from "@/components/BrandMark";
+import { FooterLinks } from "@/components/FooterLinks";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SITE_NAME } from "@/lib/site";
 
@@ -30,6 +31,7 @@ export default function AppPage() {
         </ul>
         <AppInstallPanel />
       </section>
+      <FooterLinks />
     </main>
   );
 }
