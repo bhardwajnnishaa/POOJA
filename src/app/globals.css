@@ -741,3 +741,13 @@ button.month-day:hover, a.month-day:hover { background: #ece9df; }
   .nav-link { min-height: 68px; font-size: 27px; }
   .nav-link + .nav-link { border-left: 1px solid var(--line); }
 }
+
+/* Add my date: larger, in the headline font, matching the main menu. */
+.my-dates-heading h3 { font-size: 32px; }
+.my-dates-add { min-height: 58px; padding: 0 26px; border-radius: 10px; font-family: var(--serif); font-size: 24px; font-weight: 600; letter-spacing: 0; }
+.my-dates-add svg { width: 24px; height: 24px; }
+
+@media (max-width: 640px) {
+  .my-dates-heading h3 { font-size: 30px; }
+  .my-dates-add { min-height: 60px; font-size: 25px; }
+}
