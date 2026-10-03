@@ -718,3 +718,15 @@ button.month-day:hover, a.month-day:hover { background: #ece9df; }
   .install-banner-button { width: 100%; }
   .app-features { grid-template-columns: 1fr; }
 }
+
+/* Main menu: Countdowns and Calendar in the headline style, large and clear. */
+.site-header nav { gap: 40px; }
+.nav-link { color: #4f5a4f; font-family: var(--serif); font-size: 24px; font-weight: 600; letter-spacing: 0; }
+.nav-link-active { color: #c4651f; }
+.nav-link-active::after { height: 4px; border-radius: 2px; }
+
+@media (max-width: 640px) {
+  .site-header { grid-template-rows: 48px 58px; height: 106px; }
+  .site-header nav { gap: 0; height: 58px; }
+  .nav-link { flex: 1; justify-content: center; min-height: 58px; font-size: 22px; }
+}
