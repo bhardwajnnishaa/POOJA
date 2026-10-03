@@ -5,6 +5,7 @@ import { ArrowUpRight, ShoppingBag, WandSparkles } from "lucide-react";
 import { GiftIdeas } from "@/components/GiftIdeas";
 import { LiveCountdown } from "@/components/LiveCountdown";
 import { QuoteMaker } from "@/components/QuoteMaker";
+import { ShareButton } from "@/components/ShareButton";
 import { ShareOptions } from "@/components/ShareOptions";
 import { SiteHeader } from "@/components/SiteHeader";
 import { AFFILIATE_LINKS, retailerSearch } from "@/config/affiliates";
@@ -194,7 +195,14 @@ export default async function FestivalPage({ params }: PageProps) {
           <p className="festival-date">The {festival.name} {year} date will be added here soon.</p>
         )}
         <div className="festival-share">
-          <ShareOptions message={dateKnown ? `Counting down to ${festival.name} on ${dateLabel}!` : `Getting ready for ${festival.name} ${year}!`} />
+          {dateKnown ? (
+            <ShareButton
+              message={`${festival.emoji} ${festival.name} ${year} is on ${dateLabel}! Who's ready? Counting down on Festive Clock 👇`}
+              story={{ title: festival.name, emoji: festival.emoji, target, dateLabel }}
+            />
+          ) : (
+            <ShareOptions message={`Getting ready for ${festival.name} ${year}! ${festival.emoji}`} />
+          )}
         </div>
         <a className="write-quote-link festival-quote-link" href="#quote-studio">
           <WandSparkles aria-hidden="true" />
@@ -207,7 +215,7 @@ export default async function FestivalPage({ params }: PageProps) {
           <span className="event-icon"><ShoppingBag aria-hidden="true" /></span>
           <div>
             <h2 id="festival-shop-heading">{festival.name} gift ideas</h2>
-            <p>Ready-made ideas by budget, so you spend less time searching.</p>
+            <p>Gift ideas for every budget. Zero stress 🎁</p>
           </div>
         </div>
         {dateKnown && orderBy > Date.now() ? (
@@ -281,7 +289,7 @@ export default async function FestivalPage({ params }: PageProps) {
 
       <div className="festival-wishes-heading">
         <h2>{festival.name} wishes and quotes</h2>
-        <p>Write a {festival.name} wish in English, Hindi or Hinglish, then share it on WhatsApp.</p>
+        <p>Wishes in English, Hindi or Hinglish. Copy, share, done ✅</p>
       </div>
       <QuoteMaker selectedEvent={festival.name} />
 
@@ -299,7 +307,7 @@ export default async function FestivalPage({ params }: PageProps) {
 
       <footer className="site-footer">
         <Link className="brand footer-brand" href="/"><BrandMark /><span>Festive <b>Clock</b></span></Link>
-        <p>Made for the moments that bring us together.</p>
+        <p>Made with 💛 for every celebration.</p>
         <Link href="/calendar" className="back-to-top">Festival calendar →</Link>
       </footer>
       <FooterLinks />

@@ -20,6 +20,8 @@ import {
 } from "@/lib/personal-dates";
 
 const DATE_LABEL = new Intl.DateTimeFormat("en-IN", { weekday: "short", day: "numeric", month: "long", year: "numeric", timeZone: "Asia/Kolkata" });
+const KIND_EMOJI: Record<PersonalDateKind, string> = { birthday: "🎂", anniversary: "💞", other: "📅" };
+
 export const PERSONAL_KIND_STYLE: Record<PersonalDateKind, { theme: string; icon: typeof Cake }> = {
   birthday: { theme: "coral", icon: Cake },
   anniversary: { theme: "rose", icon: HeartHandshake },
@@ -76,7 +78,11 @@ function MyDateCard({ date, now, onDelete, onShared }: {
         </button>
         {showGifts ? <GiftIdeas festivalName={date.name} budgets={giftBudgets(date.kind)} /> : null}
         <div className="card-action-row">
-          <ShareButton message={isToday ? `Today is ${date.name}! 🎉` : `Counting down to ${date.name} on ${DATE_LABEL.format(target)}!`} onShared={onShared} />
+          <ShareButton
+            message={isToday ? `Today is ${date.name}! ${KIND_EMOJI[date.kind]}🎉` : `${KIND_EMOJI[date.kind]} ${date.name} is on ${DATE_LABEL.format(target)}! Counting down 👇`}
+            onShared={onShared}
+            story={{ title: date.name, emoji: KIND_EMOJI[date.kind], target: isToday ? now : target, dateLabel: DATE_LABEL.format(isToday ? now : target) }}
+          />
           <Link className="write-quote-link" href={`/calendar?event=${encodeURIComponent(date.name)}#quote-studio`}>
             <WandSparkles aria-hidden="true" /> Write a wish
           </Link>
@@ -133,7 +139,7 @@ export function MyDates({ dates, onChange, now, onToast }: {
       <div className="my-dates-heading">
         <div>
           <h3 id="my-dates-heading">My dates</h3>
-          <p>Birthdays, anniversaries and your own special days. Saved only on this device.</p>
+          <p>Bday, anniversary or any day that matters 💛 Saved only on your phone.</p>
         </div>
         {!formOpen ? (
           <button className="my-dates-add" type="button" onClick={() => setFormOpen(true)}>

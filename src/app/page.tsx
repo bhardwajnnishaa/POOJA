@@ -65,6 +65,15 @@ function eventDateLabel(timestamp: number) {
   return INDIA_DATE_FORMATTER.format(timestamp);
 }
 
+// A short, playful status for each countdown card.
+function vibeLabel(remainingMs: number) {
+  const days = remainingMs / (24 * 60 * 60 * 1000);
+  if (days <= 1) return "It's almost here! 🔥";
+  if (days <= 7) return "This week! 🔥";
+  if (days <= 30) return "Loading… ⏳";
+  return "Save the date 📌";
+}
+
 function announceToast(message: string) {
   window.dispatchEvent(new CustomEvent("portal-toast", { detail: message }));
 }
@@ -166,6 +175,7 @@ function CountdownCard({ event, now, calendarDates, isFavorite, isShoppingEvent,
           </span>
         </div>
       </div>
+      <span className="vibe-pill">{vibeLabel(target - now)}</span>
       <div className="event-date-line" suppressHydrationWarning>
         <span className="live-dot" />
         {eventDateLabel(target)}
@@ -175,8 +185,9 @@ function CountdownCard({ event, now, calendarDates, isFavorite, isShoppingEvent,
       <div className="event-actions">
         <div className="card-action-row">
           <ShareButton
-            message={`Counting down to ${event.name} on ${eventDateLabel(target)}!`}
-            onShared={() => announceToast(`${event.name} message ready to share.`)}
+            message={`${event.emoji} ${event.name} is coming on ${eventDateLabel(target)}! Who's ready? Counting down on Festive Clock 👇`}
+            onShared={() => announceToast(`${event.name} ready to share.`)}
+            story={{ title: event.name, emoji: event.emoji, target, dateLabel: eventDateLabel(target) }}
           />
           <Link className="write-quote-link" href={`/calendar?event=${encodeURIComponent(event.name)}#quote-studio`}>
             <WandSparkles aria-hidden="true" />
@@ -217,8 +228,8 @@ function ShoppingSidebar({ target, festivals, personal, onChange }: {
     <aside className={`shopping-sidebar event-card-${target.theme}`} aria-label="Shopping links for selected celebration">
       <div className="shopping-sidebar-heading">
         <span className="eyebrow"><span className="eyebrow-line" /> CELEBRATION EDIT</span>
-        <h3>Shop the moment.</h3>
-        <p>Thoughtful finds for the celebration ahead.</p>
+        <h3>Shop the vibe ✨</h3>
+        <p>Gifts sorted. Zero overthinking. 🎁</p>
       </div>
       <label className="shopping-event-picker">
         <span>Choose an event</span>
@@ -250,7 +261,7 @@ function ShoppingSidebar({ target, festivals, personal, onChange }: {
           </a>
         ))}
       </nav>
-      <p className="shopping-sidebar-note">Searches are tailored for {target.name}.</p>
+      <p className="shopping-sidebar-note">Picked for {target.name} 💫</p>
     </aside>
   );
 }
@@ -391,7 +402,7 @@ export default function Home() {
         <div className="intro-copy">
           <div className="eyebrow"><span className="eyebrow-line" /> OUR YEAR, IN CELEBRATIONS</div>
           <h1>Good things<br />are <em>coming.</em></h1>
-          <p className="intro-description">From the first colour of Holi to the last diya at Diwali, keep every reason to celebrate a little closer.</p>
+          <p className="intro-description">Holi colours, Diwali diyas, your bestie&apos;s birthday 🎉 Every reason to celebrate, counting down live.</p>
           <a className="intro-link" href="#countdowns">See what&apos;s next <ArrowDownRight aria-hidden="true" /></a>
         </div>
         <div className="intro-art" role="img" aria-label="A warmly lit Indian festive night scene">
@@ -407,7 +418,7 @@ export default function Home() {
         <div className="section-heading">
           <div>
             <div className="eyebrow"><span className="eyebrow-line" /> THE COUNTDOWN IS ON</div>
-            <h2>What are we celebrating next?</h2>
+            <h2>What are we celebrating next? 🎉</h2>
           </div>
           <p className="section-side-note">
             <span className={`live-dot ${calendarStatus === "fallback" ? "live-dot-muted" : ""}`} />
@@ -466,12 +477,12 @@ export default function Home() {
       <section className="closing-note" id="about">
         <div className="closing-icon"><Sparkles aria-hidden="true" /></div>
         <div><p className="eyebrow">A LITTLE MORE JOY, A LITTLE MORE OFTEN</p><h2>Make room for the good stuff.</h2></div>
-        <p className="closing-copy">The best days are better when you have something to look forward to. Pick your next one and let the countdown begin.</p>
+        <p className="closing-copy">Life is better with something to look forward to. Pick your next one. Let the countdown begin ⏳</p>
       </section>
 
       <footer className="site-footer">
         <a className="brand footer-brand" href="#home"><BrandMark /><span>Festive <b>Clock</b></span></a>
-        <p>Made for the moments that bring us together.</p>
+        <p>Made with 💛 for every celebration.</p>
         <a href="#home" className="back-to-top">Back to top ↑</a>
       </footer>
       <FooterLinks />

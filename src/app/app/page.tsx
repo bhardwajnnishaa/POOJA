@@ -70,7 +70,7 @@ export default function AppPage() {
 
       <footer className="site-footer">
         <Link className="brand footer-brand" href="/"><BrandMark /><span>Festive <b>Clock</b></span></Link>
-        <p>Made for the moments that bring us together.</p>
+        <p>Made with 💛 for every celebration.</p>
         <Link href="/" className="back-to-top">Open Festive Clock →</Link>
       </footer>
       <FooterLinks />

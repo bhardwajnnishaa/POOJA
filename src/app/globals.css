@@ -751,3 +751,57 @@ button.month-day:hover, a.month-day:hover { background: #ece9df; }
   .my-dates-heading h3 { font-size: 30px; }
   .my-dates-add { min-height: 60px; font-size: 25px; }
 }
+
+/* Theme picker */
+.theme-picker { position: relative; display: inline-flex; }
+.theme-picker-button { display: grid; width: 44px; height: 44px; place-items: center; border: 1px solid var(--line); border-radius: 50%; background: transparent; color: var(--ink); cursor: pointer; }
+.theme-picker-button svg { width: 22px; height: 22px; }
+.theme-picker-menu { position: absolute; top: calc(100% + 8px); right: 0; z-index: 40; display: flex; flex-direction: column; width: 250px; padding: 6px; border: 1px solid var(--line); border-radius: 14px; background: #fffdf8; box-shadow: 0 12px 30px rgba(20, 12, 40, .18); }
+.theme-option { display: flex; min-height: 52px; align-items: center; gap: 12px; padding: 6px 10px; border: 0; border-radius: 10px; background: transparent; color: var(--ink); cursor: pointer; text-align: left; }
+.theme-option:hover, .theme-option[aria-checked="true"] { background: #f4efe4; }
+.theme-option > svg { width: 18px; height: 18px; margin-left: auto; color: #ff3d7f; }
+.theme-option-text { display: flex; flex-direction: column; }
+.theme-option-text b { font-size: 16px; }
+.theme-option-text small { color: var(--muted); font-size: 13px; }
+.theme-swatch { width: 30px; height: 30px; flex: 0 0 auto; border: 1px solid rgba(0, 0, 0, .12); border-radius: 50%; }
+.theme-option-auto .theme-swatch { background: linear-gradient(135deg, #fbf5e9 50%, #1b1435 50%); }
+.theme-option-classic .theme-swatch { background: linear-gradient(135deg, #fbf5e9, #d27833); }
+.theme-option-neon .theme-swatch { background: linear-gradient(135deg, #1b1435, #7b2ff7 60%, #3dffd0); }
+.theme-option-pastel .theme-swatch { background: linear-gradient(135deg, #ffd6e7, #e2d4ff 60%, #c9f7ec); }
+
+/* Fun status tag on countdown cards */
+.vibe-pill { display: inline-flex; align-self: flex-start; margin-top: 10px; padding: 4px 12px; border-radius: 999px; background: linear-gradient(90deg, #ff3d7f, #ff7a3d); color: #fff; font-size: 13px; font-weight: 700; }
+
+/* Share sheet with the Story card */
+.share-sheet-backdrop { position: fixed; inset: 0; z-index: 100; display: flex; align-items: flex-end; justify-content: center; background: rgba(15, 8, 30, .55); }
+.share-sheet { display: flex; width: min(100%, 460px); max-height: 92vh; flex-direction: column; gap: 12px; overflow-y: auto; padding: 18px 18px 22px; border-radius: 22px 22px 0 0; background: #fffdf8; color: var(--ink); }
+.share-sheet-head { display: flex; align-items: center; justify-content: space-between; }
+.share-sheet-head h2 { margin: 0; font-family: var(--serif); font-size: 26px; font-weight: 600; }
+.share-sheet-close { display: grid; width: 44px; height: 44px; place-items: center; border: 0; background: transparent; color: var(--ink); cursor: pointer; }
+.share-sheet-close svg { width: 22px; height: 22px; }
+.share-sheet-preview { display: grid; min-height: 240px; place-items: center; }
+.share-sheet-preview img { display: block; width: auto; max-width: 100%; max-height: 46vh; border-radius: 14px; box-shadow: 0 10px 26px rgba(20, 12, 40, .25); }
+.share-sheet-preview span { color: var(--muted); font-size: 16px; }
+.share-sheet-hint { margin: 0; color: var(--muted); font-size: 15px; text-align: center; }
+.share-sheet-actions { display: grid; gap: 10px; }
+.share-sheet-primary, .share-sheet-secondary { display: inline-flex; min-height: 52px; align-items: center; justify-content: center; gap: 9px; border-radius: 12px; cursor: pointer; font-size: 17px; font-weight: 700; }
+.share-sheet-primary { border: 0; background: linear-gradient(90deg, #ff3d7f, #ff7a3d); color: #fff; }
+.share-sheet-secondary { border: 1px solid var(--line); background: transparent; color: var(--ink); }
+.share-sheet-primary svg, .share-sheet-secondary svg { width: 20px; height: 20px; }
+@media (min-width: 641px) {
+  .share-sheet-backdrop { align-items: center; }
+  .share-sheet { border-radius: 22px; }
+}
+
+.festival-share .share-button { min-width: 220px; padding: 0 22px; }
+
+@media (max-width: 640px) {
+  /* The home banner and footer link offer Add to Home Screen; keep the phone header for the theme button. */
+  .site-header .install-app { display: none; }
+  .header-end .header-date { display: none; }
+}
+
+/* Orange buttons: a deeper orange so white text stays readable in every theme. */
+.install-banner-button, .my-dates-add, .my-dates-save, .install-app-button, .app-install-button { background: #c4581a; }
+.install-banner-button:hover, .my-dates-add:hover, .my-dates-save:hover, .install-app-button:hover, .app-install-button:hover { background: #a94a14; }
+.install-step-icon.install-step-done { background: #c4581a; color: #fff; }
