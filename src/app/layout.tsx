@@ -1,9 +1,14 @@
 import type { Metadata, Viewport } from "next";
+import { DM_Sans, Playfair_Display } from "next/font/google";
 import Script from "next/script";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const CUELINKS_CID = process.env.NEXT_PUBLIC_CUELINKS_CID;
+
+// Self-hosted at build time, so pages do not wait on a request to Google Fonts.
+const sans = DM_Sans({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
+const serif = Playfair_Display({ subsets: ["latin"], style: ["normal", "italic"], variable: "--font-serif", display: "swap" });
 
 const DESCRIPTION =
   "Live countdowns to Diwali, Holi, Eid, Rakhi, Independence Day and New Year. Check Indian festival dates, days left, wishes and gift ideas.";
@@ -38,7 +43,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en-IN">
+    <html lang="en-IN" className={`${sans.variable} ${serif.variable}`}>
       <body>
         {children}
         {CUELINKS_CID ? (
