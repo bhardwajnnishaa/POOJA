@@ -6,7 +6,7 @@ export function FooterLinks() {
       <Link href="/about">About</Link>
       <Link href="/contact">Contact</Link>
       <Link href="/privacy">Privacy Policy</Link>
-      <Link href="/app">Get the app</Link>
+      <Link href="/app">Add to Home Screen</Link>
     </nav>
   );
 }

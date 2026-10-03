@@ -24,6 +24,7 @@ import {
 import { AFFILIATE_LINKS, PERSONAL_SHOPPING_LINKS, type FestivalId, type ShoppingLink } from "@/config/affiliates";
 import { SiteHeader } from "@/components/SiteHeader";
 import { CountdownTimer } from "@/components/CountdownTimer";
+import { InstallBanner } from "@/components/InstallBanner";
 import { MyDates, PERSONAL_KIND_STYLE } from "@/components/MyDates";
 import {
   PERSONAL_DATE_KINDS,
@@ -384,6 +385,7 @@ export default function Home() {
     <main>
       {SHOW_AD_SLOTS ? <div className="top-ad-wrap"><AdSlot /></div> : null}
       <SiteHeader active="countdown" />
+      <InstallBanner />
 
       <section className="intro" id="home">
         <div className="intro-copy">

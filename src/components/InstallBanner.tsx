@@ -1,0 +1,64 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { Download, X } from "lucide-react";
+import { BrandMark } from "@/components/BrandMark";
+import { InstallSteps } from "@/components/InstallSteps";
+import { useInstallPrompt } from "@/lib/use-install-prompt";
+
+const DISMISS_KEY = "festive-clock-install-dismissed";
+
+// A friendly "Add to Home Screen" card at the top of the home page. Links ending in ?install open the steps.
+export function InstallBanner() {
+  const { device, canPrompt, promptInstall } = useInstallPrompt();
+  const [dismissed, setDismissed] = useState(true);
+  const [showSteps, setShowSteps] = useState(false);
+
+  useEffect(() => {
+    const invited = new URLSearchParams(window.location.search).has("install");
+    let wasDismissed = false;
+    try {
+      wasDismissed = window.localStorage.getItem(DISMISS_KEY) === "1";
+    } catch {
+      wasDismissed = false;
+    }
+    setDismissed(wasDismissed && !invited);
+    if (invited) setShowSteps(true);
+  }, []);
+
+  if (dismissed || device === "installed" || device === "unknown") return null;
+
+  function dismiss() {
+    setDismissed(true);
+    try {
+      window.localStorage.setItem(DISMISS_KEY, "1");
+    } catch {
+      // Dismissal only lasts for this visit when storage is blocked.
+    }
+  }
+
+  return (
+    <aside className="install-banner" aria-label="Add Festive Clock to your Home Screen">
+      <div className="install-banner-main">
+        <BrandMark />
+        <div className="install-banner-text">
+          <b>Add Festive Clock to your Home Screen</b>
+          <span>Open your countdowns in one tap, like an app. Free, nothing to download from a store.</span>
+        </div>
+        <button className="install-banner-close" type="button" aria-label="Close" onClick={dismiss}><X aria-hidden="true" /></button>
+      </div>
+      <div className="install-banner-actions">
+        {canPrompt ? (
+          <button className="install-banner-button" type="button" onClick={() => void promptInstall()}>
+            <Download aria-hidden="true" /> Add to Home Screen
+          </button>
+        ) : (
+          <button className="install-banner-button" type="button" aria-expanded={showSteps} onClick={() => setShowSteps(!showSteps)}>
+            <Download aria-hidden="true" /> {showSteps ? "Hide steps" : "Show me how"}
+          </button>
+        )}
+      </div>
+      {showSteps && !canPrompt ? <InstallSteps device={device} /> : null}
+    </aside>
+  );
+}
