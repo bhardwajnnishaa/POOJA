@@ -138,7 +138,7 @@ export const FESTIVAL_INFO: FestivalInfo[] = [
     subtitle: "Nine nights of Maa Durga",
     month: 10,
     fallbackDay: 11,
-    dates: { 2026: "10-11", 2027: "09-30" },
+    dates: { 2026: "10-11", 2027: "09-30", 2028: "09-19" },
     theme: "coral",
     icon: "lotus",
     moonDependent: false,
@@ -157,7 +157,7 @@ export const FESTIVAL_INFO: FestivalInfo[] = [
     subtitle: "The victory of good over evil",
     month: 10,
     fallbackDay: 20,
-    dates: { 2026: "10-20", 2027: "10-09" },
+    dates: { 2026: "10-20", 2027: "10-09", 2028: "09-27" },
     theme: "indigo",
     icon: "colors",
     moonDependent: false,
@@ -176,7 +176,7 @@ export const FESTIVAL_INFO: FestivalInfo[] = [
     subtitle: "A fast of love, broken by moonlight",
     month: 10,
     fallbackDay: 29,
-    dates: { 2026: "10-29", 2027: "10-18" },
+    dates: { 2026: "10-29", 2027: "10-18", 2028: "10-07" },
     theme: "rose",
     icon: "moonrise",
     moonDependent: false,
@@ -195,7 +195,7 @@ export const FESTIVAL_INFO: FestivalInfo[] = [
     subtitle: "The first day of Diwali",
     month: 11,
     fallbackDay: 6,
-    dates: { 2026: "11-06", 2027: "10-27" },
+    dates: { 2026: "11-06", 2027: "10-27", 2028: "10-15" },
     theme: "saffron",
     icon: "coins",
     moonDependent: false,
@@ -214,7 +214,7 @@ export const FESTIVAL_INFO: FestivalInfo[] = [
     subtitle: "A tilak, a prayer, a promise",
     month: 11,
     fallbackDay: 11,
-    dates: { 2026: "11-11", 2027: "10-31" },
+    dates: { 2026: "11-11", 2027: "10-31", 2028: "10-19" },
     theme: "blue",
     icon: "thread",
     moonDependent: false,
@@ -233,7 +233,7 @@ export const FESTIVAL_INFO: FestivalInfo[] = [
     subtitle: "Prayers to the setting and rising sun",
     month: 11,
     fallbackDay: 15,
-    dates: { 2026: "11-15", 2027: "11-04" },
+    dates: { 2026: "11-15", 2027: "11-04", 2028: "10-23" },
     theme: "coral",
     icon: "sun",
     moonDependent: false,
@@ -251,7 +251,7 @@ export const FESTIVAL_INFO: FestivalInfo[] = [
     subtitle: "Prakash Purab of Guru Nanak Dev Ji",
     month: 11,
     fallbackDay: 24,
-    dates: { 2026: "11-24", 2027: "11-14" },
+    dates: { 2026: "11-24", 2027: "11-14", 2028: "11-02" },
     theme: "jade",
     icon: "diya",
     moonDependent: false,
@@ -299,8 +299,11 @@ export function indiaYear(timestamp: number) {
 }
 
 // Midnight in India (UTC+5:30) on the festival day.
+// Checked dates in this file win; the live Google holiday calendar fills in later years automatically.
+// Eid is the exception: the live calendar follows the moon sighting more closely.
 export function eventTimestamp(event: FestivalInfo, year: number, calendarDates: CalendarDates) {
-  const monthDay = calendarDates[event.id]?.[year]?.slice(5) ?? event.dates[year];
+  const liveDate = calendarDates[event.id]?.[year]?.slice(5);
+  const monthDay = event.moonDependent ? liveDate ?? event.dates[year] : event.dates[year] ?? liveDate;
   const month = monthDay ? Number(monthDay.slice(0, 2)) : event.month;
   const day = monthDay ? Number(monthDay.slice(3, 5)) : event.fallbackDay;
   return Date.UTC(year, month - 1, day, -5, -30);
