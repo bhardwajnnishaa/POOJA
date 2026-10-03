@@ -1,16 +1,28 @@
-// The Festive Clock logo, drawn larger than the app icon so it reads at small sizes.
+// The Festive Clock logo: a white clock with a rainbow ring on a sunset gradient. Same drawing as the app icons in public/.
 export function BrandMark() {
   return (
     <span className="brand-mark" aria-hidden="true">
       <svg viewBox="0 0 512 512">
-        <rect width="512" height="512" rx="112" fill="#d27833" />
-        <circle cx="250" cy="270" r="176" fill="#fbf5e9" stroke="#304339" strokeWidth="26" />
-        <g stroke="#304339" strokeLinecap="round">
-          <line x1="250" y1="270" x2="176" y2="210" strokeWidth="34" />
-          <line x1="250" y1="270" x2="338" y2="186" strokeWidth="28" />
+        <defs>
+          <linearGradient id="fc-logo-bg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor="#ff3d7f" />
+            <stop offset=".55" stopColor="#ff7a3d" />
+            <stop offset="1" stopColor="#ffc23d" />
+          </linearGradient>
+          <linearGradient id="fc-logo-ring" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor="#ff3d7f" />
+            <stop offset=".5" stopColor="#ffb13d" />
+            <stop offset="1" stopColor="#3dffd0" />
+          </linearGradient>
+        </defs>
+        <rect width="512" height="512" rx="120" fill="url(#fc-logo-bg)" />
+        <circle cx="256" cy="256" r="138" fill="none" stroke="url(#fc-logo-ring)" strokeWidth="24" />
+        <circle cx="256" cy="256" r="114" fill="#fff" />
+        <g stroke="#2b1055" strokeLinecap="round">
+          <line x1="256" y1="256" x2="204" y2="214" strokeWidth="22" />
+          <line x1="256" y1="256" x2="316" y2="190" strokeWidth="16" />
         </g>
-        <circle cx="250" cy="270" r="22" fill="#d27833" />
-        <path d="M432 36 L443 66 L473 77 L443 88 L432 118 L421 88 L391 77 L421 66 Z" fill="#fbf5e9" />
+        <circle cx="256" cy="256" r="18" fill="#ff3d7f" />
       </svg>
     </span>
   );

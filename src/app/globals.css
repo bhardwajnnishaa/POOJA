@@ -730,3 +730,14 @@ button.month-day:hover, a.month-day:hover { background: #ece9df; }
   .site-header nav { gap: 0; height: 58px; }
   .nav-link { flex: 1; justify-content: center; min-height: 58px; font-size: 22px; }
 }
+
+/* Main menu, larger: bigger words and more room between Countdowns and Calendar. */
+.site-header nav { gap: 72px; }
+.nav-link { font-size: 30px; }
+
+@media (max-width: 640px) {
+  .site-header { grid-template-rows: 48px 68px; height: 116px; }
+  .site-header nav { gap: 20px; height: 68px; }
+  .nav-link { min-height: 68px; font-size: 27px; }
+  .nav-link + .nav-link { border-left: 1px solid var(--line); }
+}
