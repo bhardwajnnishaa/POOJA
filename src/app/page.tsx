@@ -42,6 +42,7 @@ import {
   type FestivalInfo,
 } from "@/lib/festivals";
 import { BrandMark } from "@/components/BrandMark";
+import { FooterLinks } from "@/components/FooterLinks";
 
 type Festival = FestivalInfo & { shoppingLinks: ShoppingLink[] };
 
@@ -471,6 +472,7 @@ export default function Home() {
         <p>Made for the moments that bring us together.</p>
         <a href="#home" className="back-to-top">Back to top ↑</a>
       </footer>
+      <FooterLinks />
       <Toast />
     </main>
   );
