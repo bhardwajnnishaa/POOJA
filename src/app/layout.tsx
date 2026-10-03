@@ -24,6 +24,7 @@ export const metadata: Metadata = {
     locale: "en_IN",
   },
   twitter: { card: "summary_large_image" },
+  appleWebApp: { capable: true, title: SITE_NAME, statusBarStyle: "default" },
   verification: { google: "kxULr-TAohc65C6X6C0WjGzBBoGzQvMK8GY3Ng_D8fI" },
 };
 
