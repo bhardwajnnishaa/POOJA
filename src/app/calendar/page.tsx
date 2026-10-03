@@ -3,7 +3,8 @@ import Link from "next/link";
 import { ArrowDownRight, CalendarDays, ChevronRight, Clock3 } from "lucide-react";
 import { QuoteMaker } from "@/components/QuoteMaker";
 import { SiteHeader } from "@/components/SiteHeader";
-import { getCalendarData, type CalendarData } from "@/lib/calendar-data";
+import { getCalendarData, rollingWindowEnd, type CalendarData } from "@/lib/calendar-data";
+import { FESTIVAL_INFO, eventTimestamp, hasKnownDate } from "@/lib/festivals";
 import type { CalendarEntry } from "@/types/calendar";
 import { BrandMark } from "@/components/BrandMark";
 import { FooterLinks } from "@/components/FooterLinks";
@@ -41,6 +42,23 @@ function indiaDateParts(timestamp: number) {
     day: Number(parts.find((part) => part.type === "day")?.value),
     date: INDIA_DATE_PARTS.format(timestamp),
   };
+}
+
+// Add our own festival dates to the calendar wherever the public feed does not already list them.
+function withFestivalDates(data: CalendarData, todayDate: string, windowEnd: string): CalendarEntry[] {
+  const startYear = Number(todayDate.slice(0, 4));
+  const added: CalendarEntry[] = [];
+  for (const festival of FESTIVAL_INFO) {
+    for (const year of [startYear, startYear + 1]) {
+      if (!hasKnownDate(festival, year, data.dates)) continue;
+      const date = INDIA_DATE_PARTS.format(eventTimestamp(festival, year, data.dates));
+      const listed = data.events.some((event) => event.festivalId === festival.id && event.date.slice(0, 4) === String(year));
+      if (date >= todayDate && date < windowEnd && !listed) {
+        added.push({ date, name: festival.name, category: "festival", source: "Festive Clock", tentative: festival.moonDependent, festivalId: festival.id });
+      }
+    }
+  }
+  return [...data.events, ...added].sort((first, second) => first.date.localeCompare(second.date));
 }
 
 function eventDay(event: CalendarEntry) {
@@ -124,7 +142,7 @@ function MonthCard({
       </div>
       <div className="month-events">
         {monthEvents.length === 0 ? (
-          <p className="month-empty">No marked holidays for the rest of this month.</p>
+          <p className="month-empty">No marked holidays this month.</p>
         ) : monthEvents.map((event) => (
           <Link className="month-event-row" href={eventHref(event)} key={`${event.date}-${event.name}`}>
             <time dateTime={event.date}>{eventDay(event)} <span>{MONTH_FORMATTER.format(new Date(Date.UTC(year, month - 1, 1))).slice(0, 3)}</span></time>
@@ -170,11 +188,19 @@ export default async function CalendarPage({
   const { event: requestedEvent } = await searchParams;
   const selectedEvent = requestedEvent ? FALLBACK_EVENT_NAMES[requestedEvent] ?? requestedEvent : null;
   const now = Date.now();
-  const events = calendarData.events;
+  const todayDate = INDIA_DATE_PARTS.format(now);
+  const windowEnd = rollingWindowEnd(todayDate);
+  const events = withFestivalDates(calendarData, todayDate, windowEnd);
   const calendarStatus = calendarAvailable ? "ready" : "unavailable";
   const today = indiaDateParts(now);
-  const year = today.year;
-  const months = Array.from({ length: 13 - today.month }, (_, index) => today.month + index);
+  // A rolling 12 months: past months drop off and new ones appear on their own.
+  const months = Array.from({ length: 12 }, (_, index) => {
+    const date = new Date(Date.UTC(today.year, today.month - 1 + index, 1));
+    return { year: date.getUTCFullYear(), month: date.getUTCMonth() + 1 };
+  });
+  const first = months[0];
+  const last = months[months.length - 1];
+  const yearLabel = first.year === last.year ? String(first.year) : `${first.year}–${String(last.year).slice(2)}`;
   const todayString = today.date;
   const eventNames = Array.from(new Set(events.map((event) => event.name)));
 
@@ -190,15 +216,15 @@ export default async function CalendarPage({
             <h1>The months <em>ahead.</em></h1>
             <p>Find the dates that mean something to you. Choose any marked day to make it yours.</p>
           </div>
-          <div className="calendar-year-stamp"><span>INDIA</span><strong suppressHydrationWarning>{year}</strong><span>{`${months.length} MONTH${months.length === 1 ? "" : "S"} LEFT`}</span></div>
+          <div className="calendar-year-stamp"><span>INDIA</span><strong suppressHydrationWarning>{yearLabel}</strong><span>NEXT 12 MONTHS</span></div>
         </div>
       </section>
 
-      <section aria-label="Remaining months calendar" className="calendar-section" id="month-calendar">
+      <section aria-label="Next 12 months calendar" className="calendar-section" id="month-calendar">
         <div className="calendar-heading-row">
           <div>
             <div className="eyebrow"><span className="eyebrow-line" /> THE YEAR, MONTH BY MONTH</div>
-            <h2 suppressHydrationWarning>{`${monthLabel(year, today.month)} — December ${year}`}</h2>
+            <h2 suppressHydrationWarning>{`${monthLabel(first.year, first.month)} — ${monthLabel(last.year, last.month)}`}</h2>
           </div>
           <span className={`calendar-sync-state ${calendarStatus}`}><span />{calendarStatus === "ready" ? "Dates refreshed automatically" : "Showing available dates"}</span>
         </div>
@@ -209,7 +235,7 @@ export default async function CalendarPage({
           <span><i className="legend-dot legend-dot-today" /> Today</span>
         </div>
         <div className="month-grid">
-          {months.map((month) => (
+          {months.map(({ year, month }) => (
             <MonthCard
               events={events.filter((event) => event.date.startsWith(`${year}-${String(month).padStart(2, "0")}-`))}
               key={`${year}-${month}`}
