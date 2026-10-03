@@ -3,6 +3,8 @@ import { DM_Sans, Playfair_Display } from "next/font/google";
 import Script from "next/script";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
+import "./themes.generated.css";
+import { THEME_BOOT_SCRIPT } from "@/lib/theme";
 
 const CUELINKS_CID = process.env.NEXT_PUBLIC_CUELINKS_CID;
 
@@ -43,7 +45,10 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en-IN" className={`${sans.variable} ${serif.variable}`}>
+    <html lang="en-IN" className={`${sans.variable} ${serif.variable}`} data-theme="classic" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_BOOT_SCRIPT }} />
+      </head>
       <body>
         {children}
         {CUELINKS_CID ? (

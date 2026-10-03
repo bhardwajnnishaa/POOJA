@@ -14,6 +14,7 @@ export type FestivalInfo = {
   theme: string;
   icon: "diya" | "moon" | "confetti" | "thread" | "colors" | "flag" | "lotus" | "sun" | "coins" | "moonrise" | "tree";
   moonDependent: boolean;
+  emoji: string;
   // Another name people search for, e.g. "Raksha Bandhan" for Rakhi.
   otherName?: string;
   about: string[];
@@ -32,6 +33,7 @@ export const FESTIVAL_INFO: FestivalInfo[] = [
     theme: "saffron",
     icon: "diya",
     moonDependent: false,
+    emoji: "🪔",
     otherName: "Deepavali",
     about: [
       "Diwali, also called Deepavali, is the Hindu festival of lights.",
@@ -51,6 +53,7 @@ export const FESTIVAL_INFO: FestivalInfo[] = [
     theme: "jade",
     icon: "moon",
     moonDependent: true,
+    emoji: "🌙",
     otherName: "Eid ul-Fitr",
     about: [
       "Eid al-Fitr marks the end of Ramadan, the Islamic month of fasting.",
@@ -70,6 +73,7 @@ export const FESTIVAL_INFO: FestivalInfo[] = [
     theme: "blue",
     icon: "confetti",
     moonDependent: false,
+    emoji: "🎉",
     about: [
       "New Year's Day falls on 1 January and starts the Gregorian calendar year.",
       "Across India, people welcome it with midnight countdowns, fireworks and time with family and friends.",
@@ -87,6 +91,7 @@ export const FESTIVAL_INFO: FestivalInfo[] = [
     theme: "rose",
     icon: "thread",
     moonDependent: false,
+    emoji: "🧵",
     otherName: "Raksha Bandhan",
     about: [
       "Raksha Bandhan, or Rakhi, celebrates the bond between brothers and sisters.",
@@ -106,6 +111,7 @@ export const FESTIVAL_INFO: FestivalInfo[] = [
     theme: "coral",
     icon: "colors",
     moonDependent: false,
+    emoji: "🎨",
     about: [
       "Holi is the Hindu festival of colours and welcomes the arrival of spring.",
       "On the night before, people light the Holika Dahan bonfire.",
@@ -124,6 +130,7 @@ export const FESTIVAL_INFO: FestivalInfo[] = [
     theme: "indigo",
     icon: "flag",
     moonDependent: false,
+    emoji: "🇮🇳",
     about: [
       "India celebrates Independence Day every year on 15 August.",
       "It marks the end of British rule in 1947.",
@@ -142,6 +149,7 @@ export const FESTIVAL_INFO: FestivalInfo[] = [
     theme: "coral",
     icon: "lotus",
     moonDependent: false,
+    emoji: "💃",
     otherName: "Sharad Navratri",
     about: [
       "Sharad Navratri is a nine-night festival dedicated to Goddess Durga and her nine forms.",
@@ -161,6 +169,7 @@ export const FESTIVAL_INFO: FestivalInfo[] = [
     theme: "indigo",
     icon: "colors",
     moonDependent: false,
+    emoji: "🏹",
     otherName: "Vijayadashami",
     about: [
       "Dussehra, or Vijayadashami, celebrates the victory of good over evil.",
@@ -180,6 +189,7 @@ export const FESTIVAL_INFO: FestivalInfo[] = [
     theme: "rose",
     icon: "moonrise",
     moonDependent: false,
+    emoji: "🌕",
     otherName: "Karva Chauth",
     about: [
       "On Karwa Chauth, married women fast from sunrise to moonrise for the well-being of their husbands.",
@@ -199,6 +209,7 @@ export const FESTIVAL_INFO: FestivalInfo[] = [
     theme: "saffron",
     icon: "coins",
     moonDependent: false,
+    emoji: "🪙",
     otherName: "Dhantrayodashi",
     about: [
       "Dhanteras is the first day of the five-day Diwali festival.",
@@ -218,6 +229,7 @@ export const FESTIVAL_INFO: FestivalInfo[] = [
     theme: "blue",
     icon: "thread",
     moonDependent: false,
+    emoji: "👫",
     otherName: "Bhau Beej",
     about: [
       "Bhai Dooj celebrates the bond between brothers and sisters.",
@@ -237,6 +249,7 @@ export const FESTIVAL_INFO: FestivalInfo[] = [
     theme: "coral",
     icon: "sun",
     moonDependent: false,
+    emoji: "☀️",
     about: [
       "Chhath Puja is dedicated to Surya, the Sun God, and to Chhathi Maiya.",
       "It is celebrated mainly in Bihar, Jharkhand and eastern Uttar Pradesh, and by their communities across India.",
@@ -255,6 +268,7 @@ export const FESTIVAL_INFO: FestivalInfo[] = [
     theme: "jade",
     icon: "diya",
     moonDependent: false,
+    emoji: "🙏",
     otherName: "Gurpurab",
     about: [
       "Guru Nanak Jayanti marks the birth anniversary of Guru Nanak Dev Ji, the first Sikh Guru.",
@@ -274,6 +288,7 @@ export const FESTIVAL_INFO: FestivalInfo[] = [
     theme: "jade",
     icon: "tree",
     moonDependent: false,
+    emoji: "🎄",
     about: [
       "Christmas celebrates the birth of Jesus Christ.",
       "In India, people attend midnight mass, decorate Christmas trees and share cake and sweets.",

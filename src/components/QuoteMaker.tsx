@@ -324,7 +324,7 @@ export function QuoteMaker({
         <div className="quote-intro">
           <div className="eyebrow"><span className="eyebrow-line" /> A FEW WORDS, MADE YOURS</div>
           <h2>A note for <br /><em>the moment.</em></h2>
-          <p>Choose a celebration, set the mood, and make a little message for someone who matters.</p>
+          <p>Pick a vibe, get a wish, send it 💌</p>
           <span className="quote-ai-note"><span className={`ai-status-dot ${generation === "ai" ? "ai-status-active" : ""}`} />
             {generation === "ai" ? "Original AI-written quote" : "AI generation · your choices, your words"}
           </span>
