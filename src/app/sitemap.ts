@@ -6,6 +6,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: `${SITE_URL}/`, changeFrequency: "daily", priority: 1 },
     { url: `${SITE_URL}/calendar`, changeFrequency: "daily", priority: 0.8 },
+    { url: `${SITE_URL}/app`, changeFrequency: "monthly", priority: 0.5 },
     ...FESTIVAL_INFO.map((festival) => ({
       url: `${SITE_URL}${festivalPath(festival)}`,
       changeFrequency: "daily" as const,

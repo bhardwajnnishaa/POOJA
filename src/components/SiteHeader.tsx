@@ -3,7 +3,7 @@ import { Clock3 } from "lucide-react";
 import { InstallAppButton } from "@/components/InstallAppButton";
 import { BrandMark } from "@/components/BrandMark";
 
-export function SiteHeader({ active }: { active: "countdown" | "calendar" }) {
+export function SiteHeader({ active }: { active?: "countdown" | "calendar" }) {
   return (
     <header className="site-header">
       <Link className="brand" href="/" aria-label="Festive Clock home">

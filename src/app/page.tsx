@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import { AFFILIATE_LINKS, type FestivalId, type ShoppingLink } from "@/config/affiliates";
 import { SiteHeader } from "@/components/SiteHeader";
+import { CountdownTimer } from "@/components/CountdownTimer";
 import { MyDates } from "@/components/MyDates";
 import { ShareOptions } from "@/components/ShareOptions";
 import {
@@ -116,13 +117,6 @@ function CountdownCard({ event, now, calendarDates, isFavorite, isShoppingEvent,
   onSelectShop: (id: FestivalId) => void;
 }) {
   const target = nextEventTimestamp(event, now, calendarDates);
-  const remaining = Math.max(0, Math.floor((target - now) / 1000));
-  const units = [
-    String(Math.floor(remaining / 86400)).padStart(2, "0"),
-    String(Math.floor((remaining % 86400) / 3600)).padStart(2, "0"),
-    String(Math.floor((remaining % 3600) / 60)).padStart(2, "0"),
-    String(remaining % 60).padStart(2, "0"),
-  ];
 
   return (
     <article className={`event-card event-card-${event.theme}`}>
@@ -166,14 +160,7 @@ function CountdownCard({ event, now, calendarDates, isFavorite, isShoppingEvent,
         {eventDateLabel(target)}
         <span className="event-date-note">India</span>
       </div>
-      <div className="timer" aria-label={`Time until ${event.name}`}>
-        {units.map((value, index) => (
-          <div className="timer-unit" key={`${event.id}-${index}`}>
-            <span className="timer-value" suppressHydrationWarning aria-live={index === 3 ? "off" : undefined}>{value}</span>
-            <span className="timer-label">{["Days", "Hours", "Minutes", "Seconds"][index]}</span>
-          </div>
-        ))}
-      </div>
+      <CountdownTimer target={target} label={`Time until ${event.name}`} />
       <div className="event-actions">
         <ShareOptions
           message={`Counting down to ${event.name} on ${eventDateLabel(target ?? Date.now())}!`}
@@ -260,9 +247,10 @@ export default function Home() {
   const [showAllEvents, setShowAllEvents] = useState(false);
 
   useEffect(() => {
+    // Timers tick on their own; the page only needs a fresh time for ordering and dates.
     const update = () => setNow(Date.now());
     update();
-    const interval = window.setInterval(update, 1000);
+    const interval = window.setInterval(update, 60 * 1000);
     return () => window.clearInterval(interval);
   }, []);
 
