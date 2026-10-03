@@ -38,26 +38,20 @@ export function InstallBanner() {
   }
 
   return (
-    <aside className="install-banner" aria-label="Add Festive Clock to your Home Screen">
-      <div className="install-banner-main">
-        <BrandMark />
-        <div className="install-banner-text">
-          <b>Add Festive Clock to your Home Screen</b>
-          <span>Open your countdowns in one tap, like an app. Free, nothing to download from a store.</span>
-        </div>
-        <button className="install-banner-close" type="button" aria-label="Close" onClick={dismiss}><X aria-hidden="true" /></button>
-      </div>
-      <div className="install-banner-actions">
-        {canPrompt ? (
-          <button className="install-banner-button" type="button" onClick={() => void promptInstall()}>
-            <Download aria-hidden="true" /> Add to Home Screen
-          </button>
-        ) : (
-          <button className="install-banner-button" type="button" aria-expanded={showSteps} onClick={() => setShowSteps(!showSteps)}>
-            <Download aria-hidden="true" /> {showSteps ? "Hide steps" : "Show me how"}
-          </button>
-        )}
-      </div>
+    <aside className="install-banner" aria-labelledby="install-banner-title">
+      <button className="install-banner-close" type="button" aria-label="Close" onClick={dismiss}><X aria-hidden="true" /></button>
+      <BrandMark />
+      <h2 id="install-banner-title" className="install-banner-title">Add to Home Screen</h2>
+      <p className="install-banner-sub">Get Festive Clock on your phone like an app. Free, nothing to download from a store.</p>
+      {canPrompt ? (
+        <button className="install-banner-button" type="button" onClick={() => void promptInstall()}>
+          <Download aria-hidden="true" /> Add to Home Screen
+        </button>
+      ) : (
+        <button className="install-banner-button" type="button" aria-expanded={showSteps} onClick={() => setShowSteps(!showSteps)}>
+          <Download aria-hidden="true" /> {showSteps ? "Hide steps" : "Show me how"}
+        </button>
+      )}
       {showSteps && !canPrompt ? <InstallSteps device={device} /> : null}
     </aside>
   );
