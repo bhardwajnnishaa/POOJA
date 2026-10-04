@@ -233,6 +233,7 @@
 [data-theme="neon"] .install-banner-button, [data-theme="neon"] .my-dates-add, [data-theme="neon"] .my-dates-save, [data-theme="neon"] .install-app-button, [data-theme="neon"] .app-install-button { background: #c4581a; }
 [data-theme="neon"] .install-banner-button:hover, [data-theme="neon"] .my-dates-add:hover, [data-theme="neon"] .my-dates-save:hover, [data-theme="neon"] .install-app-button:hover, [data-theme="neon"] .app-install-button:hover { background: #a94a14; }
 [data-theme="neon"] .install-step-icon.install-step-done { background: #c4581a; color: #fff; }
+[data-theme="neon"] .theme-picker-button { color: #fff; }
 :root[data-theme="pastel"] { --paper: #fff5ec; --paper-deep: #fff1e6; --ink: #3e291f; --muted: #4c352a; --line: #f2d6c2; --saffron: #e9872c; --green: #31584a; }
 [data-theme="pastel"] ::selection { background: #f2c38c; }
 [data-theme="pastel"] .top-ad-wrap { background: #fff2e7; }
@@ -467,6 +468,7 @@
 [data-theme="pastel"] .install-banner-button, [data-theme="pastel"] .my-dates-add, [data-theme="pastel"] .my-dates-save, [data-theme="pastel"] .install-app-button, [data-theme="pastel"] .app-install-button { background: #c4581a; }
 [data-theme="pastel"] .install-banner-button:hover, [data-theme="pastel"] .my-dates-add:hover, [data-theme="pastel"] .my-dates-save:hover, [data-theme="pastel"] .install-app-button:hover, [data-theme="pastel"] .app-install-button:hover { background: #a94a14; }
 [data-theme="pastel"] .install-step-icon.install-step-done { background: #c4581a; color: #fff; }
+[data-theme="pastel"] .theme-picker-button { color: #fff; }
 :root[data-theme="neon"] { --muted: #b9ad9d; color-scheme: dark; }
 :root[data-theme="pastel"] { --muted: #7a6052; }
 [data-theme="neon"] ::selection { background: #c4581a; color: #fff; }
