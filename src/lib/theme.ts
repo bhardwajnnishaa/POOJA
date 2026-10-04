@@ -6,15 +6,15 @@ export const THEME_STORAGE_KEY = "festive-clock-theme";
 export const THEME_OPTIONS: { id: ThemeChoice; label: string; note: string }[] = [
   { id: "auto", label: "Auto", note: "Follows your phone's dark mode" },
   { id: "classic", label: "Classic", note: "Warm and festive" },
-  { id: "neon", label: "Neon Night", note: "Dark, with glow" },
-  { id: "pastel", label: "Pastel Pop", note: "Soft and bright" },
+  { id: "neon", label: "Dark", note: "Warm and easy on the eyes" },
+  { id: "pastel", label: "Peach", note: "Soft and bright" },
 ];
 
 // Browser bar colour for each theme.
 export const THEME_BAR_COLOURS: Record<AppliedTheme, string> = {
   classic: "#fbf5e9",
-  neon: "#1b1435",
-  pastel: "#fff8fc",
+  neon: "#171310",
+  pastel: "#fff8f1",
 };
 
 // Runs in <head> before the page paints, so a saved or dark theme never flashes the light one first.

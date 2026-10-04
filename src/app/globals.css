@@ -764,10 +764,10 @@ button.month-day:hover, a.month-day:hover { background: #ece9df; }
 .theme-option-text b { font-size: 16px; }
 .theme-option-text small { color: var(--muted); font-size: 13px; }
 .theme-swatch { width: 30px; height: 30px; flex: 0 0 auto; border: 1px solid rgba(0, 0, 0, .12); border-radius: 50%; }
-.theme-option-auto .theme-swatch { background: linear-gradient(135deg, #fbf5e9 50%, #1b1435 50%); }
+.theme-option-auto .theme-swatch { background: linear-gradient(135deg, #fbf5e9 50%, #171310 50%); }
 .theme-option-classic .theme-swatch { background: linear-gradient(135deg, #fbf5e9, #d27833); }
-.theme-option-neon .theme-swatch { background: linear-gradient(135deg, #1b1435, #7b2ff7 60%, #3dffd0); }
-.theme-option-pastel .theme-swatch { background: linear-gradient(135deg, #ffd6e7, #e2d4ff 60%, #c9f7ec); }
+.theme-option-neon .theme-swatch { background: linear-gradient(135deg, #171310 55%, #e9872c); }
+.theme-option-pastel .theme-swatch { background: linear-gradient(135deg, #ffe9d9, #ffc9a8 60%, #ffb38a); }
 
 /* Fun status tag on countdown cards */
 .vibe-pill { display: inline-flex; align-self: flex-start; margin-top: 10px; padding: 4px 12px; border-radius: 999px; background: linear-gradient(90deg, #ff3d7f, #ff7a3d); color: #fff; font-size: 13px; font-weight: 700; }
