@@ -146,7 +146,7 @@ export function MyDates({ dates, onChange, now, onToast }: {
 
   // A date that is today comes first, before the next upcoming one.
   const sortKey = (date: PersonalDate) => (isPersonalDateToday(date, now) ? now : nextPersonalDate(date, now));
-  const sorted = dates.toSorted((first, second) => sortKey(first) - sortKey(second));
+  const sorted = [...dates].sort((first, second) => sortKey(first) - sortKey(second));
 
   return (
     <section className="my-dates" aria-labelledby="my-dates-heading">
