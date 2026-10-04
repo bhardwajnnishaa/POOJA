@@ -805,3 +805,16 @@ button.month-day:hover, a.month-day:hover { background: #ece9df; }
 .install-banner-button, .my-dates-add, .my-dates-save, .install-app-button, .app-install-button { background: #c4581a; }
 .install-banner-button:hover, .my-dates-add:hover, .my-dates-save:hover, .install-app-button:hover, .app-install-button:hover { background: #a94a14; }
 .install-step-icon.install-step-done { background: #c4581a; color: #fff; }
+
+/* Theme button: bigger, colourful and in the top-right corner so it is easy to find. */
+.header-end { margin-left: auto; }
+.theme-picker { order: 99; }
+.theme-picker-button { width: 54px; height: 54px; border: 0; background: linear-gradient(135deg, #ff3d7f, #ff7a3d 55%, #ffc23d); color: #fff; box-shadow: 0 4px 14px rgba(255, 90, 60, .35); }
+.theme-picker-button:hover { filter: brightness(1.05); }
+.theme-picker-button svg { width: 28px; height: 28px; }
+@media (max-width: 640px) {
+  .header-end { justify-self: end; }
+  .site-header { grid-template-rows: 64px 68px; height: 132px; }
+  .theme-picker-button { width: 50px; height: 50px; }
+  .theme-picker-button svg { width: 26px; height: 26px; }
+}
