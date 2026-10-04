@@ -859,3 +859,44 @@ button.month-day:hover, a.month-day:hover { background: #ece9df; }
   .my-dates-heading h3 { font-size: 23px; }
   .my-dates-add { min-height: 44px; padding: 0 12px; font-size: 17px; }
 }
+
+/* Phones with a small "display size" or large text: never let the page slide sideways. */
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body { overflow-x: clip; }
+.section-heading > *, .my-dates-heading > *, .event-heading-row > * { min-width: 0; }
+.section-heading h2, .intro h1, .my-dates-heading p { overflow-wrap: break-word; }
+
+/* Phone and small-tablet header: logo with the name under it, theme button on the right, menu on its own line. */
+@media (max-width: 900px) {
+  .site-header { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto auto; row-gap: 12px; column-gap: 12px; width: calc(100% - 36px); height: auto; padding-top: 10px; align-items: center; }
+  .brand { flex-direction: column; align-items: center; justify-self: start; gap: 3px; font-size: 14px; line-height: 1.1; white-space: nowrap; }
+  .brand-mark { width: 46px; height: 46px; }
+  .header-end { grid-column: 2; grid-row: 1; justify-self: end; margin-left: 0; }
+  .site-header nav { grid-column: 1 / -1; grid-row: 2; display: flex; justify-content: center; gap: 0; height: auto; border-top: 1px solid var(--line); }
+  .nav-link { flex: 1; justify-content: center; min-height: 64px; font-size: 27px; }
+  .nav-link + .nav-link { border-left: 1px solid var(--line); }
+  .site-header .install-app, .header-end .header-date { display: none; }
+  .theme-picker-button { width: 58px; height: 58px; }
+
+  /* My dates: title and Add button on one line, button at the far right, note below. */
+  .my-dates-heading { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 10px; row-gap: 4px; align-items: center; }
+  .my-dates-heading > div { display: contents; }
+  .my-dates-heading h3 { grid-column: 1; grid-row: 1; }
+  .my-dates-add { grid-column: 2; grid-row: 1; justify-self: end; min-height: 48px; padding: 0 14px; gap: 5px; font-size: 19px; }
+  .my-dates-add svg { width: 20px; height: 20px; }
+  .my-dates-heading p { grid-column: 1 / -1; grid-row: 2; }
+}
+@media (max-width: 360px) {
+  .nav-link { font-size: 24px; }
+  .my-dates-heading h3 { font-size: 23px; }
+  .my-dates-add { min-height: 44px; padding: 0 12px; font-size: 17px; }
+}
+.event-heading-row h3 { overflow-wrap: anywhere; }
+@media (max-width: 900px) {
+  .section-heading { display: block; }
+  .section-side-note { margin: 12px 0 0 2px; }
+}
+.event-card-controls { flex: 0 0 auto; }
+@media (min-width: 901px) {
+  .brand { margin-right: 56px; }
+}
