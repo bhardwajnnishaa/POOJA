@@ -13,7 +13,9 @@ import {
   Flame,
   Flower2,
   Heart,
+  Leaf,
   MoonStar,
+  Music,
   PartyPopper,
   Search,
   ShoppingBag,
@@ -22,6 +24,7 @@ import {
   Sun,
   TreePine,
   WandSparkles,
+  Wind,
 } from "lucide-react";
 import { AFFILIATE_LINKS, DELIVERY_LINKS, PERSONAL_DELIVERY_LINKS, PERSONAL_SHOPPING_LINKS, type DeliveryLinks as DeliveryLinksData, type FestivalId, type ShoppingLink } from "@/config/affiliates";
 import { DeliveryLinks } from "@/components/DeliveryLinks";
@@ -191,6 +194,15 @@ function Icon({ icon }: { icon: Festival["icon"] }) {
   }
   if (icon === "tree") {
     return <TreePine aria-hidden="true" />;
+  }
+  if (icon === "kite") {
+    return <Wind aria-hidden="true" />;
+  }
+  if (icon === "leaf") {
+    return <Leaf aria-hidden="true" />;
+  }
+  if (icon === "music") {
+    return <Music aria-hidden="true" />;
   }
   return <span className="flag-mark" aria-hidden="true">✳</span>;
 }

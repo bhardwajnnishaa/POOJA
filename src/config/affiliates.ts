@@ -68,6 +68,9 @@ const QUICK_TERMS: Record<FestivalId, string> = {
   independenceDay: "tricolour flag", navratri: "puja samagri", dussehra: "puja samagri",
   karwaChauth: "karwa chauth thali", dhanteras: "silver coin", bhaiDooj: "chocolate gift box",
   chhath: "puja samagri", guruNanak: "dry fruits", christmas: "plum cake",
+  lohri: "rewri gajak", makarSankranti: "til gud laddoo", mahaShivratri: "puja samagri",
+  ramNavami: "puja samagri", eidAlAdha: "sewai", teej: "mehendi cone",
+  janmashtami: "makhan mishri", onam: "banana chips", ganeshChaturthi: "modak",
 };
 
 const PERSONAL_QUICK_TERMS: Record<PersonalDateKind, string> = {
@@ -152,6 +155,51 @@ const SHOPPING_TERMS: Record<FestivalId, Record<RetailerId, string>> = {
     amazon: "Christmas tree and decorations", myntra: "Christmas party outfits", purplle: "Christmas beauty gifts",
     nykaa: "Christmas gift sets", meesho: "Christmas decorations", ajio: "Christmas party wear",
     flipkart: "Christmas gifts and decorations",
+  },
+  lohri: {
+    amazon: "Lohri gifts and rewri gajak", myntra: "Punjabi suit for Lohri", purplle: "winter skin care",
+    nykaa: "winter skin care gift set", meesho: "phulkari dupatta", ajio: "men kurta for Lohri",
+    flipkart: "Lohri gift hamper",
+  },
+  makarSankranti: {
+    amazon: "kites and manja for Makar Sankranti", myntra: "festive ethnic wear", purplle: "winter skin care",
+    nykaa: "festive gift sets", meesho: "kite and manja", ajio: "festive ethnic wear",
+    flipkart: "patang manja kites",
+  },
+  mahaShivratri: {
+    amazon: "Shivling and rudraksha mala", myntra: "white kurta pyjama", purplle: "festive beauty",
+    nykaa: "festive skincare", meesho: "Mahashivratri puja items", ajio: "festive ethnic wear",
+    flipkart: "Shiv puja samagri",
+  },
+  ramNavami: {
+    amazon: "Ram Darbar idol and puja items", myntra: "festive ethnic wear", purplle: "festive beauty",
+    nykaa: "festive gift sets", meesho: "Ram Navami puja items", ajio: "festive ethnic wear",
+    flipkart: "Ram Darbar frame",
+  },
+  eidAlAdha: {
+    amazon: "Eid gifts and attar", myntra: "Eid festive outfits", purplle: "attar and perfume gifts",
+    nykaa: "Eid gift sets", meesho: "Eid outfits and gifts", ajio: "men pathani suit",
+    flipkart: "Eid gift hamper",
+  },
+  teej: {
+    amazon: "Teej shringar kit and green bangles", myntra: "green saree for Teej", purplle: "mehendi and makeup",
+    nykaa: "festive makeup kit", meesho: "green lehariya saree", ajio: "green ethnic wear",
+    flipkart: "Teej gifts for wife",
+  },
+  janmashtami: {
+    amazon: "Laddu Gopal dress and jhula", myntra: "kids Krishna costume", purplle: "festive beauty",
+    nykaa: "festive gift sets", meesho: "Laddu Gopal poshak", ajio: "kids ethnic wear",
+    flipkart: "Janmashtami decoration items",
+  },
+  onam: {
+    amazon: "Onam pookalam decoration", myntra: "Kerala kasavu saree", purplle: "festive beauty",
+    nykaa: "festive gift sets", meesho: "kasavu saree and mundu", ajio: "kasavu mundu for men",
+    flipkart: "Onam decoration items",
+  },
+  ganeshChaturthi: {
+    amazon: "eco friendly Ganesh idol and decoration", myntra: "festive ethnic wear", purplle: "festive beauty",
+    nykaa: "festive gift sets", meesho: "Ganpati decoration items", ajio: "men festive kurta",
+    flipkart: "Ganesh Chaturthi decoration",
   },
 };
 

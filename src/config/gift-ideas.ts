@@ -19,6 +19,159 @@ export type GiftIdea = {
 type BudgetIdeas = Record<BudgetId, GiftIdea[]>;
 
 export const GIFT_IDEAS: Record<FestivalId, BudgetIdeas> = {
+  lohri: {
+    under500: [
+      { name: "Rewri and gajak box", why: "The classic Lohri sweets to share around the bonfire.", store: "amazon", term: "rewri gajak gift box" },
+      { name: "Til and peanut chikki", why: "A crunchy winter treat for family and friends.", store: "amazon", term: "til peanut chikki" },
+      { name: "Woollen socks set", why: "Useful on a cold January night.", store: "amazon", term: "woollen socks pack" },
+    ],
+    under1000: [
+      { name: "Phulkari dupatta", why: "Bright Punjabi embroidery for the Lohri evening.", store: "meesho", term: "phulkari dupatta" },
+      { name: "Dry fruit box", why: "A warm winter gift for elders.", store: "amazon", term: "dry fruits gift box" },
+      { name: "Soft shawl", why: "Keeps you warm by the fire.", store: "myntra", term: "women shawl" },
+    ],
+    premium: [
+      { name: "Punjabi suit", why: "A festive outfit for Lohri celebrations.", store: "myntra", term: "punjabi suit" },
+      { name: "Men's Nehru jacket", why: "Smart and warm for the evening.", store: "myntra", term: "men nehru jacket" },
+      { name: "Fire pit for the balcony", why: "A safe, small bonfire for apartment homes.", store: "amazon", term: "outdoor fire pit" },
+    ],
+  },
+  makarSankranti: {
+    under500: [
+      { name: "Kites and manja set", why: "Kite flying is the heart of Uttarayan.", store: "amazon", term: "kites with manja set" },
+      { name: "Til-gud laddoo", why: "\"Til-gud ghya, god god bola\" — sweets to share.", store: "amazon", term: "til gud laddoo" },
+      { name: "Cap and sunglasses", why: "For a long day on the terrace.", store: "amazon", term: "sun cap and sunglasses" },
+    ],
+    under1000: [
+      { name: "Brass Pongal pot", why: "For cooking sweet Pongal the traditional way.", store: "amazon", term: "brass pongal pot" },
+      { name: "Kite reel (firki)", why: "Makes flying and winding manja easier.", store: "amazon", term: "kite firki reel" },
+      { name: "Festive kurta", why: "Fresh clothes for the harvest festival.", store: "myntra", term: "men kurta" },
+    ],
+    premium: [
+      { name: "Cotton saree", why: "A festive outfit for Sankranti and Pongal.", store: "myntra", term: "cotton saree" },
+      { name: "Sweets hamper", why: "A generous gift for relatives.", store: "amazon", term: "sweets gift hamper" },
+      { name: "Silk dhoti and shirt set", why: "Traditional wear for Pongal.", store: "amazon", term: "silk dhoti shirt set" },
+    ],
+  },
+  mahaShivratri: {
+    under500: [
+      { name: "Rudraksha mala", why: "Used for chanting \"Om Namah Shivaya\".", store: "amazon", term: "rudraksha mala" },
+      { name: "Puja samagri kit", why: "Everything for the Shivling abhishek.", store: "amazon", term: "mahashivratri puja samagri kit" },
+      { name: "Vrat snacks", why: "Makhana and dry fruits for the fast.", store: "amazon", term: "roasted makhana" },
+    ],
+    under1000: [
+      { name: "Brass Shivling", why: "For daily puja at home.", store: "amazon", term: "brass shivling" },
+      { name: "Copper lota", why: "For offering water on the Shivling.", store: "amazon", term: "copper lota for puja" },
+      { name: "White kurta", why: "Simple and pure for the temple visit.", store: "myntra", term: "white kurta men" },
+    ],
+    premium: [
+      { name: "Shiva wall art", why: "A calm, spiritual touch for the home.", store: "amazon", term: "lord shiva wall painting" },
+      { name: "Brass diya set", why: "For the night-long jagran.", store: "amazon", term: "brass diya set" },
+      { name: "Silk saree", why: "A festive outfit for the temple.", store: "myntra", term: "silk saree" },
+    ],
+  },
+  ramNavami: {
+    under500: [
+      { name: "Ram Darbar photo frame", why: "For the Ram Navami puja corner.", store: "amazon", term: "ram darbar photo frame" },
+      { name: "Puja thali set", why: "For the midday aarti.", store: "amazon", term: "puja thali set" },
+      { name: "Panjiri prasad mix", why: "A traditional bhog for the day.", store: "amazon", term: "panjiri" },
+    ],
+    under1000: [
+      { name: "Ramcharitmanas", why: "For reading on Lord Rama's birthday.", store: "amazon", term: "ramcharitmanas book" },
+      { name: "Brass bell", why: "For daily puja at home.", store: "amazon", term: "brass puja bell" },
+      { name: "Festive kurta", why: "For the temple and the shobha yatra.", store: "myntra", term: "men kurta" },
+    ],
+    premium: [
+      { name: "Ram Darbar idol", why: "A lasting idol for the home temple.", store: "amazon", term: "ram darbar idol brass" },
+      { name: "Silk saree", why: "A festive outfit for the puja.", store: "myntra", term: "silk saree" },
+      { name: "Wooden home temple", why: "A proper place for daily worship.", store: "amazon", term: "wooden mandir for home" },
+    ],
+  },
+  eidAlAdha: {
+    under500: [
+      { name: "Attar", why: "A traditional Eid fragrance.", store: "amazon", term: "attar perfume" },
+      { name: "Eid greeting cards", why: "For Eidi and family visits.", store: "amazon", term: "eid mubarak cards" },
+      { name: "Sewai and dates", why: "Sweet treats for guests.", store: "amazon", term: "sewai and dates" },
+    ],
+    under1000: [
+      { name: "Prayer mat", why: "A soft, useful gift for daily namaz.", store: "amazon", term: "prayer mat" },
+      { name: "Dry fruit box", why: "A classic gift for relatives.", store: "amazon", term: "dry fruits gift box" },
+      { name: "Embroidered dupatta", why: "A festive touch for the Eid outfit.", store: "meesho", term: "embroidered dupatta" },
+    ],
+    premium: [
+      { name: "Pathani suit", why: "Smart traditional wear for Eid prayers.", store: "ajio", term: "pathani suit men" },
+      { name: "Anarkali suit", why: "A festive outfit for family visits.", store: "myntra", term: "anarkali suit" },
+      { name: "Serving tray set", why: "For hosting the Eid feast.", store: "amazon", term: "serving tray set" },
+    ],
+  },
+  teej: {
+    under500: [
+      { name: "Green glass bangles", why: "Green bangles are part of the Teej shringar.", store: "amazon", term: "green glass bangles" },
+      { name: "Mehendi cones", why: "No Teej is complete without mehendi.", store: "amazon", term: "natural mehendi cones" },
+      { name: "Bindi and sindoor set", why: "A small shringar gift.", store: "amazon", term: "bindi sindoor set" },
+    ],
+    under1000: [
+      { name: "Lehariya dupatta", why: "The classic Teej print from Rajasthan.", store: "meesho", term: "lehariya dupatta" },
+      { name: "Kundan jewellery set", why: "Festive jewellery for the celebration.", store: "amazon", term: "kundan jewellery set" },
+      { name: "Shringar gift box", why: "A thoughtful gift for a wife or sister.", store: "amazon", term: "solah shringar kit" },
+    ],
+    premium: [
+      { name: "Green lehariya saree", why: "Green is the colour of Hariyali Teej.", store: "myntra", term: "green lehariya saree" },
+      { name: "Silver payal", why: "A lasting Teej gift.", store: "amazon", term: "silver payal" },
+      { name: "Swing (jhula) for the balcony", why: "Swings are a Teej tradition.", store: "amazon", term: "balcony swing jhula" },
+    ],
+  },
+  janmashtami: {
+    under500: [
+      { name: "Laddu Gopal dress", why: "A new poshak for Kanha's birthday.", store: "meesho", term: "laddu gopal dress" },
+      { name: "Bansuri (flute)", why: "Krishna's flute, for decoration or play.", store: "amazon", term: "bansuri flute" },
+      { name: "Peacock feather set", why: "For the jhanki and decoration.", store: "amazon", term: "peacock feathers decoration" },
+    ],
+    under1000: [
+      { name: "Laddu Gopal jhula", why: "A cradle for the midnight celebration.", store: "amazon", term: "laddu gopal jhula" },
+      { name: "Kids Krishna costume", why: "For school events and photos.", store: "amazon", term: "kids krishna costume" },
+      { name: "Makhan mishri bowl set", why: "For Kanha's favourite bhog.", store: "amazon", term: "brass bowl set for bhog" },
+    ],
+    premium: [
+      { name: "Brass Laddu Gopal idol", why: "A lasting idol for the home temple.", store: "amazon", term: "brass laddu gopal idol" },
+      { name: "Radha Krishna painting", why: "A beautiful piece for the living room.", store: "amazon", term: "radha krishna painting" },
+      { name: "Festive kurta set", why: "For the midnight puja.", store: "myntra", term: "kurta pyjama set" },
+    ],
+  },
+  onam: {
+    under500: [
+      { name: "Pookalam flower stencils", why: "Makes a neat flower carpet easy.", store: "amazon", term: "pookalam rangoli stencil" },
+      { name: "Banana chips and sharkara varatti", why: "Classic Onam sadya snacks.", store: "amazon", term: "kerala banana chips" },
+      { name: "Brass nilavilakku (small)", why: "The traditional Kerala lamp.", store: "amazon", term: "nilavilakku small" },
+    ],
+    under1000: [
+      { name: "Kasavu mundu", why: "Traditional Onam wear for men.", store: "ajio", term: "kasavu mundu" },
+      { name: "Uruli bowl", why: "Fill it with flowers for the home.", store: "amazon", term: "brass uruli" },
+      { name: "Banana leaf plates", why: "Serve the sadya the traditional way.", store: "amazon", term: "banana leaf plates" },
+    ],
+    premium: [
+      { name: "Kasavu saree", why: "The classic off-white and gold Onam saree.", store: "myntra", term: "kerala kasavu saree" },
+      { name: "Brass nilavilakku (large)", why: "A lasting lamp for the home.", store: "amazon", term: "brass nilavilakku large" },
+      { name: "Couple's Onam set", why: "Matching kasavu outfits for the family.", store: "amazon", term: "kerala couple dress set" },
+    ],
+  },
+  ganeshChaturthi: {
+    under500: [
+      { name: "Modak mould", why: "Make Bappa's favourite modaks at home.", store: "amazon", term: "modak mould" },
+      { name: "Ganpati decoration flowers", why: "Bright artificial garlands for the mandap.", store: "amazon", term: "artificial flower garland" },
+      { name: "Aarti book and diya", why: "For the daily aarti.", store: "amazon", term: "ganpati aarti book" },
+    ],
+    under1000: [
+      { name: "Eco-friendly Ganesh idol", why: "A clay idol that dissolves safely at visarjan.", store: "amazon", term: "eco friendly ganesh idol" },
+      { name: "Ganpati mandap backdrop", why: "A ready decoration for the home.", store: "amazon", term: "ganpati decoration backdrop" },
+      { name: "LED string lights", why: "Lights up the pandal or home.", store: "amazon", term: "led string lights" },
+    ],
+    premium: [
+      { name: "Brass Ganesh idol", why: "A lasting idol for the home temple.", store: "amazon", term: "brass ganesh idol" },
+      { name: "Silk saree", why: "A festive outfit for aarti and visits.", store: "myntra", term: "silk saree" },
+      { name: "Men's kurta set", why: "Fresh clothes for Bappa's welcome.", store: "myntra", term: "men kurta set" },
+    ],
+  },
   diwali: {
     under500: [
       { name: "Clay diyas set", why: "Every home lights diyas on Diwali night.", store: "amazon", term: "clay diyas for diwali" },
