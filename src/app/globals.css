@@ -826,3 +826,36 @@ button.month-day:hover, a.month-day:hover { background: #ece9df; }
   .site-header { grid-template-rows: 72px 68px; height: 140px; }
   .theme-picker-button { width: 60px; height: 60px; }
 }
+
+/* Phone header: clear space between the Festive Clock name and the menu. */
+@media (max-width: 640px) {
+  .site-header { grid-template-rows: 72px 68px; row-gap: 14px; height: 154px; padding-top: 4px; }
+  .site-header nav { margin-bottom: 4px; }
+}
+
+/* My dates: one compact row, with Add my date on the far right, so the countdowns show sooner. */
+.my-dates-heading { flex-direction: row; align-items: center; justify-content: space-between; }
+.my-dates-heading > div { min-width: 0; }
+.my-dates-add { margin-left: auto; white-space: nowrap; }
+
+@media (max-width: 640px) {
+  .my-dates { margin-bottom: 18px; padding: 12px 12px 12px 14px; }
+  .my-dates-heading { flex-direction: row; align-items: center; gap: 10px; }
+  .my-dates-heading h3 { font-size: 26px; }
+  .my-dates-heading p { margin-top: 2px; font-size: 15px; line-height: 1.35; }
+  .my-dates-add { flex: 0 0 auto; min-height: 48px; padding: 0 14px; gap: 5px; font-size: 19px; }
+  .my-dates-add svg { width: 20px; height: 20px; }
+}
+
+/* Phone: "My dates" and the Add button share one line; the note sits below at full width. */
+@media (max-width: 640px) {
+  .my-dates-heading { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 10px; row-gap: 4px; align-items: center; }
+  .my-dates-heading > div { display: contents; }
+  .my-dates-heading h3 { grid-column: 1; grid-row: 1; white-space: nowrap; }
+  .my-dates-add { grid-column: 2; grid-row: 1; justify-self: end; }
+  .my-dates-heading p { grid-column: 1 / -1; grid-row: 2; }
+}
+@media (max-width: 360px) {
+  .my-dates-heading h3 { font-size: 23px; }
+  .my-dates-add { min-height: 44px; padding: 0 12px; font-size: 17px; }
+}
