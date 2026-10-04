@@ -253,6 +253,10 @@
 [data-theme="neon"] .vrat-tag-amavasya { background: #221c17; color: #f1e8dd; }
 [data-theme="neon"] .vrat-month ul { background: #181411; }
 [data-theme="neon"] .vrat-link { border: 1px solid #3a3129; background: #1d1814; color: #bf997d; }
+[data-theme="neon"] .event-search-caret { color: #cec3b5; }
+[data-theme="neon"] .event-search-list { background: #181411; }
+[data-theme="neon"] .event-search-list li:hover, [data-theme="neon"] .event-search-option-active { background: #1f1a15; }
+[data-theme="neon"] .event-search-emoji { background: #211b17; }
 :root[data-theme="pastel"] { --paper: #fff5ec; --paper-deep: #fff1e6; --ink: #3e291f; --muted: #4c352a; --line: #f2d6c2; --saffron: #e9872c; --green: #31584a; }
 [data-theme="pastel"] ::selection { background: #f2c38c; }
 [data-theme="pastel"] .top-ad-wrap { background: #fff2e7; }
@@ -507,6 +511,10 @@
 [data-theme="pastel"] .vrat-tag-amavasya { background: #ffefe3; color: #412c22; }
 [data-theme="pastel"] .vrat-month ul { background: #fff7f0; }
 [data-theme="pastel"] .vrat-link { border: 1px solid #f2d6c2; background: #fff3ea; color: #8a4512; }
+[data-theme="pastel"] .event-search-caret { color: #654d40; }
+[data-theme="pastel"] .event-search-list { background: #fff7f0; }
+[data-theme="pastel"] .event-search-list li:hover, [data-theme="pastel"] .event-search-option-active { background: #fff2e7; }
+[data-theme="pastel"] .event-search-emoji { background: #fff0e5; }
 :root[data-theme="neon"] { --muted: #b9ad9d; color-scheme: dark; }
 :root[data-theme="pastel"] { --muted: #7a6052; }
 [data-theme="neon"] ::selection { background: #c4581a; color: #fff; }
