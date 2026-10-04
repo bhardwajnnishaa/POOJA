@@ -236,6 +236,12 @@
 [data-theme="neon"] .theme-picker-button { color: #fff; }
 [data-theme="neon"] .theme-picker-button { color: #f5ece1; }
 [data-theme="neon"] .theme-picker-button svg { background: #181411; }
+[data-theme="neon"] .shopping-retailer.marketplace-blinkit { border-left-color: #e3b21b; color: #ebe2d6; }
+[data-theme="neon"] .shopping-retailer.marketplace-zepto { border-left-color: #d6336c; color: #c9849e; }
+[data-theme="neon"] .shopping-retailer.marketplace-instamart { border-left-color: #f0731a; color: #c7987c; }
+[data-theme="neon"] .shopping-retailer.marketplace-bigbasket { border-left-color: #6a9a2b; color: #95a880; }
+[data-theme="neon"] .shopping-retailer.marketplace-swiggy { border-left-color: #f0731a; color: #c7987c; }
+[data-theme="neon"] .shopping-retailer.marketplace-zomato { border-left-color: #cb202d; color: #cb808a; }
 :root[data-theme="pastel"] { --paper: #fff5ec; --paper-deep: #fff1e6; --ink: #3e291f; --muted: #4c352a; --line: #f2d6c2; --saffron: #e9872c; --green: #31584a; }
 [data-theme="pastel"] ::selection { background: #f2c38c; }
 [data-theme="pastel"] .top-ad-wrap { background: #fff2e7; }
@@ -473,6 +479,12 @@
 [data-theme="pastel"] .theme-picker-button { color: #fff; }
 [data-theme="pastel"] .theme-picker-button { color: #3d281e; }
 [data-theme="pastel"] .theme-picker-button svg { background: #fff7f0; }
+[data-theme="pastel"] .shopping-retailer.marketplace-blinkit { border-left-color: #e3b21b; color: #483227; }
+[data-theme="pastel"] .shopping-retailer.marketplace-zepto { border-left-color: #d6336c; color: #9c1f4f; }
+[data-theme="pastel"] .shopping-retailer.marketplace-instamart { border-left-color: #f0731a; color: #9a4310; }
+[data-theme="pastel"] .shopping-retailer.marketplace-bigbasket { border-left-color: #6a9a2b; color: #3f6118; }
+[data-theme="pastel"] .shopping-retailer.marketplace-swiggy { border-left-color: #f0731a; color: #9a4310; }
+[data-theme="pastel"] .shopping-retailer.marketplace-zomato { border-left-color: #cb202d; color: #a0182a; }
 :root[data-theme="neon"] { --muted: #b9ad9d; color-scheme: dark; }
 :root[data-theme="pastel"] { --muted: #7a6052; }
 [data-theme="neon"] ::selection { background: #c4581a; color: #fff; }

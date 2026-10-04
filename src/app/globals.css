@@ -900,3 +900,19 @@ body { overflow-x: clip; }
 @media (min-width: 901px) {
   .brand { margin-right: 56px; }
 }
+
+/* Fast delivery and food apps, under the main stores. */
+.delivery-links { margin-top: 18px; padding-top: 14px; border-top: 1px dashed var(--line); }
+.delivery-links h4 { margin: 0; font-family: var(--serif); font-size: 21px; font-weight: 600; }
+.delivery-links h4 + p { margin: 2px 0 10px; color: var(--muted); font-size: 15px; }
+.delivery-list + h4 { margin-top: 16px; margin-bottom: 10px; }
+.delivery-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.shopping-retailer.marketplace-blinkit { border-left-color: #e3b21b; color: #2d5a1f; }
+.shopping-retailer.marketplace-zepto { border-left-color: #d6336c; color: #9c1f4f; }
+.shopping-retailer.marketplace-instamart { border-left-color: #f0731a; color: #9a4310; }
+.shopping-retailer.marketplace-bigbasket { border-left-color: #6a9a2b; color: #3f6118; }
+.shopping-retailer.marketplace-swiggy { border-left-color: #f0731a; color: #9a4310; }
+.shopping-retailer.marketplace-zomato { border-left-color: #cb202d; color: #a0182a; }
+@media (max-width: 640px) {
+  .delivery-links h4 { font-size: 22px; }
+}

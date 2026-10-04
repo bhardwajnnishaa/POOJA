@@ -37,7 +37,50 @@ export function retailerSearch(id: RetailerId, term: string, price?: PriceRange)
   const retailer = RETAILERS.find((entry) => entry.id === id)!;
   return { label: retailer.label, href: id === "amazon" ? amazonSearch(term, price) : retailer.search(term) };
 }
-export type ShoppingLink = { id: RetailerId; label: string; href: string };
+export type ShoppingLink = { id: RetailerId | QuickStoreId; label: string; href: string };
+
+// Fast delivery apps. Grocery apps open a search; food apps open the home page, since dishes depend on the city.
+const QUICK_STORES = [
+  { id: "blinkit", label: "Blinkit", search: (term: string) => `https://blinkit.com/s/?q=${encodeURIComponent(term)}` },
+  { id: "zepto", label: "Zepto", search: (term: string) => `https://www.zepto.com/search?query=${encodeURIComponent(term)}` },
+  { id: "instamart", label: "Instamart", search: (term: string) => `https://www.swiggy.com/instamart/search?custom_back=true&query=${encodeURIComponent(term)}` },
+  { id: "bigbasket", label: "BigBasket", search: (term: string) => `https://www.bigbasket.com/ps/?q=${encodeURIComponent(term)}` },
+] as const;
+
+const FOOD_STORES = [
+  { id: "swiggy", label: "Swiggy", href: "https://www.swiggy.com/" },
+  { id: "zomato", label: "Zomato", href: "https://www.zomato.com/" },
+] as const;
+
+export type QuickStoreId = (typeof QUICK_STORES)[number]["id"] | (typeof FOOD_STORES)[number]["id"];
+export type DeliveryLinks = { quick: ShoppingLink[]; food: ShoppingLink[] };
+
+function deliveryLinks(term: string): DeliveryLinks {
+  return {
+    quick: QUICK_STORES.map((store) => ({ id: store.id, label: store.label, href: store.search(term) })),
+    food: FOOD_STORES.map((store) => ({ id: store.id, label: store.label, href: store.href })),
+  };
+}
+
+// One short search per event, for things that can arrive in minutes.
+const QUICK_TERMS: Record<FestivalId, string> = {
+  diwali: "diya", eid: "sewai", newYear: "party snacks", rakhi: "rakhi", holi: "gulal",
+  independenceDay: "tricolour flag", navratri: "puja samagri", dussehra: "puja samagri",
+  karwaChauth: "karwa chauth thali", dhanteras: "silver coin", bhaiDooj: "chocolate gift box",
+  chhath: "puja samagri", guruNanak: "dry fruits", christmas: "plum cake",
+};
+
+const PERSONAL_QUICK_TERMS: Record<PersonalDateKind, string> = {
+  birthday: "birthday cake", anniversary: "flower bouquet", other: "chocolate gift box",
+};
+
+export const DELIVERY_LINKS = Object.fromEntries(
+  (Object.keys(QUICK_TERMS) as FestivalId[]).map((id) => [id, deliveryLinks(QUICK_TERMS[id])]),
+) as Record<FestivalId, DeliveryLinks>;
+
+export const PERSONAL_DELIVERY_LINKS = Object.fromEntries(
+  (Object.keys(PERSONAL_QUICK_TERMS) as PersonalDateKind[]).map((kind) => [kind, deliveryLinks(PERSONAL_QUICK_TERMS[kind])]),
+) as Record<PersonalDateKind, DeliveryLinks>;
 
 const SHOPPING_TERMS: Record<FestivalId, Record<RetailerId, string>> = {
   diwali: {
