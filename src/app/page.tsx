@@ -21,7 +21,8 @@ import {
   TreePine,
   WandSparkles,
 } from "lucide-react";
-import { AFFILIATE_LINKS, PERSONAL_SHOPPING_LINKS, type FestivalId, type ShoppingLink } from "@/config/affiliates";
+import { AFFILIATE_LINKS, DELIVERY_LINKS, PERSONAL_DELIVERY_LINKS, PERSONAL_SHOPPING_LINKS, type DeliveryLinks as DeliveryLinksData, type FestivalId, type ShoppingLink } from "@/config/affiliates";
+import { DeliveryLinks } from "@/components/DeliveryLinks";
 import { SiteHeader } from "@/components/SiteHeader";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { InstallBanner } from "@/components/InstallBanner";
@@ -199,10 +200,10 @@ function CountdownCard({ event, now, calendarDates, isFavorite, isShoppingEvent,
   );
 }
 
-type ShopTarget = { key: string; name: string; subtitle: string; theme: string; icon: ReactNode; links: ShoppingLink[] };
+type ShopTarget = { key: string; name: string; subtitle: string; theme: string; icon: ReactNode; links: ShoppingLink[]; delivery: DeliveryLinksData };
 
 function festivalTarget(event: Festival): ShopTarget {
-  return { key: event.id, name: event.name, subtitle: event.subtitle, theme: event.theme, icon: <Icon icon={event.icon} />, links: event.shoppingLinks };
+  return { key: event.id, name: event.name, subtitle: event.subtitle, theme: event.theme, icon: <Icon icon={event.icon} />, links: event.shoppingLinks, delivery: DELIVERY_LINKS[event.id] };
 }
 
 function personalTarget(date: PersonalDate, now: number): ShopTarget {
@@ -215,6 +216,7 @@ function personalTarget(date: PersonalDate, now: number): ShopTarget {
     theme,
     icon: <KindIcon aria-hidden="true" />,
     links: PERSONAL_SHOPPING_LINKS[date.kind],
+    delivery: PERSONAL_DELIVERY_LINKS[date.kind],
   };
 }
 
@@ -261,6 +263,7 @@ function ShoppingSidebar({ target, festivals, personal, onChange }: {
           </a>
         ))}
       </nav>
+      <DeliveryLinks links={target.delivery} eventName={target.name} />
       <p className="shopping-sidebar-note">Picked for {target.name} 💫</p>
     </aside>
   );

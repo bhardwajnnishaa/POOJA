@@ -8,7 +8,8 @@ import { QuoteMaker } from "@/components/QuoteMaker";
 import { ShareButton } from "@/components/ShareButton";
 import { ShareOptions } from "@/components/ShareOptions";
 import { SiteHeader } from "@/components/SiteHeader";
-import { AFFILIATE_LINKS, retailerSearch } from "@/config/affiliates";
+import { AFFILIATE_LINKS, DELIVERY_LINKS, retailerSearch } from "@/config/affiliates";
+import { DeliveryLinks } from "@/components/DeliveryLinks";
 import { BUDGETS, GIFT_IDEAS } from "@/config/gift-ideas";
 import { getCalendarData } from "@/lib/calendar-data";
 import {
@@ -251,8 +252,9 @@ export default async function FestivalPage({ params }: PageProps) {
             </a>
           ))}
         </nav>
+        <DeliveryLinks links={DELIVERY_LINKS[festival.id]} eventName={festival.name} />
         <p className="gift-disclosure">
-          Amazon links open with your budget already applied. On other stores, sort by price. We may earn a small commission when you buy through these links, at no extra cost to you.
+          Amazon links open with your budget already applied. On other stores, sort by price. Delivery apps show what is available near you. We may earn a small commission when you buy through these links, at no extra cost to you.
         </p>
       </section>
 
