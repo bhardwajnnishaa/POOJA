@@ -48,9 +48,13 @@ export default function RootLayout({
     <html lang="en-IN" className={`${sans.variable} ${serif.variable}`} data-theme="classic" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_BOOT_SCRIPT }} />
+        <link rel="preconnect" href="https://images.unsplash.com" />
       </head>
       <body>
         {children}
+        <Script id="service-worker" strategy="lazyOnload">
+          {`if ("serviceWorker" in navigator) navigator.serviceWorker.register("/sw.js").catch(function () {});`}
+        </Script>
         {CUELINKS_CID ? (
           <>
             <Script id="cuelinks-config" strategy="afterInteractive">

@@ -222,13 +222,24 @@ async function copyToClipboard(message: string) {
   }
 }
 
+const NO_ALIASES: Record<string, string> = {};
+
 export function QuoteMaker({
-  selectedEvent,
+  selectedEvent: selectedEventProp,
   eventNames = [],
+  eventAliases = NO_ALIASES,
 }: {
   selectedEvent?: string | null;
   eventNames?: string[];
+  eventAliases?: Record<string, string>;
 }) {
+  // The calendar page is pre-built, so a "?event=Diwali" link is read here in the browser.
+  const [urlEvent, setUrlEvent] = useState<string | null>(null);
+  useEffect(() => {
+    const requested = new URLSearchParams(window.location.search).get("event");
+    if (requested) setUrlEvent(eventAliases[requested] ?? requested);
+  }, [eventAliases]);
+  const selectedEvent = selectedEventProp ?? urlEvent;
   const [eventName, setEventName] = useState(FESTIVAL_NAMES[0]);
   const [tone, setTone] = useState<QuoteTone>("heartfelt");
   const [language, setLanguage] = useState<QuoteLanguage>("English");

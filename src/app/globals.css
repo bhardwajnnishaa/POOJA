@@ -916,3 +916,8 @@ body { overflow-x: clip; }
 @media (max-width: 640px) {
   .delivery-links h4 { font-size: 22px; }
 }
+
+/* Phones get a smaller hero photo, so it arrives sooner. */
+@media (max-width: 640px) {
+  .intro-image { background-image: url("https://images.unsplash.com/photo-1606293926075-69a00dbfde81?auto=format&fit=crop&w=720&q=60"); }
+}
