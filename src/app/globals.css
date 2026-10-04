@@ -1068,3 +1068,12 @@ body { overflow-x: clip; }
 :root:lang(hi-IN) body { line-height: 1.55; }
 /* Letter spacing splits Devanagari letters apart, so it is turned off in Hindi. */
 :root:lang(hi-IN) body * { letter-spacing: 0 !important; }
+
+/* Readability pass: small labels darkened to meet 4.5:1 contrast. */
+.eyebrow { color: #59624f; }
+.festival-hero .eyebrow { color: color-mix(in srgb, var(--event-color) 62%, #1f1a14); }
+.install-banner-title em { color: #b4561c; }
+.event-filter-group button { color: #5d6055; }
+.event-category-festival { color: #7a5a2c; }
+.gift-card a { color: #8a4512; }
+.install-banner-button, .my-dates-add, .my-dates-save, .install-app-button, .app-install-button { background: #b8501a; }
