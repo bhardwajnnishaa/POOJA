@@ -483,12 +483,12 @@ export default function Home() {
     const hasNextDate = hasKnownDate(event, indiaYear(nextEventTimestamp(event, now, calendarDates)), calendarDates);
     return hasNextDate && matchesSearch && (!showFavorites || favoriteIds.includes(event.id));
   });
-  const visibleEvents = matchingEvents.toSorted((first, second) => nextEventTimestamp(first, now, calendarDates) - nextEventTimestamp(second, now, calendarDates));
-  const festivalTargets = FESTIVALS
-    .toSorted((first, second) => nextEventTimestamp(first, now, calendarDates) - nextEventTimestamp(second, now, calendarDates))
+  const visibleEvents = [...matchingEvents].sort((first, second) => nextEventTimestamp(first, now, calendarDates) - nextEventTimestamp(second, now, calendarDates));
+  const festivalTargets = [...FESTIVALS]
+    .sort((first, second) => nextEventTimestamp(first, now, calendarDates) - nextEventTimestamp(second, now, calendarDates))
     .map((event) => festivalTarget(event, hindi));
-  const personalTargets = personalDates
-    .toSorted((first, second) => nextPersonalDate(first, now) - nextPersonalDate(second, now))
+  const personalTargets = [...personalDates]
+    .sort((first, second) => nextPersonalDate(first, now) - nextPersonalDate(second, now))
     .map((date) => personalTarget(date, now));
   const shoppingTarget = [...personalTargets, ...festivalTargets].find((target) => target.key === shoppingKey)
     ?? festivalTargets.find((target) => target.key === (visibleEvents[0] ?? FESTIVALS[0]).id)!;
@@ -554,7 +554,7 @@ export default function Home() {
           <FestivalSearch
             query={searchQuery}
             onQuery={setSearchQuery}
-            events={FESTIVALS.toSorted((first, second) => nextEventTimestamp(first, now, calendarDates) - nextEventTimestamp(second, now, calendarDates))}
+            events={[...FESTIVALS].sort((first, second) => nextEventTimestamp(first, now, calendarDates) - nextEventTimestamp(second, now, calendarDates))}
             now={now}
             calendarDates={calendarDates}
           />

@@ -14,7 +14,7 @@ type RemindMeProps = {
   className?: string;
 };
 
-const compact = (date: string) => date.replaceAll("-", "");
+const compact = (date: string) => date.split("-").join("");
 
 function nextDay(date: string) {
   return new Date(Date.parse(`${date}T00:00:00Z`) + 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
