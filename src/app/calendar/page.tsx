@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowDownRight, CalendarDays, ChevronRight, Clock3 } from "lucide-react";
+import { ArrowDownRight, CalendarDays, ChevronDown, ChevronRight, Clock3 } from "lucide-react";
 import { QuoteMaker } from "@/components/QuoteMaker";
 import { SiteHeader } from "@/components/SiteHeader";
 import { getCalendarData, rollingWindowEnd, type CalendarData } from "@/lib/calendar-data";
@@ -147,10 +147,17 @@ function MonthCard({
           );
         })}
       </div>
-      <div className="month-events">
-        {monthEvents.length === 0 ? (
-          <p className="month-empty">No marked holidays this month.</p>
-        ) : monthEvents.map((event) => (
+      {monthEvents.length === 0 ? (
+        <div className="month-events"><p className="month-empty">No marked holidays this month.</p></div>
+      ) : (
+        // Closed by default, so the months stay clean; tap the bar to see the list.
+        <details className="month-events-toggle">
+          <summary>
+            <span>🎉 {monthEvents.length} important {monthEvents.length === 1 ? "day" : "days"}</span>
+            <ChevronDown aria-hidden="true" />
+          </summary>
+          <div className="month-events">
+            {monthEvents.map((event) => (
           <Link className="month-event-row" href={eventHref(event)} key={`${event.date}-${event.name}`}>
             <time dateTime={event.date}>{eventDay(event)} <span>{MONTH_FORMATTER.format(new Date(Date.UTC(year, month - 1, 1))).slice(0, 3)}</span></time>
             <span className="month-event-name">{event.name}</span>
@@ -160,8 +167,10 @@ function MonthCard({
             {event.tentative && <span className="event-tentative">Expected</span>}
             <ChevronRight aria-hidden="true" />
           </Link>
-        ))}
-      </div>
+            ))}
+          </div>
+        </details>
+      )}
     </article>
   );
 }

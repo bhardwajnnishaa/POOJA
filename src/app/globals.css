@@ -1001,3 +1001,16 @@ body { overflow-x: clip; }
   .event-search-list b { font-size: 19px; }
   .event-search-list small { font-size: 15px; }
 }
+
+/* Calendar: each month's important days sit behind one bar, closed by default. */
+.month-events-toggle { margin-top: 10px; }
+.month-events-toggle summary { display: flex; min-height: 50px; align-items: center; justify-content: space-between; gap: 10px; padding: 0 14px; border: 1px solid #e8c9a8; border-radius: 10px; background: #fdf3e7; color: #8a4512; cursor: pointer; font-family: var(--serif); font-size: 18px; font-weight: 600; list-style: none; }
+.month-events-toggle summary::-webkit-details-marker { display: none; }
+.month-events-toggle summary svg { width: 20px; height: 20px; flex: 0 0 auto; transition: transform .2s ease; }
+.month-events-toggle[open] summary svg { transform: rotate(180deg); }
+.month-events-toggle[open] summary { border-bottom-right-radius: 0; border-bottom-left-radius: 0; }
+.month-events-toggle .month-events { padding: 2px 8px; border: 1px solid #e8c9a8; border-top: 0; border-radius: 0 0 10px 10px; }
+@media (max-width: 640px) {
+  .month-events-toggle summary { min-height: 54px; font-size: 19px; }
+}
+.month-events-toggle .month-event-row { grid-template-columns: 64px minmax(0, 1fr) auto 14px; }
