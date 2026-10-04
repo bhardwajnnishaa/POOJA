@@ -1,6 +1,7 @@
 "use client";
 
 import { CountdownTimer, useSecondTick } from "@/components/CountdownTimer";
+import { RemindMe } from "@/components/RemindMe";
 
 export type VratItem = { kind: "ekadashi" | "purnima" | "amavasya"; name: string; popularName?: string; date: string; start: number; end: number };
 
@@ -33,6 +34,13 @@ export function VratNext({ items }: { items: VratItem[] }) {
             ) : (
               <CountdownTimer target={item.start} label={`Time until ${item.name} begins`} className="vrat-timer" />
             )}
+            {!running ? (
+              <RemindMe
+                title={`${emoji} ${item.name}`}
+                date={item.date}
+                details={`${item.name}. Tithi: ${TIME.format(item.start)} to ${TIME.format(item.end)} IST. https://celebration-calendar-india.vercel.app/vrat`}
+              />
+            ) : null}
           </article>
         );
       })}
