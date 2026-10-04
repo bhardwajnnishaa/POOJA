@@ -1033,3 +1033,26 @@ body { overflow-x: clip; }
   .add-home-button { gap: 8px; padding: 0 14px; font-size: clamp(20px, 6.3vw, 26px); white-space: nowrap; }
   .add-home-button span { font-size: 1.05em; }
 }
+
+/* Remind me: add the day to Google Calendar or the phone's calendar. */
+.remind-me { position: relative; }
+.card-remind { grid-column: 1 / -1; }
+.remind-me-button { display: inline-flex; width: 100%; min-height: 46px; align-items: center; justify-content: center; gap: 8px; border: 1px solid #e8c9a8; border-radius: 10px; background: #fdf3e7; color: #8a4512; cursor: pointer; font-size: 16px; font-weight: 700; }
+.remind-me-button svg { width: 18px; height: 18px; }
+.remind-me-button[aria-expanded="true"] { border-bottom-right-radius: 0; border-bottom-left-radius: 0; }
+.remind-me-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 10px; border: 1px solid #e8c9a8; border-top: 0; border-radius: 0 0 10px 10px; background: #fffaf3; }
+.remind-me-option { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; gap: 7px; padding: 0 8px; border: 1px solid var(--line); border-radius: 9px; background: #fffdf8; color: var(--ink); cursor: pointer; font-size: 15px; font-weight: 700; text-align: center; }
+.remind-me-option svg { width: 18px; height: 18px; flex: 0 0 auto; color: #c4581a; }
+.remind-me-note { grid-column: 1 / -1; margin: 0; color: var(--muted); font-size: 14px; text-align: center; }
+.festival-remind { width: min(100%, 420px); margin: 12px auto 0; }
+.vrat-next-card .remind-me { margin-top: 12px; }
+@media (max-width: 640px) {
+  .remind-me-button { min-height: 50px; font-size: 18px; }
+  .remind-me-option { font-size: 16px; }
+}
+@media (max-width: 640px) {
+  .remind-me-menu { grid-template-columns: 1fr; }
+  .remind-me-option { justify-content: flex-start; padding: 0 14px; white-space: nowrap; }
+}
+.countdown-grid .remind-me-menu { grid-template-columns: 1fr; }
+.countdown-grid .remind-me-option { justify-content: flex-start; padding: 0 14px; white-space: nowrap; }

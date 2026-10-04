@@ -6,6 +6,7 @@ import { GiftIdeas } from "@/components/GiftIdeas";
 import { LiveCountdown } from "@/components/LiveCountdown";
 import { QuoteMaker } from "@/components/QuoteMaker";
 import { ShareButton } from "@/components/ShareButton";
+import { RemindMe } from "@/components/RemindMe";
 import { ShareOptions } from "@/components/ShareOptions";
 import { SiteHeader } from "@/components/SiteHeader";
 import { AFFILIATE_LINKS, DELIVERY_LINKS, retailerSearch } from "@/config/affiliates";
@@ -205,6 +206,14 @@ export default async function FestivalPage({ params }: PageProps) {
             <ShareOptions message={`Getting ready for ${festival.name} ${year}! ${festival.emoji}`} />
           )}
         </div>
+        {dateKnown ? (
+          <RemindMe
+            className="festival-remind"
+            title={`${festival.emoji} ${festival.name}`}
+            date={new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Kolkata" }).format(target)}
+            details={`${festival.name} ${year}: ${festival.subtitle}. Countdown: https://celebration-calendar-india.vercel.app/countdown/${festival.slug}`}
+          />
+        ) : null}
         <a className="write-quote-link festival-quote-link" href="#quote-studio">
           <WandSparkles aria-hidden="true" />
           Write {festival.name} wishes

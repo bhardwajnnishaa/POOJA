@@ -39,6 +39,7 @@ import {
   type PersonalDate,
 } from "@/lib/personal-dates";
 import { ShareButton } from "@/components/ShareButton";
+import { RemindMe } from "@/components/RemindMe";
 import {
   FESTIVAL_INFO,
   festivalPath,
@@ -66,6 +67,9 @@ const INDIA_DATE_FORMATTER = new Intl.DateTimeFormat("en-IN", {
   year: "numeric",
   timeZone: "Asia/Kolkata",
 });
+
+// YYYY-MM-DD in India, for calendar reminders.
+const INDIA_DAY = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Kolkata" });
 
 function eventDateLabel(timestamp: number) {
   return INDIA_DATE_FORMATTER.format(timestamp);
@@ -288,6 +292,12 @@ function CountdownCard({ event, now, calendarDates, isFavorite, isShoppingEvent,
             <WandSparkles aria-hidden="true" />
             Write a wish
           </Link>
+          <RemindMe
+            className="card-remind"
+            title={`${event.emoji} ${event.name}`}
+            date={INDIA_DAY.format(target)}
+            details={`${event.name}: ${event.subtitle}. Countdown: https://celebration-calendar-india.vercel.app${festivalPath(event)}`}
+          />
         </div>
       </div>
     </article>

@@ -8,6 +8,7 @@ import { BUDGETS, PERSONAL_GIFT_IDEAS } from "@/config/gift-ideas";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { GiftIdeas } from "@/components/GiftIdeas";
 import { ShareButton } from "@/components/ShareButton";
+import { RemindMe } from "@/components/RemindMe";
 import {
   MAX_NAME_LENGTH,
   MAX_PERSONAL_DATES,
@@ -86,6 +87,13 @@ function MyDateCard({ date, now, onDelete, onShared }: {
           <Link className="write-quote-link" href={`/calendar?event=${encodeURIComponent(date.name)}#quote-studio`}>
             <WandSparkles aria-hidden="true" /> Write a wish
           </Link>
+          <RemindMe
+            className="card-remind"
+            title={`${KIND_EMOJI[date.kind]} ${date.name}`}
+            date={new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Kolkata" }).format(target)}
+            details={`${date.name}, saved in Festive Clock.`}
+            yearly
+          />
         </div>
       </div>
     </article>
