@@ -64,8 +64,8 @@ export async function drawStoryCard(story: StoryData, now: number): Promise<Blob
 
   // Confetti in fixed spots, so every card looks the same.
   const confetti: [number, number, number, string][] = [
-    [110, 420, 14, "#ffffff"], [960, 360, 10, "#2b1055"], [180, 1180, 9, "#3dffd0"], [930, 1060, 16, "#ffffff"],
-    [90, 1560, 12, "#2b1055"], [990, 1520, 9, "#3dffd0"], [540, 300, 8, "#ffffff"], [820, 1700, 11, "#ffffff"],
+    [110, 420, 14, "#ffffff"], [960, 360, 10, "#ffd23d"], [180, 1180, 9, "#3dffd0"], [930, 1060, 16, "#ffffff"],
+    [90, 1560, 12, "#ffd23d"], [990, 1520, 9, "#3dffd0"], [540, 300, 8, "#ffffff"], [820, 1700, 11, "#ffffff"],
   ];
   for (const [x, y, radius, colour] of confetti) {
     context.fillStyle = colour;
@@ -125,7 +125,7 @@ export async function drawStoryCard(story: StoryData, now: number): Promise<Blob
   context.fillStyle = "#ffffff";
   roundedRect(context, 90, 1630, WIDTH - 180, 170, 85);
   context.fill();
-  context.fillStyle = "#2b1055";
+  context.fillStyle = "#3b261c";
   context.font = `700 46px ${sans}`;
   context.fillText("Count down with me on Festive Clock", WIDTH / 2, 1705);
   context.fillStyle = "#ff3d7f";
