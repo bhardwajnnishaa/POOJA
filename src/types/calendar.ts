@@ -21,6 +21,8 @@ export type CalendarEntry = {
   source: string;
   tentative: boolean;
   festivalId?: FestivalId;
+  /** Where the calendar links this entry; defaults to the wish maker. */
+  href?: string;
 };
 
 export type CalendarResponse = {

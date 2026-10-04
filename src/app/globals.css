@@ -921,3 +921,58 @@ body { overflow-x: clip; }
 @media (max-width: 640px) {
   .intro-image { background-image: url("https://images.unsplash.com/photo-1606293926075-69a00dbfde81?auto=format&fit=crop&w=720&q=60"); }
 }
+
+/* Ekadashi, Purnima & Amavasya page */
+.vrat-hero { width: min(100% - 32px, 860px); margin: 0 auto; padding: 48px 0 24px; text-align: center; }
+.vrat-hero .eyebrow { justify-content: center; }
+.vrat-hero h1 { margin: 18px 0 12px; font-family: var(--serif); font-size: clamp(36px, 6vw, 60px); font-weight: 500; line-height: 1.1; }
+.vrat-hero h1 em { color: #c4651f; }
+.vrat-hero p { margin: 0 auto; max-width: 560px; color: var(--muted); font-size: 18px; line-height: 1.6; }
+.vrat-section { width: min(100% - 32px, 960px); margin: 0 auto 36px; }
+.vrat-section > h2 { margin: 0 0 12px; font-family: var(--serif); font-size: clamp(26px, 4vw, 34px); font-weight: 600; }
+.vrat-next { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.vrat-next-card { padding: 18px; border: 1px solid var(--line); border-top: 4px solid #c4651f; border-radius: 12px; background: #fffdf8; }
+.vrat-next-card.vrat-purnima { border-top-color: #d1a21f; }
+.vrat-next-card.vrat-amavasya { border-top-color: #3d4a5c; }
+.vrat-next-label { color: var(--muted); font-size: 14px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+.vrat-next-card h3 { margin: 8px 0 2px; font-family: var(--serif); font-size: 24px; font-weight: 600; line-height: 1.2; }
+.vrat-popular { display: block; margin: 2px 0; color: #a14f14; font-size: 15px; font-weight: 700; }
+.vrat-next-date { margin: 4px 0 12px; color: var(--ink); font-size: 18px; font-weight: 700; }
+.vrat-running { margin: 0; padding: 10px 12px; border-radius: 8px; background: #fdf0e3; color: #8a4512; font-weight: 700; }
+.vrat-timer { gap: 6px; }
+.vrat-timer .timer-value { font-size: 26px; }
+.vrat-timer .timer-label { font-size: 11px; }
+.vrat-legend { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 16px; }
+.vrat-tag { display: inline-flex; align-items: center; min-height: 28px; padding: 0 10px; border-radius: 999px; font-size: 13px; font-weight: 700; white-space: nowrap; }
+.vrat-tag-ekadashi { background: #fdeee0; color: #94460f; }
+.vrat-tag-purnima { background: #fbf3d6; color: #7a5a08; }
+.vrat-tag-amavasya { background: #e7ebf1; color: #2f3a49; }
+.vrat-month { margin-bottom: 18px; }
+.vrat-month h3 { margin: 0 0 8px; font-family: var(--serif); font-size: 22px; font-weight: 600; }
+.vrat-month ul { margin: 0; padding: 0; list-style: none; border: 1px solid var(--line); border-radius: 12px; background: #fffdf8; }
+.vrat-row { display: grid; grid-template-columns: 96px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 12px 14px; }
+.vrat-row + .vrat-row { border-top: 1px solid var(--line); }
+.vrat-row time { color: var(--ink); font-size: 15px; font-weight: 700; }
+.vrat-row b { display: block; font-family: var(--serif); font-size: 19px; font-weight: 600; }
+.vrat-row small { display: block; margin-top: 2px; color: var(--muted); font-size: 14px; }
+.vrat-note { margin: 16px 0 0; color: var(--muted); font-size: 15px; line-height: 1.6; }
+.vrat-link { display: flex; min-height: 52px; align-items: center; justify-content: center; gap: 8px; margin-top: 10px; border: 1px solid #e8c9a8; border-radius: 10px; background: #fdf3e7; color: #8a4512; font-family: var(--serif); font-size: 19px; font-weight: 600; }
+.vrat-link svg { width: 18px; height: 18px; }
+@media (max-width: 760px) {
+  .vrat-next { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .vrat-hero { padding-top: 32px; }
+  .vrat-hero p { font-size: 17px; }
+  .vrat-row { grid-template-columns: 74px minmax(0, 1fr); }
+  .vrat-row .vrat-tag { grid-column: 2; justify-self: start; }
+  .vrat-row b { font-size: 18px; }
+}
+.vrat-link { padding: 8px 14px; text-align: center; line-height: 1.25; }
+.vrat-link svg { flex: 0 0 auto; }
+@media (max-width: 640px) {
+  .vrat-link { width: 100%; font-size: 18px; }
+}
+@media (min-width: 641px) {
+  .vrat-link { min-height: 42px; margin-top: 0; font-size: 16px; }
+}

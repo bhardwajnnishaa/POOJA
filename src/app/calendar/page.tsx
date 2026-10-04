@@ -5,6 +5,7 @@ import { QuoteMaker } from "@/components/QuoteMaker";
 import { SiteHeader } from "@/components/SiteHeader";
 import { getCalendarData, rollingWindowEnd, type CalendarData } from "@/lib/calendar-data";
 import { FESTIVAL_INFO, eventTimestamp, hasKnownDate } from "@/lib/festivals";
+import { vratDays } from "@/lib/tithi";
 import type { CalendarEntry } from "@/types/calendar";
 import { BrandMark } from "@/components/BrandMark";
 import { FooterLinks } from "@/components/FooterLinks";
@@ -59,7 +60,11 @@ function withFestivalDates(data: CalendarData, todayDate: string, windowEnd: str
       }
     }
   }
-  return [...data.events, ...added].sort((first, second) => first.date.localeCompare(second.date));
+  // Ekadashi, Purnima and Amavasya, worked out from the moon.
+  const vrats: CalendarEntry[] = vratDays(todayDate, windowEnd).map((day) => ({
+    date: day.date, name: day.name, category: "observance", source: "Festive Clock", tentative: false, href: "/vrat",
+  }));
+  return [...data.events, ...added, ...vrats].sort((first, second) => first.date.localeCompare(second.date));
 }
 
 function eventDay(event: CalendarEntry) {
@@ -67,6 +72,7 @@ function eventDay(event: CalendarEntry) {
 }
 
 function eventHref(event: CalendarEntry) {
+  if (event.href) return event.href;
   return `/calendar?event=${encodeURIComponent(event.name)}#quote-studio`;
 }
 
