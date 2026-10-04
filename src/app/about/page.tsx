@@ -19,7 +19,7 @@ export default function AboutPage() {
         <li>Add your own birthdays, anniversaries and special days in My dates.</li>
         <li>Find gift ideas for every budget, from under ₹500 to above ₹1,000.</li>
         <li>Write wishes in English, Hindi or Hinglish and share them on WhatsApp, Facebook or Telegram.</li>
-        <li>Install it on your phone from the <Link href="/app">Get the app</Link> page.</li>
+        <li>Put it on your phone with <Link href="/app">Add to Home Screen</Link>. No download needed.</li>
       </ul>
 
       <h2>Where the dates come from</h2>

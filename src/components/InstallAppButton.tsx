@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Download } from "lucide-react";
 import { InstallSteps } from "@/components/InstallSteps";
 import { useInstallPrompt } from "@/lib/use-install-prompt";
 
@@ -20,7 +19,7 @@ export function InstallAppButton() {
         aria-expanded={canPrompt ? undefined : showSteps}
         onClick={() => (canPrompt ? void promptInstall() : setShowSteps(!showSteps))}
       >
-        <Download aria-hidden="true" /> Install app
+        <span aria-hidden="true">📲</span> Add to Home Screen
       </button>
       {showSteps ? <span className="install-app-hint" role="status"><InstallSteps device={device} /></span> : null}
     </span>
