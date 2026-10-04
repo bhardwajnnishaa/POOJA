@@ -1,18 +1,68 @@
 // Festive Clock service worker: opens the app instantly and works offline.
 // Pages show the saved copy at once and refresh it in the background, so updates appear on the next open.
-const CACHE = "festive-clock-v1";
+const CACHE = "festive-clock-v2";
 const START_PAGES = ["/", "/calendar"];
 const HERO_HOST = "images.unsplash.com";
+const SAVED_AT = "/__offline-saved-at";
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(START_PAGES)).then(() => self.skipWaiting()));
 });
 
+// Save every page in the sitemap, with its scripts and styles, so all festivals open offline.
+// New festivals added to the sitemap are picked up automatically.
+async function saveAllPages() {
+  const cache = await caches.open(CACHE);
+  const sitemap = await fetch("/sitemap.xml").then((response) => response.text());
+  const paths = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => new URL(match[1]).pathname);
+  const assets = new Set();
+  let allSaved = true;
+  for (const path of paths) {
+    try {
+      const response = await fetch(path);
+      if (!response.ok) { allSaved = false; continue; }
+      const html = await response.clone().text();
+      await cache.put(path, response);
+      for (const match of html.matchAll(/(?:src|href)="(\/_next\/static\/[^"]+)"/g)) assets.add(match[1]);
+    } catch {
+      // Skip a page that fails; the rest still get saved.
+      allSaved = false;
+    }
+  }
+  for (const asset of assets) {
+    if (await cache.match(asset)) continue;
+    try {
+      const response = await fetch(asset);
+      if (response.ok) await cache.put(asset, response);
+    } catch {
+      // Skip a file that fails.
+    }
+  }
+  // Once every page is fresh, drop build files from older versions to save space.
+  if (allSaved) {
+    for (const request of await cache.keys()) {
+      const path = new URL(request.url).pathname;
+      // Fonts are kept: some are only named inside stylesheets.
+      if (path.startsWith("/_next/static/") && !path.startsWith("/_next/static/media/") && !assets.has(path)) await cache.delete(request);
+    }
+  }
+  await cache.put(SAVED_AT, new Response(String(Date.now())));
+}
+
+// Re-save everything at most once a day, so offline pages stay current after updates.
+async function saveAllPagesDaily() {
+  const saved = await caches.match(SAVED_AT);
+  const last = saved ? Number(await saved.text()) : 0;
+  if (Date.now() - last > 24 * 60 * 60 * 1000) await saveAllPages();
+}
+
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys()
       .then((keys) => Promise.all(keys.filter((key) => key !== CACHE).map((key) => caches.delete(key))))
-      .then(() => self.clients.claim()),
+      .then(() => self.clients.claim())
+      .then(() => saveAllPages())
+      .catch(() => undefined),
   );
 });
 
@@ -35,8 +85,8 @@ async function savedThenRefresh(event) {
   const request = event.request;
   const saved = await caches.match(request, { ignoreSearch: true });
   const fresh = fetch(request).then((response) => saveCopy(request, response));
+  event.waitUntil(fresh.then(() => saveAllPagesDaily()).catch(() => undefined));
   if (saved) {
-    event.waitUntil(fresh.catch(() => undefined));
     return saved;
   }
   return fresh.catch(async () => (await caches.match("/")) ?? Response.error());
