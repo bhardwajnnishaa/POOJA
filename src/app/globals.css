@@ -818,3 +818,11 @@ button.month-day:hover, a.month-day:hover { background: #ece9df; }
   .theme-picker-button { width: 50px; height: 50px; }
   .theme-picker-button svg { width: 26px; height: 26px; }
 }
+
+/* Theme button as a rainbow colour wheel, so it reads as "change colours" and differs from the logo. */
+.theme-picker-button { width: 64px; height: 64px; padding: 6px; border: 0; background: conic-gradient(#ff3d3d, #ffb13d, #ffe14d, #3ddc84, #3db8ff, #8a5cff, #ff3dbb, #ff3d3d); color: #2a1f1a; box-shadow: 0 4px 14px rgba(0, 0, 0, .18); }
+.theme-picker-button svg { width: 100%; height: 100%; padding: 9px; border-radius: 50%; background: #fffdf8; }
+@media (max-width: 640px) {
+  .site-header { grid-template-rows: 72px 68px; height: 140px; }
+  .theme-picker-button { width: 60px; height: 60px; }
+}
