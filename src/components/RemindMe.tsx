@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Bell, CalendarPlus, Smartphone } from "lucide-react";
+import { useT } from "@/lib/i18n";
 
 type RemindMeProps = {
   title: string;
@@ -67,6 +68,7 @@ function icsFile({ title, date, details, yearly }: RemindMeProps) {
 // "Remind me": adds the day to Google Calendar or the phone's own calendar. Nothing is sent to our server.
 export function RemindMe(props: RemindMeProps) {
   const [open, setOpen] = useState(false);
+  const t = useT();
 
   function downloadIcs() {
     const blob = new Blob([icsFile(props)], { type: "text/calendar;charset=utf-8" });
@@ -84,17 +86,17 @@ export function RemindMe(props: RemindMeProps) {
   return (
     <div className={`remind-me ${props.className ?? ""}`.trim()}>
       <button className="remind-me-button" type="button" aria-expanded={open} onClick={() => setOpen(!open)}>
-        <Bell aria-hidden="true" /> Remind me
+        <Bell aria-hidden="true" /> {t("Remind me")}
       </button>
       {open ? (
         <div className="remind-me-menu">
           <a className="remind-me-option" href={googleCalendarLink(props)} target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)}>
-            <CalendarPlus aria-hidden="true" /> Google Calendar
+            <CalendarPlus aria-hidden="true" /> {t("Google Calendar")}
           </a>
           <button className="remind-me-option" type="button" onClick={downloadIcs}>
-            <Smartphone aria-hidden="true" /> Phone calendar
+            <Smartphone aria-hidden="true" /> {t("Phone calendar")}
           </button>
-          <p className="remind-me-note">Phone calendar alerts you the day before and on the day 🔔</p>
+          <p className="remind-me-note">{t("Phone calendar alerts you the day before and on the day 🔔")}</p>
         </div>
       ) : null}
     </div>

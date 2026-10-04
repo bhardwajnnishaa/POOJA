@@ -5,6 +5,7 @@ import { SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
 import "./themes.generated.css";
 import { THEME_BOOT_SCRIPT } from "@/lib/theme";
+import { LANG_BOOT_SCRIPT } from "@/lib/lang-boot";
 
 const CUELINKS_CID = process.env.NEXT_PUBLIC_CUELINKS_CID;
 
@@ -47,7 +48,7 @@ export default function RootLayout({
   return (
     <html lang="en-IN" className={`${sans.variable} ${serif.variable}`} data-theme="classic" suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: THEME_BOOT_SCRIPT }} />
+        <script dangerouslySetInnerHTML={{ __html: THEME_BOOT_SCRIPT + LANG_BOOT_SCRIPT }} />
         <link rel="preconnect" href="https://images.unsplash.com" />
       </head>
       <body>

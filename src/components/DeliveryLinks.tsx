@@ -1,5 +1,8 @@
+"use client";
+
 import { ArrowUpRight } from "lucide-react";
 import type { DeliveryLinks as DeliveryLinksData, ShoppingLink } from "@/config/affiliates";
+import { useT } from "@/lib/i18n";
 
 function StoreList({ links, label }: { links: ShoppingLink[]; label: string }) {
   return (
@@ -14,12 +17,13 @@ function StoreList({ links, label }: { links: ShoppingLink[]; label: string }) {
 }
 
 export function DeliveryLinks({ links, eventName }: { links: DeliveryLinksData; eventName: string }) {
+  const t = useT();
   return (
     <div className="delivery-links">
-      <h4>Need it today? ⚡</h4>
-      <p>Delivered in minutes.</p>
+      <h4>{t("Need it today? ⚡")}</h4>
+      <p>{t("Delivered in minutes.")}</p>
       <StoreList links={links.quick} label={`Quick delivery for ${eventName}`} />
-      <h4>Order the party food 🍕</h4>
+      <h4>{t("Order the party food 🍕")}</h4>
       <StoreList links={links.food} label="Food delivery" />
     </div>
   );

@@ -50,6 +50,7 @@ import {
   type FestivalInfo,
 } from "@/lib/festivals";
 import { BrandMark } from "@/components/BrandMark";
+import { FESTIVAL_HI, useDateLabel, useFestivalText, useLang, useT } from "@/lib/i18n";
 import { FooterLinks } from "@/components/FooterLinks";
 
 type Festival = FestivalInfo & { shoppingLinks: ShoppingLink[] };
@@ -87,11 +88,11 @@ function vibeLabel(remainingMs: number) {
 const DAY_MS = 24 * 60 * 60 * 1000;
 const VRAT_WORDS = /ekad|purn|amav|vrat|tithi|fast|moon|vrata|upvas/;
 
-function daysLeftLabel(timestamp: number, now: number) {
+function daysLeftLabel(timestamp: number, now: number, hindi: boolean) {
   const days = Math.ceil((timestamp - now) / DAY_MS);
-  if (days <= 0) return "Today 🎉";
-  if (days === 1) return "Tomorrow";
-  return `in ${days} days`;
+  if (days <= 0) return hindi ? "आज 🎉" : "Today 🎉";
+  if (days === 1) return hindi ? "कल" : "Tomorrow";
+  return hindi ? `${days} दिन में` : `in ${days} days`;
 }
 
 // Search box with a dropdown: tap a festival to open its countdown page.
@@ -103,14 +104,18 @@ function FestivalSearch({ query, onQuery, events, now, calendarDates }: {
   calendarDates: CalendarDates;
 }) {
   const router = useRouter();
+  const t = useT();
+  const hindi = useLang() === "hi";
+  const ft = useFestivalText();
+  const dateLabel = useDateLabel();
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(0);
   const needle = query.trim().toLowerCase();
-  const matches = events.filter((event) => `${event.name} ${event.otherName ?? ""} ${event.subtitle}`.toLowerCase().includes(needle));
-  const showVrat = needle === "" || VRAT_WORDS.test(needle);
+  const matches = events.filter((event) => `${event.name} ${event.otherName ?? ""} ${event.subtitle} ${FESTIVAL_HI[event.id].name}`.toLowerCase().includes(needle));
+  const showVrat = needle === "" || VRAT_WORDS.test(needle) || /एकादशी|पूर्णिमा|अमावस्या|व्रत/.test(needle);
   const options = [
-    ...matches.map((event) => ({ key: event.id, href: festivalPath(event), emoji: event.emoji, name: event.name, detail: `${eventDateLabel(nextEventTimestamp(event, now, calendarDates))} · ${daysLeftLabel(nextEventTimestamp(event, now, calendarDates), now)}` })),
-    ...(showVrat ? [{ key: "vrat", href: "/vrat", emoji: "🌙", name: "Ekadashi, Purnima & Amavasya", detail: "Every vrat date, with tithi times" }] : []),
+    ...matches.map((event) => ({ key: event.id, href: festivalPath(event), emoji: event.emoji, name: ft(event).name, detail: `${dateLabel(nextEventTimestamp(event, now, calendarDates))} · ${daysLeftLabel(nextEventTimestamp(event, now, calendarDates), now, hindi)}` })),
+    ...(showVrat ? [{ key: "vrat", href: "/vrat", emoji: "🌙", name: t("Ekadashi, Purnima & Amavasya"), detail: t("Every vrat date, with tithi times") }] : []),
   ];
 
   function choose(href: string) {
@@ -129,7 +134,7 @@ function FestivalSearch({ query, onQuery, events, now, calendarDates }: {
           aria-expanded={open && options.length > 0}
           aria-controls="festival-search-list"
           aria-autocomplete="list"
-          placeholder="Find a festival or celebration"
+          placeholder={t("Find a festival or celebration")}
           value={query}
           onFocus={() => setOpen(true)}
           onBlur={() => window.setTimeout(() => setOpen(false), 150)}
@@ -237,6 +242,10 @@ function CountdownCard({ event, now, calendarDates, isFavorite, isShoppingEvent,
   onSelectShop: (id: FestivalId) => void;
 }) {
   const target = nextEventTimestamp(event, now, calendarDates);
+  const t = useT();
+  const hindi = useLang() === "hi";
+  const { name, subtitle } = useFestivalText()(event);
+  const dateLabel = useDateLabel();
 
   return (
     <article className={`event-card event-card-${event.theme}`}>
@@ -245,8 +254,8 @@ function CountdownCard({ event, now, calendarDates, isFavorite, isShoppingEvent,
       </div>
       <div className="event-heading-row">
         <div>
-          <h3><Link href={festivalPath(event)}>{event.name}</Link></h3>
-          <p className="event-subtitle">{event.subtitle}</p>
+          <h3><Link href={festivalPath(event)}>{name}</Link></h3>
+          <p className="event-subtitle">{subtitle}</p>
         </div>
         <div className="event-card-controls">
           <button
@@ -269,32 +278,34 @@ function CountdownCard({ event, now, calendarDates, isFavorite, isShoppingEvent,
           >
             <Star aria-hidden="true" />
           </button>
-          <span className="event-calendar" suppressHydrationWarning title={eventDateLabel(target)}>
+          <span className="event-calendar" suppressHydrationWarning title={dateLabel(target)}>
             <CalendarDays aria-hidden="true" />
           </span>
         </div>
       </div>
-      <span className="vibe-pill">{vibeLabel(target - now)}</span>
+      <span className="vibe-pill">{t(vibeLabel(target - now))}</span>
       <div className="event-date-line" suppressHydrationWarning>
         <span className="live-dot" />
-        {eventDateLabel(target)}
-        <span className="event-date-note">India</span>
+        {dateLabel(target)}
+        <span className="event-date-note">{t("India")}</span>
       </div>
       <CountdownTimer target={target} label={`Time until ${event.name}`} />
       <div className="event-actions">
         <div className="card-action-row">
           <ShareButton
-            message={`${event.emoji} ${event.name} is coming on ${eventDateLabel(target)}! Who's ready? Counting down on Festive Clock 👇`}
-            onShared={() => announceToast(`${event.name} ready to share.`)}
-            story={{ title: event.name, emoji: event.emoji, target, dateLabel: eventDateLabel(target) }}
+            message={hindi
+              ? `${event.emoji} ${name} ${dateLabel(target)} को है! कौन-कौन तैयार है? Festive Clock पर काउंटडाउन देखें 👇`
+              : `${event.emoji} ${event.name} is coming on ${eventDateLabel(target)}! Who's ready? Counting down on Festive Clock 👇`}
+            onShared={() => announceToast(hindi ? `${name} शेयर के लिए तैयार।` : `${event.name} ready to share.`)}
+            story={{ title: name, emoji: event.emoji, target, dateLabel: dateLabel(target) }}
           />
           <Link className="write-quote-link" href={`/calendar?event=${encodeURIComponent(event.name)}#quote-studio`}>
             <WandSparkles aria-hidden="true" />
-            Write a wish
+            {t("Write a wish")}
           </Link>
           <RemindMe
             className="card-remind"
-            title={`${event.emoji} ${event.name}`}
+            title={`${event.emoji} ${name}`}
             date={INDIA_DAY.format(target)}
             details={`${event.name}: ${event.subtitle}. Countdown: https://celebration-calendar-india.vercel.app${festivalPath(event)}`}
           />
@@ -306,8 +317,9 @@ function CountdownCard({ event, now, calendarDates, isFavorite, isShoppingEvent,
 
 type ShopTarget = { key: string; name: string; subtitle: string; theme: string; icon: ReactNode; links: ShoppingLink[]; delivery: DeliveryLinksData };
 
-function festivalTarget(event: Festival): ShopTarget {
-  return { key: event.id, name: event.name, subtitle: event.subtitle, theme: event.theme, icon: <Icon icon={event.icon} />, links: event.shoppingLinks, delivery: DELIVERY_LINKS[event.id] };
+function festivalTarget(event: Festival, hindi = false): ShopTarget {
+  const text = hindi ? FESTIVAL_HI[event.id] : event;
+  return { key: event.id, name: text.name, subtitle: text.subtitle, theme: event.theme, icon: <Icon icon={event.icon} />, links: event.shoppingLinks, delivery: DELIVERY_LINKS[event.id] };
 }
 
 function personalTarget(date: PersonalDate, now: number): ShopTarget {
@@ -330,22 +342,24 @@ function ShoppingSidebar({ target, festivals, personal, onChange }: {
   personal: ShopTarget[];
   onChange: (key: string) => void;
 }) {
+  const t = useT();
+  const hindi = useLang() === "hi";
   return (
     <aside className={`shopping-sidebar event-card-${target.theme}`} aria-label="Shopping links for selected celebration">
       <div className="shopping-sidebar-heading">
-        <span className="eyebrow"><span className="eyebrow-line" /> CELEBRATION EDIT</span>
-        <h3>Shop the vibe ✨</h3>
-        <p>Gifts sorted. Zero overthinking. 🎁</p>
+        <span className="eyebrow"><span className="eyebrow-line" /> {t("CELEBRATION EDIT")}</span>
+        <h3>{t("Shop the vibe ✨")}</h3>
+        <p>{t("Gifts sorted. Zero overthinking. 🎁")}</p>
       </div>
       <label className="shopping-event-picker">
-        <span>Choose an event</span>
+        <span>{t("Choose an event")}</span>
         <select value={target.key} onChange={(changeEvent) => onChange(changeEvent.target.value)}>
           {personal.length > 0 ? (
-            <optgroup label="My dates">
+            <optgroup label={t("My dates")}>
               {personal.map((option) => <option key={option.key} value={option.key}>{option.name}</option>)}
             </optgroup>
           ) : null}
-          <optgroup label="Festivals">
+          <optgroup label={t("Festivals")}>
             {festivals.map((option) => <option key={option.key} value={option.key}>{option.name}</option>)}
           </optgroup>
         </select>
@@ -368,7 +382,7 @@ function ShoppingSidebar({ target, festivals, personal, onChange }: {
         ))}
       </nav>
       <DeliveryLinks links={target.delivery} eventName={target.name} />
-      <p className="shopping-sidebar-note">Picked for {target.name} 💫</p>
+      <p className="shopping-sidebar-note">{hindi ? `${target.name} के लिए चुना गया 💫` : `Picked for ${target.name} 💫`}</p>
     </aside>
   );
 }
@@ -397,6 +411,9 @@ function Toast() {
 
 export default function Home() {
   const [now, setNow] = useState(() => Date.now());
+  const t = useT();
+  const lang = useLang();
+  const hindi = lang === "hi";
   const [calendarDates, setCalendarDates] = useState<CalendarDates>({});
   const [calendarStatus, setCalendarStatus] = useState<"syncing" | "synced" | "fallback">("syncing");
   const [favoriteIds, setFavoriteIds] = useState<FestivalId[]>([]);
@@ -469,7 +486,7 @@ export default function Home() {
   const visibleEvents = matchingEvents.toSorted((first, second) => nextEventTimestamp(first, now, calendarDates) - nextEventTimestamp(second, now, calendarDates));
   const festivalTargets = FESTIVALS
     .toSorted((first, second) => nextEventTimestamp(first, now, calendarDates) - nextEventTimestamp(second, now, calendarDates))
-    .map(festivalTarget);
+    .map((event) => festivalTarget(event, hindi));
   const personalTargets = personalDates
     .toSorted((first, second) => nextPersonalDate(first, now) - nextPersonalDate(second, now))
     .map((date) => personalTarget(date, now));
@@ -507,29 +524,29 @@ export default function Home() {
 
       <section className="intro" id="home">
         <div className="intro-copy">
-          <div className="eyebrow"><span className="eyebrow-line" /> OUR YEAR, IN CELEBRATIONS</div>
-          <h1>Good things<br />are <em>coming.</em></h1>
-          <p className="intro-description">Holi colours, Diwali diyas, your bestie&apos;s birthday 🎉 Every reason to celebrate, counting down live.</p>
-          <a className="intro-link" href="#countdowns">See what&apos;s next <ArrowDownRight aria-hidden="true" /></a>
+          <div className="eyebrow"><span className="eyebrow-line" /> {t("OUR YEAR, IN CELEBRATIONS")}</div>
+          <h1>{hindi ? <>अच्छे दिन<br /><em>आ रहे हैं।</em></> : <>Good things<br />are <em>coming.</em></>}</h1>
+          <p className="intro-description">{t("Holi colours, Diwali diyas, your bestie's birthday 🎉 Every reason to celebrate, counting down live.")}</p>
+          <a className="intro-link" href="#countdowns">{t("See what's next")} <ArrowDownRight aria-hidden="true" /></a>
         </div>
         <div className="intro-art" role="img" aria-label="A warmly lit Indian festive night scene">
           <div className="intro-image" />
           <div className="intro-image-wash" />
-          <span className="art-caption"><span>01</span> / MANY REASONS TO CELEBRATE</span>
-          <div className="art-stamp"><Sparkles aria-hidden="true" /><span>Made for<br />the moments</span></div>
+          <span className="art-caption"><span>01</span> / {t("MANY REASONS TO CELEBRATE")}</span>
+          <div className="art-stamp"><Sparkles aria-hidden="true" /><span>{hindi ? <>खास पलों<br />के लिए</> : <>Made for<br />the moments</>}</span></div>
         </div>
-        <div className="intro-footnote"><span>Scroll to celebrate</span><span className="footnote-rule" /></div>
+        <div className="intro-footnote"><span>{t("Scroll to celebrate")}</span><span className="footnote-rule" /></div>
       </section>
 
       <section className="countdown-section" id="countdowns">
         <div className="section-heading">
           <div>
-            <div className="eyebrow"><span className="eyebrow-line" /> THE COUNTDOWN IS ON</div>
-            <h2>What are we celebrating next? 🎉</h2>
+            <div className="eyebrow"><span className="eyebrow-line" /> {t("THE COUNTDOWN IS ON")}</div>
+            <h2>{t("What are we celebrating next? 🎉")}</h2>
           </div>
           <p className="section-side-note">
             <span className={`live-dot ${calendarStatus === "fallback" ? "live-dot-muted" : ""}`} />
-            <span>Live countdowns · India time</span>
+            <span>{t("Live countdowns · India time")}</span>
           </p>
         </div>
         <MyDates dates={personalDates} onChange={setPersonalDates} now={now} onToast={announceToast} />
@@ -542,19 +559,19 @@ export default function Home() {
             calendarDates={calendarDates}
           />
           <div className="event-filter-group" role="group" aria-label="Filter events">
-            <button type="button" aria-pressed={!showFavorites} onClick={() => { setShowFavorites(false); setSearchQuery(""); setShowAllEvents(true); }}>All events</button>
+            <button type="button" aria-pressed={!showFavorites} onClick={() => { setShowFavorites(false); setSearchQuery(""); setShowAllEvents(true); }}>{t("All events")}</button>
             <button type="button" aria-pressed={showFavorites} onClick={() => setShowFavorites(true)}>
-              <Star aria-hidden="true" /> My picks <span>{favoriteIds.length}</span>
+              <Star aria-hidden="true" /> {t("My picks")} <span>{favoriteIds.length}</span>
             </button>
           </div>
           <Link className="open-calendar-link" href="/calendar">
-            <CalendarDays aria-hidden="true" /> Open calendar
+            <CalendarDays aria-hidden="true" /> {t("Open calendar")}
           </Link>
           <Link className="vrat-link" href="/vrat">
-            <span>🌙 Ekadashi, Purnima, Amavasya</span> <ArrowUpRight aria-hidden="true" />
+            <span>{t("🌙 Ekadashi, Purnima, Amavasya")}</span> <ArrowUpRight aria-hidden="true" />
           </Link>
           <p className="event-finder-note" aria-live="polite">
-            {visibleEvents.length} upcoming {visibleEvents.length === 1 ? "event" : "events"} · Closest dates first
+            {hindi ? `${visibleEvents.length} आने वाले त्योहार` : `${visibleEvents.length} upcoming ${visibleEvents.length === 1 ? "event" : "events"}`} · {t("Closest dates first")}
           </p>
         </div>
         {countdownItems.length > 0 ? (
@@ -563,7 +580,7 @@ export default function Home() {
               <div className="countdown-grid">{countdownItems}</div>
               {!isFiltering && visibleEvents.length > HOME_EVENT_LIMIT ? (
                 <button className="show-all-events" type="button" aria-expanded={showAllEvents} onClick={() => setShowAllEvents(!showAllEvents)}>
-                  {showAllEvents ? "Show fewer festivals" : `Show all ${visibleEvents.length} festivals`}
+                  {showAllEvents ? t("Show fewer festivals") : hindi ? `सभी ${visibleEvents.length} त्योहार देखें` : `Show all ${visibleEvents.length} festivals`}
                 </button>
               ) : null}
             </div>
@@ -573,24 +590,24 @@ export default function Home() {
           <div className="events-empty">
             <Search aria-hidden="true" />
             <div>
-              <h3>{showFavorites && favoriteIds.length === 0 ? "Choose what matters to you" : "No events found"}</h3>
-              <p>{showFavorites && favoriteIds.length === 0 ? "Save a celebration with its star to build your personal list." : "Try another search, or see every upcoming celebration."}</p>
+              <h3>{showFavorites && favoriteIds.length === 0 ? t("Choose what matters to you") : t("No events found")}</h3>
+              <p>{showFavorites && favoriteIds.length === 0 ? t("Save a celebration with its star to build your personal list.") : t("Try another search, or see every upcoming celebration.")}</p>
             </div>
-            <button type="button" onClick={() => { setSearchQuery(""); setShowFavorites(false); }}>Show all events</button>
+            <button type="button" onClick={() => { setSearchQuery(""); setShowFavorites(false); }}>{t("Show all events")}</button>
           </div>
         )}
       </section>
 
       <section className="closing-note" id="about">
         <div className="closing-icon"><Sparkles aria-hidden="true" /></div>
-        <div><p className="eyebrow">A LITTLE MORE JOY, A LITTLE MORE OFTEN</p><h2>Make room for the good stuff.</h2></div>
-        <p className="closing-copy">Life is better with something to look forward to. Pick your next one. Let the countdown begin ⏳</p>
+        <div><p className="eyebrow">{t("A LITTLE MORE JOY, A LITTLE MORE OFTEN")}</p><h2>{t("Make room for the good stuff.")}</h2></div>
+        <p className="closing-copy">{t("Life is better with something to look forward to. Pick your next one. Let the countdown begin ⏳")}</p>
       </section>
 
       <footer className="site-footer">
         <a className="brand footer-brand" href="#home"><BrandMark /><span>Festive <b>Clock</b></span></a>
-        <p>Made with 💛 for every celebration.</p>
-        <a href="#home" className="back-to-top">Back to top ↑</a>
+        <p>{t("Made with 💛 for every celebration.")}</p>
+        <a href="#home" className="back-to-top">{t("Back to top ↑")}</a>
       </footer>
       <FooterLinks />
       <Toast />

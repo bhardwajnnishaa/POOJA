@@ -3,6 +3,8 @@ import { Clock3 } from "lucide-react";
 import { InstallAppButton } from "@/components/InstallAppButton";
 import { ThemePicker } from "@/components/ThemePicker";
 import { BrandMark } from "@/components/BrandMark";
+import { HeaderNav } from "@/components/HeaderNav";
+import { LanguageToggle } from "@/lib/i18n";
 
 export function SiteHeader({ active }: { active?: "countdown" | "calendar" }) {
   return (
@@ -11,11 +13,9 @@ export function SiteHeader({ active }: { active?: "countdown" | "calendar" }) {
         <BrandMark />
         <span>Festive <b>Clock</b></span>
       </Link>
-      <nav aria-label="Main navigation">
-        <Link className={`nav-link ${active === "countdown" ? "nav-link-active" : ""}`} href="/">Countdowns</Link>
-        <Link className={`nav-link ${active === "calendar" ? "nav-link-active" : ""}`} href="/calendar">Calendar</Link>
-      </nav>
+      <HeaderNav active={active} />
       <span className="header-end">
+        <LanguageToggle />
         <ThemePicker />
         <InstallAppButton />
         <span className="header-date"><Clock3 aria-hidden="true" /> Live in India</span>

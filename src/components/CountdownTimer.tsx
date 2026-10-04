@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useT } from "@/lib/i18n";
 
 const UNIT_LABELS = ["Days", "Hours", "Minutes", "Seconds"];
 
@@ -37,6 +38,7 @@ export function useSecondTick() {
 
 export function CountdownTimer({ target, label, className = "" }: { target: number; label: string; className?: string }) {
   const now = useSecondTick();
+  const t = useT();
   const remaining = now === null ? null : Math.max(0, Math.floor((target - now) / 1000));
   const units = remaining === null
     ? ["--", "--", "--", "--"]
@@ -52,7 +54,7 @@ export function CountdownTimer({ target, label, className = "" }: { target: numb
       {units.map((value, index) => (
         <div className="timer-unit" key={UNIT_LABELS[index]}>
           <span className="timer-value">{value}</span>
-          <span className="timer-label">{UNIT_LABELS[index]}</span>
+          <span className="timer-label">{t(UNIT_LABELS[index])}</span>
         </div>
       ))}
     </div>

@@ -1056,3 +1056,15 @@ body { overflow-x: clip; }
 }
 .countdown-grid .remind-me-menu { grid-template-columns: 1fr; }
 .countdown-grid .remind-me-option { justify-content: flex-start; padding: 0 14px; white-space: nowrap; }
+
+/* Hindi / English switch in the header. */
+.lang-toggle { display: inline-flex; min-width: 72px; min-height: 48px; align-items: center; justify-content: center; padding: 0 14px; border: 2px solid #c4581a; border-radius: 999px; background: #fffaf3; color: #a14a12; cursor: pointer; font-size: 18px; font-weight: 800; white-space: nowrap; }
+.lang-toggle:hover { background: #fdeee0; }
+.header-end { display: inline-flex; align-items: center; gap: 10px; }
+@media (max-width: 900px) {
+  .lang-toggle { min-height: 46px; padding: 0 12px; font-size: 17px; }
+}
+/* Devanagari needs a little more line height. */
+:root:lang(hi-IN) body { line-height: 1.55; }
+/* Letter spacing splits Devanagari letters apart, so it is turned off in Hindi. */
+:root:lang(hi-IN) body * { letter-spacing: 0 !important; }
