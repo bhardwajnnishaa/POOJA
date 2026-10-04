@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Download } from "lucide-react";
+import { Check } from "lucide-react";
 import { InstallSteps } from "@/components/InstallSteps";
 import { ShareOptions } from "@/components/ShareOptions";
 import { useInstallPrompt } from "@/lib/use-install-prompt";
@@ -15,8 +15,8 @@ export function AppInstallPanel() {
       ) : (
         <>
           {canPrompt ? (
-            <button className="app-install-button" type="button" onClick={() => void promptInstall()}>
-              <Download aria-hidden="true" /> Add to Home Screen
+            <button className="app-install-button add-home-button" type="button" onClick={() => void promptInstall()}>
+              <span aria-hidden="true">📲</span> Add to Home Screen
             </button>
           ) : null}
           {device !== "unknown" ? (
@@ -25,7 +25,7 @@ export function AppInstallPanel() {
               <InstallSteps device={device} />
             </div>
           ) : null}
-          <p className="app-install-note">Free. No sign-up. No app store. It opens straight from your Home Screen, like an app.</p>
+          <p className="app-install-note">Free. No download. No sign-up. It opens straight from your Home Screen, like an app.</p>
         </>
       )}
 

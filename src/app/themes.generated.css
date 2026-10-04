@@ -259,6 +259,7 @@
 [data-theme="neon"] .event-search-emoji { background: #211b17; }
 [data-theme="neon"] .month-events-toggle summary { border: 1px solid #3a3129; background: #1d1814; color: #bf997d; }
 [data-theme="neon"] .month-events-toggle .month-events { border: 1px solid #3a3129; }
+[data-theme="neon"] .add-home-button { color: #fff; }
 :root[data-theme="pastel"] { --paper: #fff5ec; --paper-deep: #fff1e6; --ink: #3e291f; --muted: #4c352a; --line: #f2d6c2; --saffron: #e9872c; --green: #31584a; }
 [data-theme="pastel"] ::selection { background: #f2c38c; }
 [data-theme="pastel"] .top-ad-wrap { background: #fff2e7; }
@@ -519,6 +520,7 @@
 [data-theme="pastel"] .event-search-emoji { background: #fff0e5; }
 [data-theme="pastel"] .month-events-toggle summary { border: 1px solid #f2d6c2; background: #fff3ea; color: #8a4512; }
 [data-theme="pastel"] .month-events-toggle .month-events { border: 1px solid #f2d6c2; }
+[data-theme="pastel"] .add-home-button { color: #fff; }
 :root[data-theme="neon"] { --muted: #b9ad9d; color-scheme: dark; }
 :root[data-theme="pastel"] { --muted: #7a6052; }
 [data-theme="neon"] ::selection { background: #c4581a; color: #fff; }
