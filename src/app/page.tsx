@@ -441,7 +441,7 @@ export default function Home() {
             />
           </label>
           <div className="event-filter-group" role="group" aria-label="Filter events">
-            <button type="button" aria-pressed={!showFavorites} onClick={() => setShowFavorites(false)}>All events</button>
+            <button type="button" aria-pressed={!showFavorites} onClick={() => { setShowFavorites(false); setSearchQuery(""); setShowAllEvents(true); }}>All events</button>
             <button type="button" aria-pressed={showFavorites} onClick={() => setShowFavorites(true)}>
               <Star aria-hidden="true" /> My picks <span>{favoriteIds.length}</span>
             </button>
