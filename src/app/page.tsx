@@ -2,10 +2,12 @@
 
 import { useEffect, useState, type ReactNode } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   ArrowDownRight,
   ArrowUpRight,
   CalendarDays,
+  ChevronDown,
   Check,
   Coins,
   Flame,
@@ -73,6 +75,86 @@ function vibeLabel(remainingMs: number) {
   if (days <= 7) return "This week! 🔥";
   if (days <= 30) return "Loading… ⏳";
   return "Save the date 📌";
+}
+
+const DAY_MS = 24 * 60 * 60 * 1000;
+const VRAT_WORDS = /ekad|purn|amav|vrat|tithi|fast|moon|vrata|upvas/;
+
+function daysLeftLabel(timestamp: number, now: number) {
+  const days = Math.ceil((timestamp - now) / DAY_MS);
+  if (days <= 0) return "Today 🎉";
+  if (days === 1) return "Tomorrow";
+  return `in ${days} days`;
+}
+
+// Search box with a dropdown: tap a festival to open its countdown page.
+function FestivalSearch({ query, onQuery, events, now, calendarDates }: {
+  query: string;
+  onQuery: (query: string) => void;
+  events: Festival[];
+  now: number;
+  calendarDates: CalendarDates;
+}) {
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const [active, setActive] = useState(0);
+  const needle = query.trim().toLowerCase();
+  const matches = events.filter((event) => `${event.name} ${event.otherName ?? ""} ${event.subtitle}`.toLowerCase().includes(needle));
+  const showVrat = needle === "" || VRAT_WORDS.test(needle);
+  const options = [
+    ...matches.map((event) => ({ key: event.id, href: festivalPath(event), emoji: event.emoji, name: event.name, detail: `${eventDateLabel(nextEventTimestamp(event, now, calendarDates))} · ${daysLeftLabel(nextEventTimestamp(event, now, calendarDates), now)}` })),
+    ...(showVrat ? [{ key: "vrat", href: "/vrat", emoji: "🌙", name: "Ekadashi, Purnima & Amavasya", detail: "Every vrat date, with tithi times" }] : []),
+  ];
+
+  function choose(href: string) {
+    setOpen(false);
+    router.push(href);
+  }
+
+  return (
+    <div className="event-search-wrap">
+      <label className="event-search">
+        <Search aria-hidden="true" />
+        <input
+          type="search"
+          role="combobox"
+          aria-label="Find an event"
+          aria-expanded={open && options.length > 0}
+          aria-controls="festival-search-list"
+          aria-autocomplete="list"
+          placeholder="Find a festival or celebration"
+          value={query}
+          onFocus={() => setOpen(true)}
+          onBlur={() => window.setTimeout(() => setOpen(false), 150)}
+          onChange={(changeEvent) => { onQuery(changeEvent.target.value); setOpen(true); setActive(0); }}
+          onKeyDown={(keyEvent) => {
+            if (keyEvent.key === "ArrowDown") { keyEvent.preventDefault(); setActive((index) => Math.min(index + 1, options.length - 1)); }
+            if (keyEvent.key === "ArrowUp") { keyEvent.preventDefault(); setActive((index) => Math.max(index - 1, 0)); }
+            if (keyEvent.key === "Enter" && open && options[active]) { keyEvent.preventDefault(); choose(options[active].href); }
+            if (keyEvent.key === "Escape") setOpen(false);
+          }}
+        />
+        <ChevronDown aria-hidden="true" className="event-search-caret" />
+      </label>
+      {open && options.length > 0 ? (
+        <ul className="event-search-list" id="festival-search-list" role="listbox" aria-label="Festivals">
+          {options.map((option, index) => (
+            <li
+              key={option.key}
+              role="option"
+              aria-selected={index === active}
+              className={index === active ? "event-search-option-active" : ""}
+              onMouseDown={(mouseEvent) => mouseEvent.preventDefault()}
+              onClick={() => choose(option.href)}
+            >
+              <span className="event-search-emoji" aria-hidden="true">{option.emoji}</span>
+              <span><b>{option.name}</b><small>{option.detail}</small></span>
+            </li>
+          ))}
+        </ul>
+      ) : null}
+    </div>
+  );
 }
 
 function announceToast(message: string) {
@@ -430,16 +512,13 @@ export default function Home() {
         </div>
         <MyDates dates={personalDates} onChange={setPersonalDates} now={now} onToast={announceToast} />
         <div className="event-finder">
-          <label className="event-search">
-            <Search aria-hidden="true" />
-            <input
-              type="search"
-              aria-label="Find an event"
-              placeholder="Find a festival or celebration"
-              value={searchQuery}
-              onChange={(event) => setSearchQuery(event.target.value)}
-            />
-          </label>
+          <FestivalSearch
+            query={searchQuery}
+            onQuery={setSearchQuery}
+            events={FESTIVALS.toSorted((first, second) => nextEventTimestamp(first, now, calendarDates) - nextEventTimestamp(second, now, calendarDates))}
+            now={now}
+            calendarDates={calendarDates}
+          />
           <div className="event-filter-group" role="group" aria-label="Filter events">
             <button type="button" aria-pressed={!showFavorites} onClick={() => { setShowFavorites(false); setSearchQuery(""); setShowAllEvents(true); }}>All events</button>
             <button type="button" aria-pressed={showFavorites} onClick={() => setShowFavorites(true)}>
