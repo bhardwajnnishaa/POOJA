@@ -33,6 +33,15 @@ const FESTIVAL_PATTERNS: { id: FestivalId; match: RegExp; exclude?: RegExp; mont
   { id: "christmas", match: /^christmas( day)?$/, months: [12] },
   { id: "newYear", match: /^new year'?s day$/, months: [1] },
   { id: "independenceDay", match: /^independence day$/, months: [8] },
+  { id: "lohri", match: /\blohri\b/, months: [1] },
+  { id: "makarSankranti", match: /makar ?sankranti|uttarayan/, months: [1] },
+  { id: "mahaShivratri", match: /shivaratri|shivratri/, months: [2, 3] },
+  { id: "ramNavami", match: /ram(a)? navami/, months: [3, 4] },
+  { id: "eidAlAdha", match: /bakr[i-]?id|eid.*adha|id.?ul.?(zuha|adha)/ },
+  { id: "teej", match: /hariyali teej|shravan(i)? teej/, months: [7, 8] },
+  { id: "janmashtami", match: /janmashtami|janmasthami/, months: [8, 9] },
+  { id: "onam", match: /\bonam\b|thiruvonam/, months: [8, 9] },
+  { id: "ganeshChaturthi", match: /ganesh(a)? chaturthi|vinayaka? chaturthi/, months: [8, 9] },
 ];
 
 function festivalId(name: string, month: number): FestivalId | null {

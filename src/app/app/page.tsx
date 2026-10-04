@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 const DATE_LABEL = new Intl.DateTimeFormat("en-IN", { day: "numeric", month: "long", year: "numeric", timeZone: "Asia/Kolkata" });
 
 const FEATURES = [
-  { icon: CalendarDays, title: "14 festival countdowns", text: "Diwali, Navratri, Holi, Eid, Rakhi and more, in India time." },
+  { icon: CalendarDays, title: `${FESTIVAL_INFO.length} festival countdowns`, text: "Diwali, Ganesh Chaturthi, Holi, Eid, Rakhi and more, in India time." },
   { icon: Heart, title: "Your own dates", text: "Birthdays and anniversaries, saved only on your phone." },
   { icon: Gift, title: "Gift ideas by budget", text: "Under ₹500, ₹500 to ₹1,000, and above." },
   { icon: WandSparkles, title: "Wishes in 3 languages", text: "English, Hindi and Hinglish, ready to share." },

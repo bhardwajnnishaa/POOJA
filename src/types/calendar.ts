@@ -12,7 +12,16 @@ export type FestivalId =
   | "bhaiDooj"
   | "chhath"
   | "guruNanak"
-  | "christmas";
+  | "christmas"
+  | "lohri"
+  | "makarSankranti"
+  | "mahaShivratri"
+  | "ramNavami"
+  | "eidAlAdha"
+  | "teej"
+  | "janmashtami"
+  | "onam"
+  | "ganeshChaturthi";
 
 export type CalendarEntry = {
   date: string;
