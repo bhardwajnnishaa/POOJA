@@ -2,6 +2,7 @@
 
 import { CountdownTimer, useSecondTick } from "@/components/CountdownTimer";
 import { RemindMe } from "@/components/RemindMe";
+import { useT } from "@/lib/i18n";
 
 export type VratItem = { kind: "ekadashi" | "purnima" | "amavasya"; name: string; popularName?: string; date: string; start: number; end: number };
 
@@ -17,6 +18,7 @@ const TIME = new Intl.DateTimeFormat("en-IN", { day: "numeric", month: "short", 
 // Picks the next one of each kind in the browser, so the cards stay right even on a saved page.
 export function VratNext({ items }: { items: VratItem[] }) {
   const now = useSecondTick() ?? 0;
+  const t = useT();
   return (
     <div className="vrat-next">
       {KINDS.map(({ kind, label, emoji }) => {
@@ -25,12 +27,12 @@ export function VratNext({ items }: { items: VratItem[] }) {
         const running = now >= item.start;
         return (
           <article className={`vrat-next-card vrat-${kind}`} key={kind}>
-            <span className="vrat-next-label">{emoji} {label}</span>
+            <span className="vrat-next-label">{emoji} {t(label)}</span>
             <h3>{item.name}</h3>
             {item.popularName ? <p className="vrat-popular">{item.popularName}</p> : null}
             <p className="vrat-next-date">{DAY.format(Date.parse(`${item.date}T00:00:00Z`))}</p>
             {running ? (
-              <p className="vrat-running">Running now · ends {TIME.format(item.end)}</p>
+              <p className="vrat-running">{t("Running now · ends")} {TIME.format(item.end)}</p>
             ) : (
               <CountdownTimer target={item.start} label={`Time until ${item.name} begins`} className="vrat-timer" />
             )}

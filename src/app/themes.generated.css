@@ -264,6 +264,8 @@
 [data-theme="neon"] .remind-me-menu { border: 1px solid #3a3129; background: #191512; }
 [data-theme="neon"] .remind-me-option { background: #181411; }
 [data-theme="neon"] .remind-me-option svg { color: #c4581a; }
+[data-theme="neon"] .lang-toggle { border: 2px solid #c4581a; background: #191512; color: #cb9b7d; }
+[data-theme="neon"] .lang-toggle:hover { background: #1f1a15; }
 :root[data-theme="pastel"] { --paper: #fff5ec; --paper-deep: #fff1e6; --ink: #3e291f; --muted: #4c352a; --line: #f2d6c2; --saffron: #e9872c; --green: #31584a; }
 [data-theme="pastel"] ::selection { background: #f2c38c; }
 [data-theme="pastel"] .top-ad-wrap { background: #fff2e7; }
@@ -529,6 +531,8 @@
 [data-theme="pastel"] .remind-me-menu { border: 1px solid #f2d6c2; background: #fff6ee; }
 [data-theme="pastel"] .remind-me-option { background: #fff7f0; }
 [data-theme="pastel"] .remind-me-option svg { color: #c4581a; }
+[data-theme="pastel"] .lang-toggle { border: 2px solid #c4581a; background: #fff6ee; color: #a14a12; }
+[data-theme="pastel"] .lang-toggle:hover { background: #fff2e7; }
 :root[data-theme="neon"] { --muted: #b9ad9d; color-scheme: dark; }
 :root[data-theme="pastel"] { --muted: #7a6052; }
 [data-theme="neon"] ::selection { background: #c4581a; color: #fff; }

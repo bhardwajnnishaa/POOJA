@@ -4,11 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import { Download, Image as ImageIcon, Link as LinkIcon, Share2, X } from "lucide-react";
 import { ShareOptions } from "@/components/ShareOptions";
 import { drawStoryCard, type StoryData } from "@/lib/story-card";
+import { useT } from "@/lib/i18n";
 
 export type { StoryData };
 
 // The Share button. With a story, it opens a sheet offering a Story / Status image as well as the link.
 export function ShareButton({ message, onShared, story }: { message: string; onShared?: () => void; story?: StoryData }) {
+  const t = useT();
   const [showOptions, setShowOptions] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
 
@@ -28,7 +30,7 @@ export function ShareButton({ message, onShared, story }: { message: string; onS
   return (
     <>
       <button className="share-button" type="button" aria-expanded={story ? sheetOpen : showOptions} onClick={() => (story ? setSheetOpen(true) : void shareLink())}>
-        <Share2 aria-hidden="true" /> Share
+        <Share2 aria-hidden="true" /> {t("Share")}
       </button>
       {showOptions && !story ? <div className="share-button-options"><ShareOptions message={message} onShared={onShared} /></div> : null}
       {story && sheetOpen ? <ShareSheet story={story} message={message} onShared={onShared} onClose={() => setSheetOpen(false)} /> : null}

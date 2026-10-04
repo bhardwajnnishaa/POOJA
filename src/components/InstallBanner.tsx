@@ -5,6 +5,7 @@ import { X } from "lucide-react";
 import { BrandMark } from "@/components/BrandMark";
 import { InstallSteps } from "@/components/InstallSteps";
 import { useInstallPrompt } from "@/lib/use-install-prompt";
+import { useLang, useT } from "@/lib/i18n";
 
 const DISMISS_KEY = "festive-clock-install-dismissed";
 
@@ -13,6 +14,8 @@ export function InstallBanner() {
   const { device, canPrompt, promptInstall } = useInstallPrompt();
   const [dismissed, setDismissed] = useState(true);
   const [showSteps, setShowSteps] = useState(false);
+  const t = useT();
+  const lang = useLang();
 
   useEffect(() => {
     const invited = new URLSearchParams(window.location.search).has("install");
@@ -39,17 +42,17 @@ export function InstallBanner() {
 
   return (
     <aside className="install-banner" aria-labelledby="install-banner-title">
-      <button className="install-banner-close" type="button" aria-label="Close" onClick={dismiss}><X aria-hidden="true" /></button>
+      <button className="install-banner-close" type="button" aria-label={t("Close")} onClick={dismiss}><X aria-hidden="true" /></button>
       <BrandMark />
-      <h2 id="install-banner-title" className="install-banner-title">Add to <em>Home Screen</em></h2>
-      <p className="install-banner-sub">No download. No app store. Just <span className="nowrap">one tap ✨</span></p>
+      <h2 id="install-banner-title" className="install-banner-title">{lang === "hi" ? <>होम स्क्रीन पर <em>जोड़ें</em></> : <>Add to <em>Home Screen</em></>}</h2>
+      <p className="install-banner-sub">{t("No download. No app store. Just")} <span className="nowrap">{t("one tap ✨")}</span></p>
       <button
         className="install-banner-button add-home-button"
         type="button"
         aria-expanded={canPrompt ? undefined : showSteps}
         onClick={() => (canPrompt ? void promptInstall() : setShowSteps(!showSteps))}
       >
-        <span aria-hidden="true">📲</span> Add to Home Screen
+        <span aria-hidden="true">📲</span> {t("Add to Home Screen")}
       </button>
       {showSteps && !canPrompt ? <InstallSteps device={device} /> : null}
     </aside>

@@ -9,6 +9,7 @@ import { CountdownTimer } from "@/components/CountdownTimer";
 import { GiftIdeas } from "@/components/GiftIdeas";
 import { ShareButton } from "@/components/ShareButton";
 import { RemindMe } from "@/components/RemindMe";
+import { useLang, useT } from "@/lib/i18n";
 import {
   MAX_NAME_LENGTH,
   MAX_PERSONAL_DATES,
@@ -21,6 +22,7 @@ import {
 } from "@/lib/personal-dates";
 
 const DATE_LABEL = new Intl.DateTimeFormat("en-IN", { weekday: "short", day: "numeric", month: "long", year: "numeric", timeZone: "Asia/Kolkata" });
+const HI_DATE_LABEL = new Intl.DateTimeFormat("hi-IN", { weekday: "short", day: "numeric", month: "long", year: "numeric", timeZone: "Asia/Kolkata" });
 const KIND_EMOJI: Record<PersonalDateKind, string> = { birthday: "🎂", anniversary: "💞", other: "📅" };
 
 export const PERSONAL_KIND_STYLE: Record<PersonalDateKind, { theme: string; icon: typeof Cake }> = {
@@ -47,6 +49,9 @@ function MyDateCard({ date, now, onDelete, onShared }: {
   onShared: () => void;
 }) {
   const [showGifts, setShowGifts] = useState(false);
+  const t = useT();
+  const lang = useLang();
+  const dateLabel = (timestamp: number) => (lang === "hi" ? HI_DATE_LABEL : DATE_LABEL).format(timestamp);
   const { theme, icon: Icon } = PERSONAL_KIND_STYLE[date.kind];
   const target = nextPersonalDate(date, now);
   const isToday = isPersonalDateToday(date, now);
@@ -56,7 +61,7 @@ function MyDateCard({ date, now, onDelete, onShared }: {
     <article className={`event-card my-date-card event-card-${theme}`}>
       <div className="event-card-topline">
         <span className="event-icon"><Icon aria-hidden="true" /></span>
-        <span className="event-kicker">My date · {kindLabel}</span>
+        <span className="event-kicker">{t("My date")} · {t(kindLabel)}</span>
       </div>
       <div className="event-heading-row">
         <h3>{date.name}</h3>
@@ -66,16 +71,16 @@ function MyDateCard({ date, now, onDelete, onShared }: {
       </div>
       <div className="event-date-line" suppressHydrationWarning>
         <span className="live-dot" />
-        {DATE_LABEL.format(isToday ? now : target)}
+        {dateLabel(isToday ? now : target)}
       </div>
       {isToday ? (
-        <p className="my-date-today">🎉 It&apos;s today! Send your wishes.</p>
+        <p className="my-date-today">{t("🎉 It's today! Send your wishes.")}</p>
       ) : (
         <CountdownTimer target={target} label={`Time until ${date.name}`} />
       )}
       <div className="event-actions">
         <button className="my-date-gifts-toggle" type="button" aria-expanded={showGifts} onClick={() => setShowGifts(!showGifts)}>
-          <Gift aria-hidden="true" /> {showGifts ? "Hide gift ideas" : "Gift ideas"}
+          <Gift aria-hidden="true" /> {showGifts ? t("Hide gift ideas") : t("Gift ideas")}
         </button>
         {showGifts ? <GiftIdeas festivalName={date.name} budgets={giftBudgets(date.kind)} /> : null}
         <div className="card-action-row">
@@ -85,7 +90,7 @@ function MyDateCard({ date, now, onDelete, onShared }: {
             story={{ title: date.name, emoji: KIND_EMOJI[date.kind], target: isToday ? now : target, dateLabel: DATE_LABEL.format(isToday ? now : target) }}
           />
           <Link className="write-quote-link" href={`/calendar?event=${encodeURIComponent(date.name)}#quote-studio`}>
-            <WandSparkles aria-hidden="true" /> Write a wish
+            <WandSparkles aria-hidden="true" /> {t("Write a wish")}
           </Link>
           <RemindMe
             className="card-remind"
@@ -111,6 +116,7 @@ export function MyDates({ dates, onChange, now, onToast }: {
   const [dateValue, setDateValue] = useState("");
   const [kind, setKind] = useState<PersonalDateKind>("birthday");
   const [error, setError] = useState("");
+  const t = useT();
 
   function update(next: PersonalDate[]) {
     onChange(next);
@@ -146,12 +152,12 @@ export function MyDates({ dates, onChange, now, onToast }: {
     <section className="my-dates" aria-labelledby="my-dates-heading">
       <div className="my-dates-heading">
         <div>
-          <h3 id="my-dates-heading">My dates</h3>
-          <p>Bday, anniversary or any day that matters 💛 Saved only on your phone.</p>
+          <h3 id="my-dates-heading">{t("My dates")}</h3>
+          <p>{t("Bday, anniversary or any day that matters 💛 Saved only on your phone.")}</p>
         </div>
         {!formOpen ? (
           <button className="my-dates-add" type="button" onClick={() => setFormOpen(true)}>
-            <Plus aria-hidden="true" /> Add my date
+            <Plus aria-hidden="true" /> {t("Add my date")}
           </button>
         ) : null}
       </div>
@@ -159,32 +165,32 @@ export function MyDates({ dates, onChange, now, onToast }: {
       {formOpen ? (
         <form className="my-dates-form" onSubmit={addDate} noValidate>
           <label>
-            <span>Name</span>
+            <span>{t("Name")}</span>
             <input
               type="text"
               value={name}
               maxLength={MAX_NAME_LENGTH}
-              placeholder="e.g. Mom's birthday"
+              placeholder={t("e.g. Mom's birthday")}
               onChange={(event) => setName(event.target.value)}
               autoFocus
             />
           </label>
           <label>
-            <span>Date</span>
+            <span>{t("Date")}</span>
             <input type="date" value={dateValue} onChange={(event) => setDateValue(event.target.value)} />
           </label>
           <label>
-            <span>Type</span>
+            <span>{t("Type")}</span>
             <select value={kind} onChange={(event) => setKind(event.target.value as PersonalDateKind)}>
-              {PERSONAL_DATE_KINDS.map((option) => <option key={option.id} value={option.id}>{option.label}</option>)}
+              {PERSONAL_DATE_KINDS.map((option) => <option key={option.id} value={option.id}>{t(option.label)}</option>)}
             </select>
           </label>
           <div className="my-dates-form-actions">
-            <button className="my-dates-save" type="submit">Save date</button>
-            <button className="my-dates-cancel" type="button" onClick={closeForm}><X aria-hidden="true" /> Cancel</button>
+            <button className="my-dates-save" type="submit">{t("Save date")}</button>
+            <button className="my-dates-cancel" type="button" onClick={closeForm}><X aria-hidden="true" /> {t("Cancel")}</button>
           </div>
           {error ? <p className="my-dates-error" role="alert">{error}</p> : null}
-          <p className="my-dates-form-note">The year does not matter. The countdown repeats every year.</p>
+          <p className="my-dates-form-note">{t("The year does not matter. The countdown repeats every year.")}</p>
         </form>
       ) : null}
 
