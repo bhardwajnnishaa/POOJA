@@ -449,6 +449,9 @@ export default function Home() {
           <Link className="open-calendar-link" href="/calendar">
             <CalendarDays aria-hidden="true" /> Open calendar
           </Link>
+          <Link className="vrat-link" href="/vrat">
+            <span>🌙 Ekadashi, Purnima, Amavasya</span> <ArrowUpRight aria-hidden="true" />
+          </Link>
           <p className="event-finder-note" aria-live="polite">
             {visibleEvents.length} upcoming {visibleEvents.length === 1 ? "event" : "events"} · Closest dates first
           </p>
