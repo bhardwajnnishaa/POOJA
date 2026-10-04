@@ -9,7 +9,8 @@ import type { CalendarEntry } from "@/types/calendar";
 import { BrandMark } from "@/components/BrandMark";
 import { FooterLinks } from "@/components/FooterLinks";
 
-export const dynamic = "force-dynamic";
+// Pre-built and refreshed every hour, so the page opens instantly.
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: "Indian Festival Calendar",
@@ -172,11 +173,7 @@ function AdBanner() {
   );
 }
 
-export default async function CalendarPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ event?: string }>;
-}) {
+export default async function CalendarPage() {
   let calendarData: CalendarData = { dates: {}, events: [] };
   let calendarAvailable = true;
   try {
@@ -185,8 +182,6 @@ export default async function CalendarPage({
     calendarAvailable = false;
   }
 
-  const { event: requestedEvent } = await searchParams;
-  const selectedEvent = requestedEvent ? FALLBACK_EVENT_NAMES[requestedEvent] ?? requestedEvent : null;
   const now = Date.now();
   const todayDate = INDIA_DATE_PARTS.format(now);
   const windowEnd = rollingWindowEnd(todayDate);
@@ -249,7 +244,7 @@ export default async function CalendarPage({
         {calendarStatus === "ready" && <p className="calendar-source-note">Dates are drawn from the India and Islamic public-holiday calendars. Lunar observances marked “Expected” may vary by local moon sighting.</p>}
       </section>
 
-      <QuoteMaker eventNames={eventNames} selectedEvent={selectedEvent} />
+      <QuoteMaker eventNames={eventNames} eventAliases={FALLBACK_EVENT_NAMES} />
 
       <footer className="site-footer calendar-footer">
         <Link className="brand footer-brand" href="/"><BrandMark /><span>Festive <b>Clock</b></span></Link>
