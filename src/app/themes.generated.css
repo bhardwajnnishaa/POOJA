@@ -277,6 +277,7 @@
 [data-theme="neon"] .remind-me-choice button[aria-pressed="true"] { border-color: #b8501a; background: #b8501a; color: #fff; }
 [data-theme="neon"] .remind-me-when { background: #1e1915; color: #ebe3d7; }
 [data-theme="neon"] .remind-me-options .remind-me-option:first-child { border-color: #b8501a; }
+[data-theme="neon"] .remind-me-set { color: #fff; }
 :root[data-theme="pastel"] { --paper: #fff5ec; --paper-deep: #fff1e6; --ink: #3e291f; --muted: #4c352a; --line: #f2d6c2; --saffron: #e9872c; --green: #31584a; }
 [data-theme="pastel"] ::selection { background: #f2c38c; }
 [data-theme="pastel"] .top-ad-wrap { background: #fff2e7; }
@@ -555,6 +556,7 @@
 [data-theme="pastel"] .remind-me-choice button[aria-pressed="true"] { border-color: #b8501a; background: #b8501a; color: #fff; }
 [data-theme="pastel"] .remind-me-when { background: #fff2e8; color: #473126; }
 [data-theme="pastel"] .remind-me-options .remind-me-option:first-child { border-color: #b8501a; }
+[data-theme="pastel"] .remind-me-set { color: #fff; }
 :root[data-theme="neon"] { --muted: #b9ad9d; color-scheme: dark; }
 :root[data-theme="pastel"] { --muted: #7a6052; }
 [data-theme="neon"] ::selection { background: #c4581a; color: #fff; }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AlarmClock, CalendarPlus, Smartphone } from "lucide-react";
+import { AlarmClock, BellRing } from "lucide-react";
 import { useLang, useT } from "@/lib/i18n";
 import { googleCalendarLink, reminderTimes, type ReminderInput } from "@/lib/reminder";
 
@@ -42,16 +42,8 @@ export function RemindMe(props: RemindMeProps) {
     title: props.title, date: props.date, time, before: String(daysBefore), details: props.details ?? "", ...(props.yearly ? { yearly: "1" } : {}),
   })}`;
 
-  const google = (
-    <a className="remind-me-option" href={googleCalendarLink(input)} target="_blank" rel="noopener noreferrer" key="google">
-      <CalendarPlus aria-hidden="true" /> {t("Google Calendar")}
-    </a>
-  );
-  const phone = (
-    <a className="remind-me-option" href={icsHref} key="phone">
-      <Smartphone aria-hidden="true" /> {isApple ? t("iPhone Calendar") : t("Phone calendar")}
-    </a>
-  );
+  // One button: iPhone gets its own Calendar app, everyone else gets Google Calendar.
+  const whenLabel = (hindi ? WHEN_LABEL_HI : WHEN_LABEL).format(start);
 
   return (
     <div className={`remind-me ${props.className ?? ""}`.trim()}>
@@ -73,9 +65,16 @@ export function RemindMe(props: RemindMeProps) {
               </button>
             ))}
           </div>
-          <p className="remind-me-when" suppressHydrationWarning>🔔 {(hindi ? WHEN_LABEL_HI : WHEN_LABEL).format(start)}</p>
-          <div className="remind-me-options">{isApple ? [phone, google] : [google, phone]}</div>
-          <p className="remind-me-note">{t("Your calendar will ring at this time. Save the event when it opens.")}</p>
+          <a
+            className="remind-me-set"
+            href={isApple ? icsHref : googleCalendarLink(input)}
+            {...(isApple ? {} : { target: "_blank", rel: "noopener noreferrer" })}
+            suppressHydrationWarning
+          >
+            <BellRing aria-hidden="true" />
+            <span>{t("Set reminder")}<small>{whenLabel}</small></span>
+          </a>
+          <p className="remind-me-note">{t("Tap Save when your calendar opens. Your phone will ring at this time.")}</p>
         </div>
       ) : null}
     </div>
