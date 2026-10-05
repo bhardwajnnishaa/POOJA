@@ -36,7 +36,10 @@ export const metadata: Metadata = {
   // Next.js now only emits the standard tag; iPhones before iOS 16.4 still need the Apple one
   // to open the Home Screen icon as a full-screen app.
   other: { "apple-mobile-web-app-capable": "yes" },
-  verification: { google: "kxULr-TAohc65C6X6C0WjGzBBoGzQvMK8GY3Ng_D8fI" },
+  // Both Search Console codes stay: removing one unverifies that property.
+  verification: {
+    google: ["kxULr-TAohc65C6X6C0WjGzBBoGzQvMK8GY3Ng_D8fI", "TUYM3ZuWHvfd1iWV29VLGH6r9jByemFy828"],
+  },
 };
 
 export const viewport: Viewport = {
