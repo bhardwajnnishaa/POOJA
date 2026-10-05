@@ -485,11 +485,12 @@ export function festivalPath(festival: Pick<FestivalInfo, "slug">) {
   return `/countdown/${festival.slug}`;
 }
 
+// India is always UTC+5:30 (no daylight saving), so plain arithmetic is exact and far faster
+// than building a date formatter, which this did hundreds of times while sorting festivals.
+const IST_OFFSET_MS = (5 * 60 + 30) * 60 * 1000;
+
 export function indiaYear(timestamp: number) {
-  return Number(new Intl.DateTimeFormat("en-IN", {
-    year: "numeric",
-    timeZone: "Asia/Kolkata",
-  }).format(timestamp));
+  return new Date(timestamp + IST_OFFSET_MS).getUTCFullYear();
 }
 
 // Midnight in India (UTC+5:30) on the festival day.
