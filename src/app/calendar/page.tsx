@@ -5,7 +5,7 @@ import { QuoteMaker } from "@/components/QuoteMaker";
 import { SiteHeader } from "@/components/SiteHeader";
 import { getCalendarData, rollingWindowEnd, type CalendarData } from "@/lib/calendar-data";
 import { FESTIVAL_INFO, eventTimestamp, hasKnownDate } from "@/lib/festivals";
-import { vratDays } from "@/lib/tithi";
+import { pitruPaksha, vratDays, type ShraddhDay } from "@/lib/tithi";
 import type { CalendarEntry } from "@/types/calendar";
 import { BrandMark } from "@/components/BrandMark";
 import { FooterLinks } from "@/components/FooterLinks";
@@ -64,7 +64,56 @@ function withFestivalDates(data: CalendarData, todayDate: string, windowEnd: str
   const vrats: CalendarEntry[] = vratDays(todayDate, windowEnd).map((day) => ({
     date: day.date, name: day.name, category: "observance", source: "Festive Clock", tentative: false, href: "/vrat",
   }));
-  return [...data.events, ...added, ...vrats].sort((first, second) => first.date.localeCompare(second.date));
+  // Pitru Paksha Shraddh days, linked to the Shraddh list on this page.
+  const year = Number(todayDate.slice(0, 4));
+  const shraddh: CalendarEntry[] = [...pitruPaksha(year), ...pitruPaksha(year + 1)]
+    .filter((day) => day.date >= todayDate && day.date < windowEnd)
+    .map((day) => ({ date: day.date, name: day.name, category: "observance", source: "Festive Clock", tentative: false, href: "#pitru-paksha" }));
+  return [...data.events, ...added, ...vrats, ...shraddh].sort((first, second) => first.date.localeCompare(second.date));
+}
+
+const SHRADDH_DAY = new Intl.DateTimeFormat("en-IN", { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" });
+const SHRADDH_TIME = new Intl.DateTimeFormat("en-IN", { day: "numeric", month: "short", hour: "numeric", minute: "2-digit", timeZone: "Asia/Kolkata" });
+
+// This year's Pitru Paksha until it ends, then next year's. Open on its own while it is on or near.
+function PitruPaksha({ todayDate }: { todayDate: string }) {
+  const year = Number(todayDate.slice(0, 4));
+  let days: ShraddhDay[] = pitruPaksha(year);
+  if (!days.length || days[days.length - 1].date < todayDate) days = pitruPaksha(year + 1);
+  if (!days.length) return null;
+  const first = days[0].date;
+  const last = days[days.length - 1].date;
+  const ongoing = todayDate >= first && todayDate <= last;
+  const daysAway = Math.round((Date.parse(`${first}T00:00:00Z`) - Date.parse(`${todayDate}T00:00:00Z`)) / 86400000);
+  const label = (date: string) => SHRADDH_DAY.format(Date.parse(`${date}T00:00:00Z`));
+
+  return (
+    <section className="pitru-paksha" id="pitru-paksha" aria-labelledby="pitru-paksha-heading">
+      <details open={ongoing || daysAway <= 15}>
+        <summary>
+          <span>
+            <span className="pitru-kicker">🪔 {ongoing ? "Going on now" : `Starts ${label(first)}`}</span>
+            <span className="pitru-title" id="pitru-paksha-heading">Pitru Paksha {first.slice(0, 4)} · Shraddh Tithi</span>
+            <span className="pitru-range">{label(first)} – {label(last)} · पितृ पक्ष श्राद्ध तिथि</span>
+          </span>
+          <ChevronDown aria-hidden="true" />
+        </summary>
+        <ol className="pitru-list">
+          {days.map((day) => (
+            <li className={day.date === todayDate ? "pitru-today" : ""} key={day.name}>
+              <time dateTime={day.date}>{label(day.date)}</time>
+              <span>
+                <b>{day.name}</b>
+                <small>{day.nameHi} · Tithi: {SHRADDH_TIME.format(day.start)} → {SHRADDH_TIME.format(day.end)}</small>
+              </span>
+              {day.date === todayDate ? <span className="pitru-today-tag">Today</span> : null}
+            </li>
+          ))}
+        </ol>
+        <p className="pitru-note">Shraddh is done in the afternoon (Aparahna). Each date is the day its tithi runs in that time in New Delhi. Your family pandit or local panchang may differ by a day.</p>
+      </details>
+    </section>
+  );
 }
 
 function eventDay(event: CalendarEntry) {
@@ -229,6 +278,8 @@ export default async function CalendarPage() {
           <div className="calendar-year-stamp"><span>INDIA</span><strong suppressHydrationWarning>{yearLabel}</strong><span>NEXT 12 MONTHS</span></div>
         </div>
       </section>
+
+      <PitruPaksha todayDate={todayString} />
 
       <section aria-label="Next 12 months calendar" className="calendar-section" id="month-calendar">
         <div className="calendar-heading-row">

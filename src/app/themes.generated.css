@@ -278,6 +278,12 @@
 [data-theme="neon"] .remind-me-when { background: #1e1915; color: #ebe3d7; }
 [data-theme="neon"] .remind-me-options .remind-me-option:first-child { border-color: #b8501a; }
 [data-theme="neon"] .remind-me-set { color: #fff; }
+[data-theme="neon"] .pitru-paksha details { border: 1px solid #3a3129; border-left: 5px solid #8a5a2b; background: #1a1512; }
+[data-theme="neon"] .pitru-paksha summary > svg { color: #b69b83; }
+[data-theme="neon"] .pitru-kicker { color: #b69b83; }
+[data-theme="neon"] .pitru-list li { border-top: 1px solid #3a3129; }
+[data-theme="neon"] .pitru-today { background: #1e1915; }
+[data-theme="neon"] .pitru-today-tag { background: #8a5a2b; color: #fff; }
 :root[data-theme="pastel"] { --paper: #fff5ec; --paper-deep: #fff1e6; --ink: #3e291f; --muted: #4c352a; --line: #f2d6c2; --saffron: #e9872c; --green: #31584a; }
 [data-theme="pastel"] ::selection { background: #f2c38c; }
 [data-theme="pastel"] .top-ad-wrap { background: #fff2e7; }
@@ -557,6 +563,12 @@
 [data-theme="pastel"] .remind-me-when { background: #fff2e8; color: #473126; }
 [data-theme="pastel"] .remind-me-options .remind-me-option:first-child { border-color: #b8501a; }
 [data-theme="pastel"] .remind-me-set { color: #fff; }
+[data-theme="pastel"] .pitru-paksha details { border: 1px solid #f2d6c2; border-left: 5px solid #8a5a2b; background: #fff6ee; }
+[data-theme="pastel"] .pitru-paksha summary > svg { color: #7a4a1d; }
+[data-theme="pastel"] .pitru-kicker { color: #7a4a1d; }
+[data-theme="pastel"] .pitru-list li { border-top: 1px solid #f2d6c2; }
+[data-theme="pastel"] .pitru-today { background: #fff2e8; }
+[data-theme="pastel"] .pitru-today-tag { background: #8a5a2b; color: #fff; }
 :root[data-theme="neon"] { --muted: #b9ad9d; color-scheme: dark; }
 :root[data-theme="pastel"] { --muted: #7a6052; }
 [data-theme="neon"] ::selection { background: #c4581a; color: #fff; }
