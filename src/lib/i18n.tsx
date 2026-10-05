@@ -96,6 +96,8 @@ const HI: Record<string, string> = {
   "Phone calendar": "फ़ोन कैलेंडर",
   "Phone calendar alerts you the day before and on the day 🔔": "फ़ोन कैलेंडर एक दिन पहले और उसी दिन याद दिलाएगा 🔔",
   "iPhone Calendar": "iPhone कैलेंडर",
+  "Set reminder": "रिमाइंडर सेट करें",
+  "Tap Save when your calendar opens. Your phone will ring at this time.": "कैलेंडर खुलने पर Save दबाएँ। इसी समय आपका फ़ोन याद दिलाएगा।",
   "When": "कब",
   "On the day": "उसी दिन",
   "1 day before": "1 दिन पहले",
