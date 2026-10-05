@@ -36,7 +36,10 @@ export const metadata: Metadata = {
   // Next.js now only emits the standard tag; iPhones before iOS 16.4 still need the Apple one
   // to open the Home Screen icon as a full-screen app.
   other: { "apple-mobile-web-app-capable": "yes" },
-  verification: { google: "kxULr-TAohc65C6X6C0WjGzBBoGzQvMK8GY3Ng_D8fI" },
+  // Both Search Console codes stay: removing one unverifies that property.
+  verification: {
+    google: ["kxULr-TAohc65C6X6C0WjGzBBoGzQvMK8GY3Ng_D8fI", "TUYM3ZuWHvfd1iWV29VLGH6r9jByemFy828"],
+  },
 };
 
 export const viewport: Viewport = {
@@ -53,6 +56,12 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_BOOT_SCRIPT + LANG_BOOT_SCRIPT }} />
         <link rel="preconnect" href="https://images.unsplash.com" />
+        {/* Google AdSense. A plain tag, because AdSense rejects the extra attribute next/script adds. */}
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9561435102395818"
+          crossOrigin="anonymous"
+        />
       </head>
       <body>
         {children}
