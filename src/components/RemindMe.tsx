@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { Bell, CalendarPlus, Smartphone } from "lucide-react";
-import { useT } from "@/lib/i18n";
+import { useEffect, useState } from "react";
+import { AlarmClock, CalendarPlus, Smartphone } from "lucide-react";
+import { useLang, useT } from "@/lib/i18n";
+import { googleCalendarLink, reminderTimes, type ReminderInput } from "@/lib/reminder";
 
 type RemindMeProps = {
   title: string;
@@ -14,89 +15,67 @@ type RemindMeProps = {
   className?: string;
 };
 
-const compact = (date: string) => date.split("-").join("");
+const TIMES = [
+  { value: "07:00", en: "7 AM", hi: "सुबह 7" },
+  { value: "09:00", en: "9 AM", hi: "सुबह 9" },
+  { value: "12:00", en: "12 PM", hi: "दोपहर 12" },
+  { value: "18:00", en: "6 PM", hi: "शाम 6" },
+  { value: "21:00", en: "9 PM", hi: "रात 9" },
+];
 
-function nextDay(date: string) {
-  return new Date(Date.parse(`${date}T00:00:00Z`) + 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
-}
+const WHEN_LABEL = new Intl.DateTimeFormat("en-IN", { weekday: "short", day: "numeric", month: "short", hour: "numeric", minute: "2-digit", timeZone: "Asia/Kolkata" });
+const WHEN_LABEL_HI = new Intl.DateTimeFormat("hi-IN", { weekday: "short", day: "numeric", month: "short", hour: "numeric", minute: "2-digit", timeZone: "Asia/Kolkata" });
 
-function googleCalendarLink({ title, date, details, yearly }: RemindMeProps) {
-  const params = new URLSearchParams({
-    action: "TEMPLATE",
-    text: title,
-    dates: `${compact(date)}/${compact(nextDay(date))}`,
-    details: details ?? "",
-    ctz: "Asia/Kolkata",
-  });
-  if (yearly) params.set("recur", "RRULE:FREQ=YEARLY");
-  return `https://calendar.google.com/calendar/render?${params}`;
-}
-
-const escapeIcs = (text: string) => text.replace(/[\\,;]/g, (match) => `\\${match}`).replace(/\n/g, "\\n");
-
-// An all-day event with two alerts: 9 AM the day before, and 8 AM on the day.
-function icsFile({ title, date, details, yearly }: RemindMeProps) {
-  const stamp = new Date().toISOString().replace(/[-:]/g, "").slice(0, 15) + "Z";
-  return [
-    "BEGIN:VCALENDAR",
-    "VERSION:2.0",
-    "PRODID:-//Festive Clock//Remind me//EN",
-    "CALSCALE:GREGORIAN",
-    "BEGIN:VEVENT",
-    `UID:${compact(date)}-${title.replace(/[^a-z0-9]/gi, "").toLowerCase()}@festive-clock`,
-    `DTSTAMP:${stamp}`,
-    `DTSTART;VALUE=DATE:${compact(date)}`,
-    `DTEND;VALUE=DATE:${compact(nextDay(date))}`,
-    ...(yearly ? ["RRULE:FREQ=YEARLY"] : []),
-    `SUMMARY:${escapeIcs(title)}`,
-    `DESCRIPTION:${escapeIcs(details ?? "")}`,
-    "BEGIN:VALARM",
-    "ACTION:DISPLAY",
-    `DESCRIPTION:${escapeIcs(`${title} is tomorrow!`)}`,
-    "TRIGGER:-PT15H",
-    "END:VALARM",
-    "BEGIN:VALARM",
-    "ACTION:DISPLAY",
-    `DESCRIPTION:${escapeIcs(`${title} is today!`)}`,
-    "TRIGGER:PT8H",
-    "END:VALARM",
-    "END:VEVENT",
-    "END:VCALENDAR",
-  ].join("\r\n");
-}
-
-// "Remind me": adds the day to Google Calendar or the phone's own calendar. Nothing is sent to our server.
+// "Remind me": an alert at the time the person picks, added to Google Calendar or the phone's calendar.
 export function RemindMe(props: RemindMeProps) {
-  const [open, setOpen] = useState(false);
   const t = useT();
+  const hindi = useLang() === "hi";
+  const [open, setOpen] = useState(false);
+  const [time, setTime] = useState("09:00");
+  const [daysBefore, setDaysBefore] = useState<0 | 1>(0);
+  const [isApple, setIsApple] = useState(false);
+  useEffect(() => setIsApple(/iphone|ipad|ipod|macintosh/i.test(navigator.userAgent) && "ontouchend" in document), []);
 
-  function downloadIcs() {
-    const blob = new Blob([icsFile(props)], { type: "text/calendar;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = `${props.title.replace(/[^a-z0-9]+/gi, "-").replace(/^-+|-+$/g, "").toLowerCase() || "reminder"}.ics`;
-    document.body.append(link);
-    link.click();
-    link.remove();
-    window.setTimeout(() => URL.revokeObjectURL(url), 10_000);
-    setOpen(false);
-  }
+  const input: ReminderInput = { title: props.title, date: props.date, time, daysBefore, details: props.details, yearly: props.yearly };
+  const { start } = reminderTimes(input);
+  const icsHref = `/api/remind?${new URLSearchParams({
+    title: props.title, date: props.date, time, before: String(daysBefore), details: props.details ?? "", ...(props.yearly ? { yearly: "1" } : {}),
+  })}`;
+
+  const google = (
+    <a className="remind-me-option" href={googleCalendarLink(input)} target="_blank" rel="noopener noreferrer" key="google">
+      <CalendarPlus aria-hidden="true" /> {t("Google Calendar")}
+    </a>
+  );
+  const phone = (
+    <a className="remind-me-option" href={icsHref} key="phone">
+      <Smartphone aria-hidden="true" /> {isApple ? t("iPhone Calendar") : t("Phone calendar")}
+    </a>
+  );
 
   return (
     <div className={`remind-me ${props.className ?? ""}`.trim()}>
       <button className="remind-me-button" type="button" aria-expanded={open} onClick={() => setOpen(!open)}>
-        <Bell aria-hidden="true" /> {t("Remind me")}
+        <AlarmClock aria-hidden="true" /> {t("Remind me")}
       </button>
       {open ? (
         <div className="remind-me-menu">
-          <a className="remind-me-option" href={googleCalendarLink(props)} target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)}>
-            <CalendarPlus aria-hidden="true" /> {t("Google Calendar")}
-          </a>
-          <button className="remind-me-option" type="button" onClick={downloadIcs}>
-            <Smartphone aria-hidden="true" /> {t("Phone calendar")}
-          </button>
-          <p className="remind-me-note">{t("Phone calendar alerts you the day before and on the day 🔔")}</p>
+          <div className="remind-me-choice" role="group" aria-label={t("When")}>
+            <span>{t("When")}</span>
+            <button type="button" aria-pressed={daysBefore === 0} onClick={() => setDaysBefore(0)}>{t("On the day")}</button>
+            <button type="button" aria-pressed={daysBefore === 1} onClick={() => setDaysBefore(1)}>{t("1 day before")}</button>
+          </div>
+          <div className="remind-me-choice remind-me-times" role="group" aria-label={t("Alert time")}>
+            <span>⏰ {t("Alert time")}</span>
+            {TIMES.map((option) => (
+              <button type="button" key={option.value} aria-pressed={time === option.value} onClick={() => setTime(option.value)}>
+                {hindi ? option.hi : option.en}
+              </button>
+            ))}
+          </div>
+          <p className="remind-me-when" suppressHydrationWarning>🔔 {(hindi ? WHEN_LABEL_HI : WHEN_LABEL).format(start)}</p>
+          <div className="remind-me-options">{isApple ? [phone, google] : [google, phone]}</div>
+          <p className="remind-me-note">{t("Your calendar will ring at this time. Save the event when it opens.")}</p>
         </div>
       ) : null}
     </div>

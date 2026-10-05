@@ -31,6 +31,9 @@ export default function PrivacyPage() {
       <p>Gift ideas and store buttons link to shops such as Amazon, Flipkart, Myntra, Nykaa, Purplle, Meesho and AJIO. Some links are affiliate links, and we may use an affiliate network such as Cuelinks.</p>
       <p>When you click these links, the shop or the network may use cookies or similar technology to record that you came from {SITE_NAME}. This lets them pay us a small commission, at no extra cost to you. Their own privacy policies apply on their websites.</p>
 
+      <h2>Reminders</h2>
+      <p><b>Remind me</b> adds an event to Google Calendar or your phone&apos;s calendar. For the phone calendar, the event name and date are sent to our server only to create the calendar file. Nothing is stored.</p>
+
       <h2>Sharing</h2>
       <p>Share buttons open WhatsApp, Facebook, Telegram or your phone&apos;s share menu with a ready message. We do not see who you share with.</p>
 
