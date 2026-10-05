@@ -22,6 +22,7 @@ import {
 } from "@/lib/personal-dates";
 
 const DATE_LABEL = new Intl.DateTimeFormat("en-IN", { weekday: "short", day: "numeric", month: "long", year: "numeric", timeZone: "Asia/Kolkata" });
+const INDIA_DAY = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Kolkata" });
 const HI_DATE_LABEL = new Intl.DateTimeFormat("hi-IN", { weekday: "short", day: "numeric", month: "long", year: "numeric", timeZone: "Asia/Kolkata" });
 const KIND_EMOJI: Record<PersonalDateKind, string> = { birthday: "🎂", anniversary: "💞", other: "📅" };
 
@@ -95,7 +96,7 @@ function MyDateCard({ date, now, onDelete, onShared }: {
           <RemindMe
             className="card-remind"
             title={`${KIND_EMOJI[date.kind]} ${date.name}`}
-            date={new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Kolkata" }).format(target)}
+            date={INDIA_DAY.format(target)}
             details={`${date.name}, saved in Festive Clock.`}
             yearly
           />
