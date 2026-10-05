@@ -33,6 +33,9 @@ export const metadata: Metadata = {
   },
   twitter: { card: "summary_large_image" },
   appleWebApp: { capable: true, title: SITE_NAME, statusBarStyle: "default" },
+  // Next.js now only emits the standard tag; iPhones before iOS 16.4 still need the Apple one
+  // to open the Home Screen icon as a full-screen app.
+  other: { "apple-mobile-web-app-capable": "yes" },
   verification: { google: "kxULr-TAohc65C6X6C0WjGzBBoGzQvMK8GY3Ng_D8fI" },
 };
 
