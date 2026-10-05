@@ -1,6 +1,6 @@
 // Festive Clock service worker: opens the app instantly and works offline.
 // Pages show the saved copy at once and refresh it in the background, so updates appear on the next open.
-const CACHE = "festive-clock-v2";
+const CACHE = "festive-clock-v3";
 const START_PAGES = ["/", "/calendar"];
 const HERO_HOST = "images.unsplash.com";
 const SAVED_AT = "/__offline-saved-at";
@@ -20,7 +20,7 @@ async function saveAllPages() {
   for (const path of paths) {
     try {
       const response = await fetch(path);
-      if (!response.ok) { allSaved = false; continue; }
+      if (!response.ok || response.redirected) { allSaved = false; continue; }
       const html = await response.clone().text();
       await cache.put(path, response);
       for (const match of html.matchAll(/(?:src|href)="(\/_next\/static\/[^"]+)"/g)) assets.add(match[1]);
@@ -66,8 +66,10 @@ self.addEventListener("activate", (event) => {
   );
 });
 
+// A redirected copy is never saved: Safari refuses to open a page the worker answers with one,
+// which leaves the Home Screen app on a blank error screen.
 function saveCopy(request, response) {
-  if (response && (response.ok || response.type === "opaque")) {
+  if (response && !response.redirected && (response.ok || response.type === "opaque")) {
     const copy = response.clone();
     caches.open(CACHE).then((cache) => cache.put(request, copy));
   }
