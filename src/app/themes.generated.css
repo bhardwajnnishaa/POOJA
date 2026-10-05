@@ -273,6 +273,10 @@
 [data-theme="neon"] .event-category-festival { color: #b6a48b; }
 [data-theme="neon"] .gift-card a { color: #bf997d; }
 [data-theme="neon"] .install-banner-button, [data-theme="neon"] .my-dates-add, [data-theme="neon"] .my-dates-save, [data-theme="neon"] .install-app-button, [data-theme="neon"] .app-install-button { background: #b8501a; }
+[data-theme="neon"] .remind-me-choice button { background: #181411; }
+[data-theme="neon"] .remind-me-choice button[aria-pressed="true"] { border-color: #b8501a; background: #b8501a; color: #fff; }
+[data-theme="neon"] .remind-me-when { background: #1e1915; color: #ebe3d7; }
+[data-theme="neon"] .remind-me-options .remind-me-option:first-child { border-color: #b8501a; }
 :root[data-theme="pastel"] { --paper: #fff5ec; --paper-deep: #fff1e6; --ink: #3e291f; --muted: #4c352a; --line: #f2d6c2; --saffron: #e9872c; --green: #31584a; }
 [data-theme="pastel"] ::selection { background: #f2c38c; }
 [data-theme="pastel"] .top-ad-wrap { background: #fff2e7; }
@@ -547,6 +551,10 @@
 [data-theme="pastel"] .event-category-festival { color: #7a5a2c; }
 [data-theme="pastel"] .gift-card a { color: #8a4512; }
 [data-theme="pastel"] .install-banner-button, [data-theme="pastel"] .my-dates-add, [data-theme="pastel"] .my-dates-save, [data-theme="pastel"] .install-app-button, [data-theme="pastel"] .app-install-button { background: #b8501a; }
+[data-theme="pastel"] .remind-me-choice button { background: #fff7f0; }
+[data-theme="pastel"] .remind-me-choice button[aria-pressed="true"] { border-color: #b8501a; background: #b8501a; color: #fff; }
+[data-theme="pastel"] .remind-me-when { background: #fff2e8; color: #473126; }
+[data-theme="pastel"] .remind-me-options .remind-me-option:first-child { border-color: #b8501a; }
 :root[data-theme="neon"] { --muted: #b9ad9d; color-scheme: dark; }
 :root[data-theme="pastel"] { --muted: #7a6052; }
 [data-theme="neon"] ::selection { background: #c4581a; color: #fff; }

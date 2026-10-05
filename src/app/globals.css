@@ -1077,3 +1077,18 @@ body { overflow-x: clip; }
 .event-category-festival { color: #7a5a2c; }
 .gift-card a { color: #8a4512; }
 .install-banner-button, .my-dates-add, .my-dates-save, .install-app-button, .app-install-button { background: #b8501a; }
+
+/* Remind me: pick the day and the alert time, then the calendar. */
+.remind-me-menu { display: flex; flex-direction: column; gap: 12px; }
+.remind-me-choice { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.remind-me-choice > span { flex-basis: 100%; color: var(--ink); font-size: 15px; font-weight: 800; }
+.remind-me-choice button { min-height: 44px; padding: 0 14px; border: 1px solid var(--line); border-radius: 999px; background: #fffdf8; color: var(--ink); cursor: pointer; font-size: 16px; font-weight: 700; }
+.remind-me-choice button[aria-pressed="true"] { border-color: #b8501a; background: #b8501a; color: #fff; }
+.remind-me-when { margin: 0; padding: 10px 12px; border-radius: 9px; background: #fdf0e3; color: #7a3d0f; font-size: 16px; font-weight: 800; text-align: center; }
+.remind-me-options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.remind-me-options .remind-me-option:first-child { border-color: #b8501a; box-shadow: 0 0 0 1px #b8501a inset; }
+.countdown-grid .remind-me-options, .my-dates-grid .remind-me-options { grid-template-columns: 1fr; }
+@media (max-width: 640px) {
+  .remind-me-options { grid-template-columns: 1fr; }
+  .remind-me-choice button { min-height: 46px; font-size: 17px; }
+}
