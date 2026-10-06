@@ -74,7 +74,7 @@ export function RemindMe(props: RemindMeProps) {
             <BellRing aria-hidden="true" />
             <span>{t("Set reminder")}<small>{whenLabel}</small></span>
           </a>
-          <p className="remind-me-note">{t("Tap Save when your calendar opens. Your phone will ring at this time.")}</p>
+          <p className="remind-me-note">{t("Tap Save when your calendar opens. Your phone will then remind you with its notification sound.")}</p>
         </div>
       ) : null}
     </div>

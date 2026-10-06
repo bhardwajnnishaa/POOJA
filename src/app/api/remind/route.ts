@@ -8,7 +8,8 @@ export function GET(request: Request) {
   return new Response(icsFile(input), {
     headers: {
       "Content-Type": "text/calendar; charset=utf-8",
-      "Content-Disposition": 'attachment; filename="festive-clock-reminder.ics"',
+      // inline (not attachment): iPhone then opens it straight in Calendar instead of downloading it.
+      "Content-Disposition": 'inline; filename="festive-clock-reminder.ics"',
       "Cache-Control": "no-store",
     },
   });
