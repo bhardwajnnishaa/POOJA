@@ -305,6 +305,7 @@ function CountdownCard({ event, now, calendarDates, isFavorite, isShoppingEvent,
           </Link>
           <RemindMe
             className="card-remind"
+            href={festivalPath(event)}
             title={`${event.emoji} ${name}`}
             date={INDIA_DAY.format(target)}
             details={`${event.name}: ${event.subtitle}. Countdown: https://celebration-calendar-india.vercel.app${festivalPath(event)}`}

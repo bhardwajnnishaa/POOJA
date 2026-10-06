@@ -115,3 +115,35 @@ self.addEventListener("fetch", (event) => {
     event.respondWith(savedFirst(request));
   }
 });
+
+// Reminders sent by Festive Clock (Remind me → Set reminder).
+self.addEventListener("push", (event) => {
+  let data = {};
+  try {
+    data = event.data ? event.data.json() : {};
+  } catch {
+    data = { title: event.data ? event.data.text() : "Festive Clock" };
+  }
+  event.waitUntil(self.registration.showNotification(data.title || "Festive Clock", {
+    body: data.body || "",
+    icon: "/icon-192.png",
+    badge: "/icon-192.png",
+    tag: data.title || "festive-clock",
+    renotify: true,
+    vibrate: [300, 150, 300, 150, 300],
+    data: { url: data.url || "/" },
+  }));
+});
+
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+  const url = new URL(event.notification.data?.url || "/", self.location.origin).href;
+  event.waitUntil(
+    self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((windows) => {
+      for (const client of windows) {
+        if (client.url === url && "focus" in client) return client.focus();
+      }
+      return self.clients.openWindow(url);
+    }),
+  );
+});

@@ -1171,3 +1171,7 @@ body { overflow-x: clip; }
   .panchang-times { grid-template-columns: 1fr; }
   .calendar-quick-links { grid-template-columns: 1fr; }
 }
+button.remind-me-set { width: 100%; border: 0; cursor: pointer; }
+button.remind-me-set:disabled { opacity: .75; cursor: progress; }
+.remind-me-done { display: flex; flex-direction: column; align-items: center; margin: 0; padding: 14px; border-radius: 14px; background: #e6f4ea; color: #1e5b2c; font-family: var(--serif); font-size: 22px; font-weight: 700; }
+.remind-me-done small { margin-top: 3px; font-family: var(--sans); font-size: 15px; }
