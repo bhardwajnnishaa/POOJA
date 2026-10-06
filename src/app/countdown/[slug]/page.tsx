@@ -209,6 +209,7 @@ export default async function FestivalPage({ params }: PageProps) {
         {dateKnown ? (
           <RemindMe
             className="festival-remind"
+            href={`/countdown/${festival.slug}`}
             title={`${festival.emoji} ${festival.name}`}
             date={new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Kolkata" }).format(target)}
             details={`${festival.name} ${year}: ${festival.subtitle}. Countdown: https://celebration-calendar-india.vercel.app/countdown/${festival.slug}`}

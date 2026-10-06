@@ -95,6 +95,7 @@ function MyDateCard({ date, now, onDelete, onShared }: {
           </Link>
           <RemindMe
             className="card-remind"
+            href="/"
             title={`${KIND_EMOJI[date.kind]} ${date.name}`}
             date={INDIA_DAY.format(target)}
             details={`${date.name}, saved in Festive Clock.`}
