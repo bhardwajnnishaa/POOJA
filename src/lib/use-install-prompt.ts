@@ -35,6 +35,8 @@ function detectDevice(): InstallDevice {
     || (navigator as Navigator & { standalone?: boolean }).standalone === true;
   if (standalone || installedNow) return "installed";
   if (/iphone|ipad|ipod/i.test(navigator.userAgent)) return "apple";
+  // iPads report themselves as a Mac, so tell them apart by the touch screen.
+  if (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1) return "apple";
   if (/android/i.test(navigator.userAgent)) return "android";
   return "desktop";
 }
