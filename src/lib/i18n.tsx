@@ -2,6 +2,7 @@
 
 // Hindi / English switch. The choice is saved on the phone and every open component updates at once.
 import { useCallback, useSyncExternalStore } from "react";
+import { FESTIVAL_HI } from "@/lib/i18n-data";
 import type { FestivalId } from "@/types/calendar";
 
 export type Lang = "en" | "hi";
@@ -97,6 +98,36 @@ const HI: Record<string, string> = {
   "Phone calendar alerts you the day before and on the day 🔔": "फ़ोन कैलेंडर एक दिन पहले और उसी दिन याद दिलाएगा 🔔",
   "iPhone Calendar": "iPhone कैलेंडर",
   "Set reminder": "रिमाइंडर सेट करें",
+  "TODAY'S PANCHANG": "आज का पंचांग",
+  "City": "शहर",
+  "Today": "आज",
+  "Yesterday": "बीता कल",
+  "Previous day": "पिछला दिन",
+  "Next day": "अगला दिन",
+  "Month": "मास",
+  "North India": "उत्तर भारत",
+  "South & West": "दक्षिण व पश्चिम",
+  "Sunrise": "सूर्योदय",
+  "Sunset": "सूर्यास्त",
+  "Moonrise": "चंद्रोदय",
+  "Moonset": "चंद्रास्त",
+  "Tithi": "तिथि",
+  "Nakshatra": "नक्षत्र",
+  "Yoga": "योग",
+  "till": "तक",
+  "then": "फिर",
+  "Avoid for new work": "नए काम के लिए टालें",
+  "Good times": "शुभ समय",
+  "Rahu Kaal": "राहु काल",
+  "Yamaganda": "यमगंड",
+  "Gulika Kaal": "गुलिक काल",
+  "Abhijit Muhurat": "अभिजीत मुहूर्त",
+  "Brahma Muhurat": "ब्रह्म मुहूर्त",
+  "Not today": "आज नहीं",
+  "Not observed on Wednesday": "बुधवार को नहीं माना जाता",
+  "Now": "अभी",
+  "Times are for the city you choose, worked out from the Sun and Moon. Tithi, nakshatra and yoga are those running at sunrise. Your local panchang may differ by a minute or two.": "समय आपके चुने हुए शहर के लिए हैं, सूर्य और चंद्रमा की स्थिति से निकाले गए। तिथि, नक्षत्र और योग सूर्योदय के समय के हैं। स्थानीय पंचांग में एक-दो मिनट का अंतर हो सकता है।",
+  "📿 Today's Panchang": "📿 आज का पंचांग",
   "Tap Save when your calendar opens. Your phone will ring at this time.": "कैलेंडर खुलने पर Save दबाएँ। इसी समय आपका फ़ोन याद दिलाएगा।",
   "When": "कब",
   "On the day": "उसी दिन",
@@ -138,31 +169,7 @@ export function useT() {
   return useCallback((english: string) => (lang === "hi" ? HI[english] ?? english : english), [lang]);
 }
 
-export const FESTIVAL_HI: Record<FestivalId, { name: string; subtitle: string }> = {
-  diwali: { name: "दिवाली", subtitle: "रोशनी का त्योहार" },
-  eid: { name: "ईद-उल-फ़ित्र", subtitle: "मेल-मिलाप का जश्न" },
-  newYear: { name: "नया साल", subtitle: "नया पन्ना, नई शुरुआत" },
-  rakhi: { name: "रक्षाबंधन", subtitle: "एक धागा, ज़िंदगी भर का प्यार" },
-  holi: { name: "होली", subtitle: "रंगों का त्योहार" },
-  independenceDay: { name: "स्वतंत्रता दिवस", subtitle: "आज़ादी का जश्न" },
-  navratri: { name: "नवरात्रि", subtitle: "माँ दुर्गा की नौ रातें" },
-  dussehra: { name: "दशहरा", subtitle: "बुराई पर अच्छाई की जीत" },
-  karwaChauth: { name: "करवा चौथ", subtitle: "प्यार का व्रत, चाँद के साथ पूरा" },
-  dhanteras: { name: "धनतेरस", subtitle: "दिवाली का पहला दिन" },
-  bhaiDooj: { name: "भाई दूज", subtitle: "एक तिलक, एक दुआ, एक वादा" },
-  chhath: { name: "छठ पूजा", subtitle: "डूबते और उगते सूरज को अर्घ्य" },
-  guruNanak: { name: "गुरु नानक जयंती", subtitle: "गुरु नानक देव जी का प्रकाश पर्व" },
-  christmas: { name: "क्रिसमस", subtitle: "खुशियाँ, कैरल और पेड़ पर सितारा" },
-  lohri: { name: "लोहड़ी", subtitle: "अलाव, रेवड़ी और भांगड़ा" },
-  makarSankranti: { name: "मकर संक्रांति", subtitle: "पतंग, तिल-गुड़ और पोंगल" },
-  mahaShivratri: { name: "महाशिवरात्रि", subtitle: "भगवान शिव की महान रात्रि" },
-  ramNavami: { name: "राम नवमी", subtitle: "भगवान राम का जन्मोत्सव" },
-  eidAlAdha: { name: "ईद-उल-अज़हा", subtitle: "बकरीद, क़ुर्बानी का त्योहार" },
-  teej: { name: "हरियाली तीज", subtitle: "हरी चूड़ियाँ, मेहंदी और झूले" },
-  janmashtami: { name: "जन्माष्टमी", subtitle: "कान्हा का आधी रात का जन्मदिन" },
-  onam: { name: "ओणम", subtitle: "केरल का फ़सल त्योहार" },
-  ganeshChaturthi: { name: "गणेश चतुर्थी", subtitle: "गणपति बप्पा मोरया!" },
-};
+export { FESTIVAL_HI };
 
 /** Festival name and tagline in the chosen language. */
 export function useFestivalText() {

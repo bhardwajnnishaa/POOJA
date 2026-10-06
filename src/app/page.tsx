@@ -567,6 +567,9 @@ export default function Home() {
           <Link className="open-calendar-link" href="/calendar">
             <CalendarDays aria-hidden="true" /> {t("Open calendar")}
           </Link>
+          <Link className="vrat-link panchang-link" href="/panchang">
+            <span>{t("📿 Today's Panchang")}</span> <ArrowUpRight aria-hidden="true" />
+          </Link>
           <Link className="vrat-link" href="/vrat">
             <span>{t("🌙 Ekadashi, Purnima, Amavasya")}</span> <ArrowUpRight aria-hidden="true" />
           </Link>

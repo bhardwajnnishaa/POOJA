@@ -279,6 +279,11 @@ export default async function CalendarPage() {
         </div>
       </section>
 
+      <div className="calendar-quick-links">
+        <Link className="vrat-link panchang-link" href="/panchang"><span>📿 Today&apos;s Panchang · Rahu Kaal</span></Link>
+        <Link className="vrat-link" href="/vrat"><span>🌙 Ekadashi, Purnima, Amavasya</span></Link>
+      </div>
+
       <PitruPaksha todayDate={todayString} />
 
       <section aria-label="Next 12 months calendar" className="calendar-section" id="month-calendar">
