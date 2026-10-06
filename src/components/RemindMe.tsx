@@ -5,6 +5,7 @@ import { AlarmClock, BellRing } from "lucide-react";
 import { useLang, useT } from "@/lib/i18n";
 import { googleCalendarLink, reminderTimes, type ReminderInput } from "@/lib/reminder";
 import { VAPID_PUBLIC_KEY } from "@/lib/push-config";
+import { REMIND_ME_ENABLED } from "@/lib/features";
 
 type RemindMeProps = {
   title: string;
@@ -74,6 +75,11 @@ const WHEN_LABEL_HI = new Intl.DateTimeFormat("hi-IN", { weekday: "short", day: 
 
 // "Remind me": an alert at the time the person picks, added to Google Calendar or the phone's calendar.
 export function RemindMe(props: RemindMeProps) {
+  if (!REMIND_ME_ENABLED) return null;
+  return <RemindMePanel {...props} />;
+}
+
+function RemindMePanel(props: RemindMeProps) {
   const t = useT();
   const hindi = useLang() === "hi";
   const [open, setOpen] = useState(false);
