@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { Check, Copy, Pencil, RefreshCw, Sparkles, WandSparkles, X } from "lucide-react";
 import { ShareOptions } from "@/components/ShareOptions";
+import { WishCardButton } from "@/components/WishCard";
+import { FESTIVAL_INFO } from "@/lib/festivals";
 
 type QuoteTone = "heartfelt" | "poetic" | "playful";
 type QuoteLanguage = "English" | "Hindi" | "Hinglish";
@@ -224,6 +226,20 @@ async function copyToClipboard(message: string) {
 
 const NO_ALIASES: Record<string, string> = {};
 
+function eventEmoji(eventName: string) {
+  if (/birthday|janamdin|janmdin/i.test(eventName)) return "🎂";
+  if (/anniversary|saalgirah/i.test(eventName)) return "💞";
+  const name = eventName.toLowerCase();
+  return FESTIVAL_INFO.find((festival) => name.includes(festival.name.toLowerCase()) || (festival.otherName && name.includes(festival.otherName.toLowerCase())))?.emoji ?? "✨";
+}
+
+// The line added under every copied or shared wish, so people who receive it can make their own.
+const SIGNATURE = "✨ Made with Festive Clock 🪔 — make yours:";
+
+function wishLink() {
+  return `${window.location.origin}${window.location.pathname}#quote-studio`;
+}
+
 export function QuoteMaker({
   selectedEvent: selectedEventProp,
   eventNames = [],
@@ -323,7 +339,7 @@ export function QuoteMaker({
   }
 
   function announceCopy(message: string) {
-    void copyToClipboard(message).then(() => {
+    void copyToClipboard(`${message}\n\n${SIGNATURE} ${wishLink()}`).then(() => {
       setNotice("Quote copied to your clipboard.");
       window.setTimeout(() => setNotice(""), 3200);
     });
@@ -424,7 +440,11 @@ export function QuoteMaker({
                   <button className="quote-edit-button" type="button" onClick={() => { setEditedQuote(quote); setIsEditing(true); }}>
                     <Pencil aria-hidden="true" /> Edit quote
                   </button>
-                  <ShareOptions message={quote} onShared={() => setNotice("Quote copied and ready to share.")} />
+                  <WishCardButton
+                    card={{ text: quote, eventName, emoji: eventEmoji(eventName), footer: "Made with Festive Clock" }}
+                    shareText={`${SIGNATURE} ${typeof window === "undefined" ? "" : wishLink()}`}
+                  />
+                  <ShareOptions message={`${quote}\n\n${SIGNATURE}`} onShared={() => setNotice("Quote copied and ready to share.")} />
                 </>
               )}
             </div>

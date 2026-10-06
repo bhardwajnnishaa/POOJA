@@ -1175,3 +1175,24 @@ button.remind-me-set { width: 100%; border: 0; cursor: pointer; }
 button.remind-me-set:disabled { opacity: .75; cursor: progress; }
 .remind-me-done { display: flex; flex-direction: column; align-items: center; margin: 0; padding: 14px; border-radius: 14px; background: #e6f4ea; color: #1e5b2c; font-family: var(--serif); font-size: 22px; font-weight: 700; }
 .remind-me-done small { margin-top: 3px; font-family: var(--sans); font-size: 15px; }
+
+/* Make it a card: the eye-catching action in the wish maker. */
+.quote-card-button { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; gap: 8px; padding: 0 18px; border: 0; border-radius: 12px; background: linear-gradient(120deg, #d62f6a, #b8501a 70%); box-shadow: 0 5px 14px rgba(196, 70, 40, .25); color: #fff; cursor: pointer; font-family: var(--serif); font-size: 18px; font-weight: 700; }
+.quote-card-button svg { width: 20px; height: 20px; }
+@media (max-width: 640px) {
+  .quote-card-button { flex-basis: 100%; min-height: 54px; font-size: 20px; }
+}
+
+/* Add to Home Screen as a pop-up card that slides up from the bottom. */
+.install-popup { position: fixed; right: 12px; bottom: 12px; left: 12px; z-index: 60; width: auto; max-width: 480px; margin: 0 auto; padding: 22px 18px 18px; box-shadow: 0 18px 50px rgba(40, 20, 10, .28); animation: install-popup-in .45s cubic-bezier(.2, .9, .3, 1.2) both; }
+.install-popup .brand-mark { width: 56px; height: 56px; }
+.install-popup .install-banner-title { margin: 10px 0 6px; font-size: clamp(28px, 7vw, 36px); }
+.install-popup .install-banner-sub { margin-bottom: 14px; font-size: 16px; }
+.install-popup .install-steps { max-height: 40vh; overflow-y: auto; }
+@media (min-width: 900px) {
+  .install-popup { right: 24px; bottom: 24px; left: auto; width: 420px; }
+}
+@keyframes install-popup-in { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .install-popup { animation: none; }
+}
