@@ -128,7 +128,7 @@ const HI: Record<string, string> = {
   "Now": "अभी",
   "Times are for the city you choose, worked out from the Sun and Moon. Tithi, nakshatra and yoga are those running at sunrise. Your local panchang may differ by a minute or two.": "समय आपके चुने हुए शहर के लिए हैं, सूर्य और चंद्रमा की स्थिति से निकाले गए। तिथि, नक्षत्र और योग सूर्योदय के समय के हैं। स्थानीय पंचांग में एक-दो मिनट का अंतर हो सकता है।",
   "📿 Today's Panchang": "📿 आज का पंचांग",
-  "Tap Save when your calendar opens. Your phone will ring at this time.": "कैलेंडर खुलने पर Save दबाएँ। इसी समय आपका फ़ोन याद दिलाएगा।",
+  "Tap Save when your calendar opens. Your phone will then remind you with its notification sound.": "कैलेंडर खुलने पर Save दबाएँ। फिर आपका फ़ोन नोटिफ़िकेशन की आवाज़ के साथ याद दिलाएगा।",
   "When": "कब",
   "On the day": "उसी दिन",
   "1 day before": "1 दिन पहले",
