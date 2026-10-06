@@ -7,6 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/`, changeFrequency: "daily", priority: 1 },
     { url: `${SITE_URL}/calendar`, changeFrequency: "daily", priority: 0.8 },
     { url: `${SITE_URL}/vrat`, changeFrequency: "daily", priority: 0.8 },
+    { url: `${SITE_URL}/panchang`, changeFrequency: "daily", priority: 0.9 },
     { url: `${SITE_URL}/app`, changeFrequency: "monthly", priority: 0.5 },
     { url: `${SITE_URL}/about`, changeFrequency: "yearly", priority: 0.3 },
     { url: `${SITE_URL}/contact`, changeFrequency: "yearly", priority: 0.3 },
