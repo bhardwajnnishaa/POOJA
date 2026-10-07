@@ -1202,3 +1202,27 @@ button.remind-me-set:disabled { opacity: .75; cursor: progress; }
 @media (prefers-reduced-motion: reduce) {
   .install-popup { animation: none; }
 }
+
+/* Panchang and Ekadashi buttons: bigger and bolder, they matter most to Indian users. */
+.vrat-link { min-height: 62px; padding: 10px 18px; border-width: 2px; border-color: #e3b88c; font-size: 22px; font-weight: 700; }
+.vrat-link svg { width: 22px; height: 22px; }
+.event-finder .vrat-link, .event-finder .panchang-link { margin-top: 0; }
+@media (min-width: 641px) {
+  /* Side by side on their own row, each taking half the width. */
+  .event-finder .vrat-link { flex: 1 1 320px; min-height: 62px; font-size: 22px; }
+  .calendar-quick-links .vrat-link { min-height: 62px; font-size: 22px; }
+}
+@media (max-width: 640px) {
+  .vrat-link { min-height: 64px; font-size: 21px; }
+  .event-finder .panchang-link { margin-top: 2px; }
+}
+@media (min-width: 641px) {
+  /* Exactly half each, so both always move to their own row together. */
+  .event-finder .vrat-link { flex: 1 1 calc(50% - 6px); }
+}
+@media (max-width: 640px) {
+  .vrat-link { padding: 10px 12px; gap: 6px; }
+}
+@media (max-width: 380px) {
+  .vrat-link { font-size: 19px; }
+}

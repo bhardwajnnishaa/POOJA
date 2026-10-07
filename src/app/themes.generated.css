@@ -297,6 +297,7 @@
 [data-theme="neon"] .panchang-now { background: #1e1915; }
 [data-theme="neon"] .remind-me-done { background: #1f1a15; color: #ebe2d6; }
 [data-theme="neon"] .quote-card-button { color: #fff; }
+[data-theme="neon"] .vrat-link { border-color: #e3b88c; }
 :root[data-theme="pastel"] { --paper: #fff5ec; --paper-deep: #fff1e6; --ink: #3e291f; --muted: #4c352a; --line: #f2d6c2; --saffron: #e9872c; --green: #31584a; }
 [data-theme="pastel"] ::selection { background: #f2c38c; }
 [data-theme="pastel"] .top-ad-wrap { background: #fff2e7; }
@@ -595,6 +596,7 @@
 [data-theme="pastel"] .panchang-now { background: #fff2e8; }
 [data-theme="pastel"] .remind-me-done { background: #fff2e7; color: #483227; }
 [data-theme="pastel"] .quote-card-button { color: #fff; }
+[data-theme="pastel"] .vrat-link { border-color: #e3b88c; }
 :root[data-theme="neon"] { --muted: #b9ad9d; color-scheme: dark; }
 :root[data-theme="pastel"] { --muted: #7a6052; }
 [data-theme="neon"] ::selection { background: #c4581a; color: #fff; }
