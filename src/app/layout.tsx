@@ -8,6 +8,10 @@ import { THEME_BOOT_SCRIPT } from "@/lib/theme";
 import { LANG_BOOT_SCRIPT } from "@/lib/lang-boot";
 
 const CUELINKS_CID = process.env.NEXT_PUBLIC_CUELINKS_CID;
+const ADSENSE_CLIENT = "ca-pub-9561435102395818";
+// The AdSense script is large and pulls in more files, so it loads only after the app has opened
+// and the phone is idle. A plain script tag, because AdSense rejects the attribute next/script adds.
+const ADSENSE_LOADER = `window.addEventListener("load",function(){var go=function(){var s=document.createElement("script");s.async=true;s.crossOrigin="anonymous";s.src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}";document.head.appendChild(s)};setTimeout(function(){window.requestIdleCallback?requestIdleCallback(go,{timeout:3000}):go()},2500)});`;
 
 // Self-hosted at build time, so pages do not wait on a request to Google Fonts.
 const sans = DM_Sans({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
@@ -60,15 +64,12 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_BOOT_SCRIPT + LANG_BOOT_SCRIPT }} />
         <link rel="preconnect" href="https://images.unsplash.com" />
-        {/* Google AdSense. A plain tag, because AdSense rejects the extra attribute next/script adds. */}
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9561435102395818"
-          crossOrigin="anonymous"
-        />
+        {/* Google AdSense account tag: lets Google confirm the site without loading the ads script first. */}
+        <meta name="google-adsense-account" content={ADSENSE_CLIENT} />
       </head>
       <body>
         {children}
+        <script dangerouslySetInnerHTML={{ __html: ADSENSE_LOADER }} />
         <Script id="service-worker" strategy="lazyOnload">
           {`if ("serviceWorker" in navigator) navigator.serviceWorker.register("/sw.js").catch(function () {});`}
         </Script>
