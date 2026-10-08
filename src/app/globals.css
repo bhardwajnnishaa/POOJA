@@ -956,8 +956,8 @@ body { overflow-x: clip; }
 .vrat-row b { display: block; font-family: var(--serif); font-size: 19px; font-weight: 600; }
 .vrat-row small { display: block; margin-top: 2px; color: var(--muted); font-size: 14px; }
 .vrat-note { margin: 16px 0 0; color: var(--muted); font-size: 15px; line-height: 1.6; }
-.vrat-link { display: flex; min-height: 52px; align-items: center; justify-content: center; gap: 8px; margin-top: 10px; border: 1px solid #e8c9a8; border-radius: 10px; background: #fdf3e7; color: #8a4512; font-family: var(--serif); font-size: 19px; font-weight: 600; }
-.vrat-link svg { width: 18px; height: 18px; }
+.vrat-link { display: flex; min-height: 58px; align-items: center; justify-content: center; gap: 10px; margin-top: 10px; border: 1px solid #e8c9a8; border-radius: 12px; background: #fdf3e7; color: #8a4512; font-family: var(--serif); font-size: 22px; font-weight: 700; }
+.vrat-link svg { width: 22px; height: 22px; }
 @media (max-width: 760px) {
   .vrat-next { grid-template-columns: 1fr; }
 }
@@ -968,13 +968,13 @@ body { overflow-x: clip; }
   .vrat-row .vrat-tag { grid-column: 2; justify-self: start; }
   .vrat-row b { font-size: 18px; }
 }
-.vrat-link { padding: 8px 14px; text-align: center; line-height: 1.25; }
+.vrat-link { padding: 10px 16px; text-align: center; line-height: 1.25; }
 .vrat-link svg { flex: 0 0 auto; }
 @media (max-width: 640px) {
-  .vrat-link { width: 100%; font-size: 18px; }
+  .vrat-link { width: 100%; font-size: 22px; }
 }
 @media (min-width: 641px) {
-  .vrat-link { min-height: 42px; margin-top: 0; font-size: 16px; }
+  .vrat-link { min-height: 52px; margin-top: 0; padding: 10px 20px; font-size: 21px; }
 }
 
 /* Countdowns first on phones and tablets: results show right under the search box. */
