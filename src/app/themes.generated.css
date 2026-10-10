@@ -300,6 +300,9 @@
 [data-theme="neon"] .vrat-link { border-color: #e3b88c; }
 [data-theme="neon"] .install-step-tip { background: #1b1613; }
 [data-theme="neon"] .install-copy-link { border: 2px solid #b8501a; background: #191512; color: #bf997d; }
+[data-theme="neon"] .navratri-today { border: 1px solid #3a3129; border-left: 5px solid #c2410c; background: #1c1713; }
+[data-theme="neon"] .navratri-kicker { color: #c78f7d; }
+[data-theme="neon"] .navratri-today .navratri-next { color: #c78f7d; }
 :root[data-theme="pastel"] { --paper: #fff5ec; --paper-deep: #fff1e6; --ink: #3e291f; --muted: #4c352a; --line: #f2d6c2; --saffron: #e9872c; --green: #31584a; }
 [data-theme="pastel"] ::selection { background: #f2c38c; }
 [data-theme="pastel"] .top-ad-wrap { background: #fff2e7; }
@@ -601,6 +604,9 @@
 [data-theme="pastel"] .vrat-link { border-color: #e3b88c; }
 [data-theme="pastel"] .install-step-tip { background: #fff5ec; }
 [data-theme="pastel"] .install-copy-link { border: 2px solid #b8501a; background: #fff6ee; color: #8a4512; }
+[data-theme="pastel"] .navratri-today { border: 1px solid #f2d6c2; border-left: 5px solid #c2410c; background: #fff4eb; }
+[data-theme="pastel"] .navratri-kicker { color: #9a3412; }
+[data-theme="pastel"] .navratri-today .navratri-next { color: #9a3412; }
 :root[data-theme="neon"] { --muted: #b9ad9d; color-scheme: dark; }
 :root[data-theme="pastel"] { --muted: #7a6052; }
 [data-theme="neon"] ::selection { background: #c4581a; color: #fff; }

@@ -1,5 +1,6 @@
 // Festive Clock service worker: opens the app instantly and works offline.
-// Pages show the saved copy at once and refresh it in the background, so updates appear on the next open.
+// Pages saved today show at once and refresh in the background. A page saved on an earlier day
+// waits briefly for today's copy, so dates and panchang never open a day behind.
 const CACHE = "festive-clock-v3";
 const START_PAGES = ["/", "/calendar"];
 const HERO_HOST = "images.unsplash.com";
@@ -82,14 +83,29 @@ async function savedFirst(request) {
   return saved ?? fetch(request).then((response) => saveCopy(request, response));
 }
 
-// Show the saved page now and fetch a fresh one for next time.
+const INDIA_DATE = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Kolkata" });
+const FRESH_WAIT_MS = 4000;
+
+// True when the server sent this copy on today's date in India.
+function savedToday(response) {
+  const sentAt = Date.parse(response.headers.get("date") ?? "");
+  return !Number.isNaN(sentAt) && INDIA_DATE.format(sentAt) === INDIA_DATE.format(Date.now());
+}
+
+// Show today's saved page now and fetch a fresh one for next time.
 async function savedThenRefresh(event) {
   const request = event.request;
   const saved = await caches.match(request, { ignoreSearch: true });
   const fresh = fetch(request).then((response) => saveCopy(request, response));
   event.waitUntil(fresh.then(() => saveAllPagesDaily()).catch(() => undefined));
-  if (saved) {
+  if (saved && savedToday(saved)) {
     return saved;
+  }
+  if (saved) {
+    // Saved on an earlier day: use the fresh page if it comes quickly, else the saved one (offline or slow).
+    const timeout = new Promise((resolve) => setTimeout(() => resolve(null), FRESH_WAIT_MS));
+    const response = await Promise.race([fresh, timeout]).catch(() => null);
+    return response && response.ok ? response : saved;
   }
   return fresh.catch(async () => (await caches.match("/")) ?? Response.error());
 }

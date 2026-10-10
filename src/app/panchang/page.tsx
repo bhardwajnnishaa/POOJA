@@ -4,9 +4,12 @@ import { BrandMark } from "@/components/BrandMark";
 import { FooterLinks } from "@/components/FooterLinks";
 import { PanchangView, type DayEvents } from "@/components/PanchangView";
 import { SiteHeader } from "@/components/SiteHeader";
+import { RenderedDay } from "@/components/DayRefresh";
+import { NavratriToday } from "@/components/NavratriToday";
 import { FESTIVAL_INFO, eventTimestamp, hasKnownDate } from "@/lib/festivals";
 import { FESTIVAL_HI } from "@/lib/i18n-data";
 import { PANCHANG_CITIES, panchangFor, type CityId, type PanchangDay } from "@/lib/panchang";
+import { NAVDURGA, navratriDay } from "@/lib/navratri";
 import { pitruPaksha, vratDays } from "@/lib/tithi";
 
 // Worked out on the server and refreshed every hour; the browser picks today's page.
@@ -48,10 +51,16 @@ export default function PanchangPage() {
     }
   }
   for (const day of [...pitruPaksha(year), ...pitruPaksha(year + 1)]) if (day.date >= first && day.date <= last) add(day.date, day.name, day.nameHi);
+  for (const date of dates) {
+    const day = navratriDay(date);
+    if (day) add(date, `🪔 ${NAVDURGA[day - 1].en} (Navratri Day ${day})`, `🪔 ${NAVDURGA[day - 1].hi} (नवरात्रि दिन ${day})`);
+  }
 
   return (
     <main>
       <SiteHeader />
+      <RenderedDay day={today} />
+      <NavratriToday />
       <PanchangView days={days} events={events} cities={PANCHANG_CITIES.map(({ id, name, nameHi }) => ({ id, name, nameHi }))} />
       <footer className="site-footer">
         <Link className="brand footer-brand" href="/"><BrandMark /><span>Festive <b>Clock</b></span></Link>

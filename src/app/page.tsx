@@ -40,6 +40,7 @@ import {
 } from "@/lib/personal-dates";
 import { ShareButton } from "@/components/ShareButton";
 import { RemindMe } from "@/components/RemindMe";
+import { NavratriToday } from "@/components/NavratriToday";
 import {
   FESTIVAL_INFO,
   festivalPath,
@@ -522,6 +523,7 @@ export default function Home() {
       {SHOW_AD_SLOTS ? <div className="top-ad-wrap"><AdSlot /></div> : null}
       <SiteHeader active="countdown" />
       <InstallBanner />
+      <NavratriToday />
 
       <section className="intro" id="home">
         <div className="intro-copy">

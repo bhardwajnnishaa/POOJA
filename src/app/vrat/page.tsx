@@ -3,6 +3,7 @@ import Link from "next/link";
 import { BrandMark } from "@/components/BrandMark";
 import { FooterLinks } from "@/components/FooterLinks";
 import { SiteHeader } from "@/components/SiteHeader";
+import { RenderedDay } from "@/components/DayRefresh";
 import { VratNext } from "@/components/VratNext";
 import { rollingWindowEnd } from "@/lib/calendar-data";
 import { vratDays, type VratDay } from "@/lib/tithi";
@@ -46,6 +47,7 @@ export default function VratPage() {
   return (
     <main>
       <SiteHeader />
+      <RenderedDay day={today} />
       <section className="vrat-hero">
         <div className="eyebrow"><span className="eyebrow-line" /> VRAT & TITHI DATES</div>
         <h1>Ekadashi, Purnima <em>&amp; Amavasya</em></h1>

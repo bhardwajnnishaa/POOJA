@@ -6,6 +6,7 @@ import "./globals.css";
 import "./themes.generated.css";
 import { THEME_BOOT_SCRIPT } from "@/lib/theme";
 import { LANG_BOOT_SCRIPT } from "@/lib/lang-boot";
+import { DayRefresh } from "@/components/DayRefresh";
 
 const CUELINKS_CID = process.env.NEXT_PUBLIC_CUELINKS_CID;
 const ADSENSE_CLIENT = "ca-pub-9561435102395818";
@@ -69,6 +70,7 @@ export default function RootLayout({
       </head>
       <body>
         {children}
+        <DayRefresh />
         <script dangerouslySetInnerHTML={{ __html: ADSENSE_LOADER }} />
         <Script id="service-worker" strategy="lazyOnload">
           {`if ("serviceWorker" in navigator) navigator.serviceWorker.register("/sw.js").catch(function () {});`}
