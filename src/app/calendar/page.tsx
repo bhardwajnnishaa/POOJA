@@ -9,6 +9,7 @@ import { pitruPaksha, vratDays, type ShraddhDay } from "@/lib/tithi";
 import type { CalendarEntry } from "@/types/calendar";
 import { BrandMark } from "@/components/BrandMark";
 import { FooterLinks } from "@/components/FooterLinks";
+import { RenderedDay } from "@/components/DayRefresh";
 
 // Pre-built and refreshed every hour, so the page opens instantly.
 export const revalidate = 3600;
@@ -267,6 +268,7 @@ export default async function CalendarPage() {
     <main>
       <AdBanner />
       <SiteHeader active="calendar" />
+      <RenderedDay day={todayString} />
 
       <section className="calendar-intro">
         <div className="eyebrow"><span className="eyebrow-line" /> INDIA · PUBLIC HOLIDAYS & FESTIVALS</div>

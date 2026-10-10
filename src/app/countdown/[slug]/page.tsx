@@ -9,6 +9,8 @@ import { ShareButton } from "@/components/ShareButton";
 import { RemindMe } from "@/components/RemindMe";
 import { ShareOptions } from "@/components/ShareOptions";
 import { SiteHeader } from "@/components/SiteHeader";
+import { RenderedDay } from "@/components/DayRefresh";
+import { NavratriToday } from "@/components/NavratriToday";
 import { AFFILIATE_LINKS, DELIVERY_LINKS, retailerSearch } from "@/config/affiliates";
 import { DeliveryLinks } from "@/components/DeliveryLinks";
 import { BUDGETS, GIFT_IDEAS } from "@/config/gift-ideas";
@@ -182,6 +184,8 @@ export default async function FestivalPage({ params }: PageProps) {
         </>
       ) : null}
       <SiteHeader active="countdown" />
+      <RenderedDay day={ISO_DATE.format(Date.now())} />
+      {festival.id === "navratri" ? <NavratriToday /> : null}
 
       <section className={`festival-hero event-card-${festival.theme}`}>
         <div className="eyebrow"><span className="eyebrow-line" /> {festival.subtitle.toUpperCase()}</div>
