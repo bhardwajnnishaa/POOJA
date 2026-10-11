@@ -6,7 +6,7 @@ import { BrandMark } from "@/components/BrandMark";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { FooterLinks } from "@/components/FooterLinks";
 import { SiteHeader } from "@/components/SiteHeader";
-import { FESTIVAL_INFO, festivalPath, hasKnownDate, indiaYear, nextEventTimestamp } from "@/lib/festivals";
+import { FESTIVAL_INFO, celebrationLength, festivalPath, hasKnownDate, indiaYear, nextEventTimestamp } from "@/lib/festivals";
 import { SITE_NAME } from "@/lib/site";
 
 export const revalidate = 21600;
@@ -51,7 +51,7 @@ export default function AppPage() {
             <Link className={`app-preview-card event-card-${festival.theme}`} href={festivalPath(festival)} key={festival.id}>
               <b>{festival.name}</b>
               <span>{DATE_LABEL.format(target)}</span>
-              <CountdownTimer target={target} label={`Time until ${festival.name}`} />
+              <CountdownTimer target={target} label={`Time until ${festival.name}`} days={celebrationLength(festival, indiaYear(target), {})} />
             </Link>
           ))}
         </div>

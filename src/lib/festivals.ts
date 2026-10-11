@@ -19,6 +19,9 @@ export type FestivalInfo = {
   otherName?: string;
   about: string[];
   aboutHinglish: string;
+  // A celebration that runs until the day before another festival, e.g. Navratri until Dussehra.
+  // Without it, the celebration is one day.
+  endsBefore?: FestivalId;
 };
 
 export const FESTIVAL_INFO: FestivalInfo[] = [
@@ -146,6 +149,7 @@ export const FESTIVAL_INFO: FestivalInfo[] = [
     month: 10,
     fallbackDay: 11,
     dates: { 2026: "10-11", 2027: "09-30", 2028: "09-19" },
+    endsBefore: "dussehra",
     theme: "coral",
     icon: "lotus",
     moonDependent: false,
@@ -504,10 +508,29 @@ export function eventTimestamp(event: FestivalInfo, year: number, calendarDates:
   return Date.UTC(year, month - 1, day, -5, -30);
 }
 
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+/** How many days the celebration lasts in a year: Navratri runs up to Dussehra, which is 8 or 9 days. */
+export function celebrationLength(event: FestivalInfo, year: number, calendarDates: CalendarDates) {
+  const end = event.endsBefore && FESTIVAL_INFO.find((festival) => festival.id === event.endsBefore);
+  if (!end || !hasKnownDate(end, year, calendarDates)) return 1;
+  const days = Math.round((eventTimestamp(end, year, calendarDates) - eventTimestamp(event, year, calendarDates)) / DAY_MS);
+  return days >= 1 && days <= 10 ? days : 1;
+}
+
+// The start of this year's celebration while it is still on (the whole festival day, or every
+// day of Navratri), then next year's.
 export function nextEventTimestamp(event: FestivalInfo, now: number, calendarDates: CalendarDates) {
   const year = indiaYear(now);
   const thisYear = eventTimestamp(event, year, calendarDates);
-  return thisYear > now ? thisYear : eventTimestamp(event, year + 1, calendarDates);
+  return thisYear + celebrationLength(event, year, calendarDates) * DAY_MS > now ? thisYear : eventTimestamp(event, year + 1, calendarDates);
+}
+
+/** Which day of the celebration it is (1 = first day), or null when it is not on. */
+export function celebrationDay(start: number, days: number, now: number) {
+  if (now < start) return null;
+  const day = Math.floor((now - start) / DAY_MS) + 1;
+  return day <= days ? day : null;
 }
 
 // Lunar festivals only have reliable dates for years we hold data for.

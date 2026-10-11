@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useT } from "@/lib/i18n";
+import { useLang, useT } from "@/lib/i18n";
+import { celebrationDay } from "@/lib/festivals";
 
 const UNIT_LABELS = ["Days", "Hours", "Minutes", "Seconds"];
 
@@ -36,9 +37,19 @@ export function useSecondTick() {
   return now;
 }
 
-export function CountdownTimer({ target, label, className = "" }: { target: number; label: string; className?: string }) {
+// Shown in place of the digits while the celebration is on.
+function LiveNow({ day, days, className }: { day: number; days: number; className: string }) {
+  const hindi = useLang() === "hi";
+  const text = days > 1
+    ? (hindi ? `🎉 चल रहा है · दिन ${day} / ${days}` : `🎉 Going on now · Day ${day} of ${days}`)
+    : (hindi ? "🎉 आज है! शुभकामनाएँ" : "🎉 It's today! Celebrate");
+  return <div className={`timer timer-live ${className}`.trim()} role="status">{text}</div>;
+}
+
+export function CountdownTimer({ target, label, className = "", days = 1 }: { target: number; label: string; className?: string; days?: number }) {
   const now = useSecondTick();
   const t = useT();
+  const liveDay = now === null ? null : celebrationDay(target, days, now);
   const remaining = now === null ? null : Math.max(0, Math.floor((target - now) / 1000));
   const units = remaining === null
     ? ["--", "--", "--", "--"]
@@ -48,6 +59,8 @@ export function CountdownTimer({ target, label, className = "" }: { target: numb
       Math.floor((remaining % 3600) / 60),
       remaining % 60,
     ].map((value) => String(value).padStart(2, "0"));
+
+  if (liveDay !== null) return <LiveNow day={liveDay} days={days} className={className} />;
 
   return (
     <div className={`timer ${className}`.trim()} aria-label={label}>

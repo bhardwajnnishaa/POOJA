@@ -6,6 +6,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { getCalendarData, rollingWindowEnd, type CalendarData } from "@/lib/calendar-data";
 import { FESTIVAL_INFO, eventTimestamp, hasKnownDate } from "@/lib/festivals";
 import { pitruPaksha, vratDays, type ShraddhDay } from "@/lib/tithi";
+import { NAVDURGA, navratriDay } from "@/lib/navratri";
 import type { CalendarEntry } from "@/types/calendar";
 import { BrandMark } from "@/components/BrandMark";
 import { FooterLinks } from "@/components/FooterLinks";
@@ -67,30 +68,55 @@ function withFestivalDates(data: CalendarData, todayDate: string, windowEnd: str
   }));
   // Pitru Paksha Shraddh days, linked to the Shraddh list on this page.
   const year = Number(todayDate.slice(0, 4));
+  // The Shraddh list is on this page only near Pitru Paksha; further ahead the days have no link.
+  const panelShown = pitruPakshaShown(todayDate) !== null;
   const shraddh: CalendarEntry[] = [...pitruPaksha(year), ...pitruPaksha(year + 1)]
     .filter((day) => day.date >= todayDate && day.date < windowEnd)
-    .map((day) => ({ date: day.date, name: day.name, category: "observance", source: "Festive Clock", tentative: false, href: "#pitru-paksha" }));
-  return [...data.events, ...added, ...vrats, ...shraddh].sort((first, second) => first.date.localeCompare(second.date));
+    .map((day) => ({ date: day.date, name: day.name, category: "observance", source: "Festive Clock", tentative: false, href: panelShown ? "#pitru-paksha" : "/calendar" }));
+  // Each day of Navratri with the form of Maa Durga worshipped that day.
+  const navratri: CalendarEntry[] = [];
+  for (let day = Date.parse(`${todayDate}T00:00:00Z`); day < Date.parse(`${windowEnd}T00:00:00Z`); day += 86400000) {
+    const date = new Date(day).toISOString().slice(0, 10);
+    const navratriDayNumber = navratriDay(date);
+    if (navratriDayNumber) {
+      navratri.push({ date, name: `Navratri Day ${navratriDayNumber} · ${NAVDURGA[navratriDayNumber - 1].en}`, category: "observance", source: "Festive Clock", tentative: false, href: "/countdown/navratri" });
+    }
+  }
+  // Days that are over are left out, so the list only shows what is still ahead.
+  return [...data.events, ...added, ...vrats, ...shraddh, ...navratri]
+    .filter((event) => event.date >= todayDate)
+    .sort((first, second) => first.date.localeCompare(second.date));
 }
 
 const SHRADDH_DAY = new Intl.DateTimeFormat("en-IN", { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" });
 const SHRADDH_TIME = new Intl.DateTimeFormat("en-IN", { day: "numeric", month: "short", hour: "numeric", minute: "2-digit", timeZone: "Asia/Kolkata" });
 
-// This year's Pitru Paksha until it ends, then next year's. Open on its own while it is on or near.
-function PitruPaksha({ todayDate }: { todayDate: string }) {
+// Shown from 30 days before Pitru Paksha until its last day. Shraddh days already done drop off the list.
+const PITRU_SHOW_DAYS_BEFORE = 30;
+
+// The Pitru Paksha to show today (this year's, or next year's once it is over), or null when none is near.
+function pitruPakshaShown(todayDate: string) {
   const year = Number(todayDate.slice(0, 4));
-  let days: ShraddhDay[] = pitruPaksha(year);
-  if (!days.length || days[days.length - 1].date < todayDate) days = pitruPaksha(year + 1);
-  if (!days.length) return null;
-  const first = days[0].date;
-  const last = days[days.length - 1].date;
+  let allDays: ShraddhDay[] = pitruPaksha(year);
+  if (!allDays.length || allDays[allDays.length - 1].date < todayDate) allDays = pitruPaksha(year + 1);
+  if (!allDays.length) return null;
+  const first = allDays[0].date;
+  const last = allDays[allDays.length - 1].date;
   const ongoing = todayDate >= first && todayDate <= last;
   const daysAway = Math.round((Date.parse(`${first}T00:00:00Z`) - Date.parse(`${todayDate}T00:00:00Z`)) / 86400000);
+  if (!ongoing && daysAway > PITRU_SHOW_DAYS_BEFORE) return null;
+  return { first, last, ongoing, days: allDays.filter((day) => day.date >= todayDate) };
+}
+
+function PitruPaksha({ todayDate }: { todayDate: string }) {
+  const shown = pitruPakshaShown(todayDate);
+  if (!shown) return null;
+  const { first, last, ongoing, days } = shown;
   const label = (date: string) => SHRADDH_DAY.format(Date.parse(`${date}T00:00:00Z`));
 
   return (
     <section className="pitru-paksha" id="pitru-paksha" aria-labelledby="pitru-paksha-heading">
-      <details open={ongoing || daysAway <= 15}>
+      <details open>
         <summary>
           <span>
             <span className="pitru-kicker">🪔 {ongoing ? "Going on now" : `Starts ${label(first)}`}</span>

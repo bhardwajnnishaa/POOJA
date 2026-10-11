@@ -46,6 +46,7 @@ import {
   festivalPath,
   hasKnownDate,
   indiaYear,
+  celebrationLength,
   nextEventTimestamp,
   type CalendarDates,
   type FestivalInfo,
@@ -80,6 +81,7 @@ function eventDateLabel(timestamp: number) {
 // A short, playful status for each countdown card.
 function vibeLabel(remainingMs: number) {
   const days = remainingMs / (24 * 60 * 60 * 1000);
+  if (days <= 0) return "Going on now 🎉";
   if (days <= 1) return "It's almost here! 🔥";
   if (days <= 7) return "This week! 🔥";
   if (days <= 30) return "Loading… ⏳";
@@ -91,7 +93,8 @@ const VRAT_WORDS = /ekad|purn|amav|vrat|tithi|fast|moon|vrata|upvas/;
 
 function daysLeftLabel(timestamp: number, now: number, hindi: boolean) {
   const days = Math.ceil((timestamp - now) / DAY_MS);
-  if (days <= 0) return hindi ? "आज 🎉" : "Today 🎉";
+  if (days < 0) return hindi ? "चल रहा है 🎉" : "Going on now 🎉";
+  if (days === 0) return hindi ? "आज 🎉" : "Today 🎉";
   if (days === 1) return hindi ? "कल" : "Tomorrow";
   return hindi ? `${days} दिन में` : `in ${days} days`;
 }
@@ -290,7 +293,7 @@ function CountdownCard({ event, now, calendarDates, isFavorite, isShoppingEvent,
         {dateLabel(target)}
         <span className="event-date-note">{t("India")}</span>
       </div>
-      <CountdownTimer target={target} label={`Time until ${event.name}`} />
+      <CountdownTimer target={target} label={`Time until ${event.name}`} days={celebrationLength(event, indiaYear(target), calendarDates)} />
       <div className="event-actions">
         <div className="card-action-row">
           <ShareButton
