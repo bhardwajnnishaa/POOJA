@@ -22,6 +22,7 @@ import {
   festivalPath,
   hasKnownDate,
   indiaYear,
+  celebrationLength,
   nextEventTimestamp,
   type CalendarDates,
   type FestivalInfo,
@@ -85,13 +86,17 @@ function faqsFor(festival: FestivalInfo, year: number, dateLabel: string, daysLe
       question: `How many days are left for ${name}?`,
       answer: daysLeft > 0
         ? `About ${daysLeft} ${daysLeft === 1 ? "day is" : "days are"} left until ${name} ${year}. The live countdown above shows the exact time.`
-        : `${name} ${year} is less than a day away. The live countdown above shows the exact time.`,
+        : daysLeft < 0
+          ? `${name} ${year} has begun and is going on now.`
+          : `${name} ${year} is less than a day away. The live countdown above shows the exact time.`,
     },
     {
       question: `${name} mein kitne din baki hain?`,
       answer: daysLeft > 0
         ? `${name} ${year} mein lagbhag ${daysLeft} din baki hain. Upar diya live countdown sahi samay dikhata hai.`
-        : `${name} ${year} mein ek din se bhi kam samay baki hai. Upar diya live countdown sahi samay dikhata hai.`,
+        : daysLeft < 0
+          ? `${name} ${year} shuru ho chuka hai aur abhi chal raha hai.`
+          : `${name} ${year} mein ek din se bhi kam samay baki hai. Upar diya live countdown sahi samay dikhata hai.`,
     },
     { question: `Why is ${name} celebrated?`, answer: festival.about.join(" ") },
     { question: `${name} kyon manate hain?`, answer: festival.aboutHinglish },
@@ -195,7 +200,7 @@ export default async function FestivalPage({ params }: PageProps) {
             <p className="festival-date">
               {festival.name} {year} {festival.moonDependent ? "is expected on" : "falls on"} <b>{dateLabel}</b> in India.
             </p>
-            <LiveCountdown target={target} name={festival.name} />
+            <LiveCountdown target={target} name={festival.name} days={celebrationLength(festival, indiaYear(target), calendarDates)} />
           </>
         ) : (
           <p className="festival-date">The {festival.name} {year} date will be added here soon.</p>
