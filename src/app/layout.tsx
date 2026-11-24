@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { DM_Sans, Noto_Sans_Devanagari, Noto_Serif_Devanagari, Playfair_Display } from "next/font/google";
 import Script from "next/script";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
+import { ADSENSE_CLIENT } from "@/lib/ads";
 import "./globals.css";
 import "./themes.generated.css";
 import { THEME_BOOT_SCRIPT } from "@/lib/theme";
@@ -9,7 +10,6 @@ import { LANG_BOOT_SCRIPT } from "@/lib/lang-boot";
 import { DayRefresh } from "@/components/DayRefresh";
 
 const CUELINKS_CID = process.env.NEXT_PUBLIC_CUELINKS_CID;
-const ADSENSE_CLIENT = "ca-pub-9561435102395818";
 // The AdSense script is large and pulls in more files, so it loads only after the app has opened
 // and the phone is idle. A plain script tag, because AdSense rejects the attribute next/script adds.
 const ADSENSE_LOADER = `window.addEventListener("load",function(){var go=function(){var s=document.createElement("script");s.async=true;s.crossOrigin="anonymous";s.src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}";document.head.appendChild(s)};setTimeout(function(){window.requestIdleCallback?requestIdleCallback(go,{timeout:3000}):go()},2500)});`;

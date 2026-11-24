@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/privacy" },
 };
 
-const LAST_UPDATED = "3 October 2026";
+const LAST_UPDATED = "24 November 2026";
 
 export default function PrivacyPage() {
   return (
@@ -48,7 +48,10 @@ export default function PrivacyPage() {
       <p>The photo on the home page is loaded from Unsplash, which receives a standard request from your browser. Festival dates are refreshed from public Google holiday calendars by our server. This does not involve any information about you.</p>
 
       <h2>Advertising</h2>
-      <p>{SITE_NAME} does not show ads at the moment. If we add advertising, for example Google AdSense, we will update this page first to explain what changes.</p>
+      <p>{SITE_NAME} shows ads served by Google AdSense. Ads help keep the site free.</p>
+      <p>Third-party vendors, including Google, use cookies to serve ads based on your earlier visits to this website or other websites. Google&apos;s use of advertising cookies lets it and its partners show you ads based on those visits.</p>
+      <p>You can turn off personalised advertising in Google&apos;s <a href="https://adssettings.google.com" rel="noopener noreferrer" target="_blank">Ads Settings</a>. You can also opt out of some other vendors&apos; cookies at <a href="https://www.aboutads.info/choices/" rel="noopener noreferrer" target="_blank">aboutads.info</a>.</p>
+      <p>To learn more, read <a href="https://policies.google.com/technologies/partner-sites" rel="noopener noreferrer" target="_blank">how Google uses information from sites that use its services</a>. In some regions, such as the EEA and the UK, you may be asked for your consent before personalised ads are shown.</p>
 
       <h2>Children</h2>
       <p>{SITE_NAME} is a general audience website. We do not knowingly collect personal information from children.</p>
