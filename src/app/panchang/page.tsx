@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { AdUnit } from "@/components/AdUnit";
+import { AD_SLOT_BANNER } from "@/lib/ads";
 import { BrandMark } from "@/components/BrandMark";
 import { FooterLinks } from "@/components/FooterLinks";
 import { PanchangView, type DayEvents } from "@/components/PanchangView";
@@ -62,6 +64,7 @@ export default function PanchangPage() {
       <RenderedDay day={today} />
       <NavratriToday />
       <PanchangView days={days} events={events} cities={PANCHANG_CITIES.map(({ id, name, nameHi }) => ({ id, name, nameHi }))} />
+      <AdUnit slot={AD_SLOT_BANNER} />
       <footer className="site-footer">
         <Link className="brand footer-brand" href="/"><BrandMark /><span>Festive <b>Clock</b></span></Link>
         <p>Made with 💛 for every celebration.</p>

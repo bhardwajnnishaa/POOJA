@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { AdUnit } from "@/components/AdUnit";
+import { AD_SLOT_BANNER } from "@/lib/ads";
 import { BrandMark } from "@/components/BrandMark";
 import { FooterLinks } from "@/components/FooterLinks";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -85,6 +87,8 @@ export default function VratPage() {
         ))}
         <p className="vrat-note">Dates follow sunrise in New Delhi. In your city, or in your tradition, a fast can fall a day earlier or later. Evening festivals such as Diwali can be on the day before. Please confirm with your local panchang.</p>
       </section>
+
+      <AdUnit slot={AD_SLOT_BANNER} />
 
       <section className="festival-faq vrat-section" aria-labelledby="vrat-faq-heading">
         <h2 id="vrat-faq-heading">Questions and answers</h2>
