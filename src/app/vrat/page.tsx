@@ -9,6 +9,7 @@ import { RenderedDay } from "@/components/DayRefresh";
 import { VratNext } from "@/components/VratNext";
 import { rollingWindowEnd } from "@/lib/calendar-data";
 import { vratDays, type VratDay } from "@/lib/tithi";
+import { vratSlug } from "@/lib/vrat-pages";
 
 // Worked out on the server and refreshed every hour; nothing to update by hand.
 export const revalidate = 3600;
@@ -75,7 +76,7 @@ export default function VratPage() {
                 <li className={`vrat-row vrat-${entry.kind}`} key={`${entry.date}-${entry.kind}`}>
                   <time dateTime={entry.date}>{DAY.format(Date.parse(`${entry.date}T00:00:00Z`))}</time>
                   <div>
-                    <b>{entry.name}</b>
+                    <b><Link href={`/vrat/${vratSlug(entry.name)}`}>{entry.name}</Link></b>
                     {entry.popularName ? <span className="vrat-popular">{entry.popularName}</span> : null}
                     <small>Tithi: {TIME.format(entry.start)} → {TIME.format(entry.end)}</small>
                   </div>

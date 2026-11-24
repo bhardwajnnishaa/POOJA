@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { FESTIVAL_INFO, festivalPath } from "@/lib/festivals";
 import { SITE_URL } from "@/lib/site";
+import { vratPages } from "@/lib/vrat-pages";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
@@ -16,6 +17,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${SITE_URL}${festivalPath(festival)}`,
       changeFrequency: "daily" as const,
       priority: 0.9,
+    })),
+    ...[...vratPages().keys()].map((slug) => ({
+      url: `${SITE_URL}/vrat/${slug}`,
+      changeFrequency: "weekly" as const,
+      priority: 0.7,
     })),
   ];
 }
