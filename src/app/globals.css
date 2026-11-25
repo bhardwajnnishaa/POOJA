@@ -1248,3 +1248,48 @@ button.remind-me-set:disabled { opacity: .75; cursor: progress; }
 
 /* A celebration that is on right now: one clear line in place of the countdown digits. */
 .timer.timer-live { display: flex; align-items: center; justify-content: center; min-height: 66px; color: #34453a; font-family: var(--serif); font-size: 21px; font-weight: 600; line-height: 1.3; text-align: center; }
+
+/* Compact phone home page: the same look on every phone.
+   Text sits beside the picture and countdown cards show near the top,
+   like the tablet and desktop layout, instead of one huge stacked hero. */
+@media (max-width: 640px) {
+  .site-header { row-gap: 6px; padding-top: 8px; }
+  .brand { flex-direction: row; gap: 8px; font-size: 15px; }
+  .brand-mark { width: 34px; height: 34px; }
+  .theme-picker-button { width: 44px; height: 44px; }
+  .nav-link { min-height: 48px; font-size: 21px; }
+
+  .intro { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; align-items: center; padding: 22px 0 40px; }
+  .intro .eyebrow { gap: 6px; letter-spacing: .06em; }
+  .intro .eyebrow-line { width: 14px; }
+  .intro h1 { margin: 10px 0 8px; font-size: clamp(24px, 7vw, 34px); line-height: 1.08; }
+  .intro-description { line-height: 1.5; }
+  .intro-link { margin-top: 10px; }
+  .intro-art { height: auto; min-height: 180px; align-self: stretch; }
+  .art-stamp { top: 10px; right: 10px; left: 10px; gap: 6px; padding: 7px 9px; font-size: 15px; }
+  .art-stamp svg { width: 14px; height: 14px; }
+  .art-caption { bottom: 12px; left: 12px; right: 12px; letter-spacing: .04em; line-height: 1.35; }
+  .intro-footnote { display: none; }
+
+  .countdown-section { padding-top: 30px; }
+  .countdown-layout { grid-template-columns: minmax(0, 1fr); }
+  .countdown-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; width: 100%; }
+  .countdown-grid .event-card { min-height: 0; padding: 12px 10px 11px; }
+  /* Two cards side by side: the small icons go up beside the festival icon so the name gets the full width. */
+  .countdown-grid .event-card-topline { min-height: 44px; }
+  .countdown-grid .event-icon { width: 30px; height: 30px; }
+  .countdown-grid .event-heading-row { display: block; margin-top: 8px; }
+  .countdown-grid .event-card-controls { position: absolute; top: 12px; right: 4px; gap: 0; }
+  .countdown-grid .event-calendar { display: none; }
+  .countdown-grid .event-heading-row h3 { font-size: 22px; }
+  .countdown-grid .event-subtitle { font-size: 15px; line-height: 1.4; }
+  .countdown-grid .vibe-pill { margin-top: 8px; }
+  .countdown-grid .event-date-line { display: block; margin-top: 10px; font-size: 15px; line-height: 1.4; }
+  .countdown-grid .event-date-line .live-dot { display: inline-block; margin-right: 6px; vertical-align: middle; }
+  .countdown-grid .event-date-note { display: none; }
+  .countdown-grid .timer { grid-template-columns: repeat(2, 1fr); row-gap: 10px; margin-top: 10px; padding: 10px 0; }
+  .countdown-grid .timer-value { font-size: 26px; }
+  .countdown-grid .card-action-row { grid-template-columns: 1fr; gap: 6px; }
+  .countdown-grid .card-action-row .write-quote-link { padding: 0 4px; }
+  .section-heading h2 { font-size: 26px; }
+}
