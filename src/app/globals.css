@@ -1248,3 +1248,64 @@ button.remind-me-set:disabled { opacity: .75; cursor: progress; }
 
 /* A celebration that is on right now: one clear line in place of the countdown digits. */
 .timer.timer-live { display: flex; align-items: center; justify-content: center; min-height: 66px; color: #34453a; font-family: var(--serif); font-size: 21px; font-weight: 600; line-height: 1.3; text-align: center; }
+
+/* Phone layout, final say: calm sizes and less to scroll through before the first countdown.
+   Decorative bits (the picture block, extra labels) are hidden on small screens only. */
+@media (max-width: 640px) {
+  .site-header { grid-template-rows: 50px 46px; height: auto; padding-top: 6px; row-gap: 2px; }
+  .brand-mark { width: 38px; height: 38px; }
+  .nav-link { min-height: 46px; font-size: 19px; }
+  .lang-toggle { min-width: 58px; min-height: 38px; padding: 0 10px; border-width: 1.5px; font-size: 15px; }
+  .theme-picker-button { width: 42px; height: 42px; padding: 4px; }
+  .header-end { gap: 10px; }
+
+  .intro { padding: 18px 0 20px; gap: 0; }
+  .intro .eyebrow, .intro-link, .intro-art, .intro-footnote { display: none; }
+  .intro h1 { margin: 0 0 6px; font-size: 28px; line-height: 1.15; }
+  .intro-description { max-width: none; font-size: 15px; line-height: 1.5; }
+
+  .countdown-section { padding-top: 20px; }
+  .section-heading { margin-bottom: 12px; }
+  .section-heading .eyebrow, .section-side-note { display: none; }
+  .section-heading h2 { max-width: none; margin: 0; font-size: 24px; }
+
+  .my-dates { margin-bottom: 12px; padding: 10px 12px; }
+  .my-dates-heading h3 { font-size: 20px; }
+  .my-dates-heading p { font-size: 13px; }
+  .my-dates-add { min-height: 42px; padding: 0 12px; font-size: 16px; }
+  .my-dates-add svg { width: 18px; height: 18px; }
+
+  .event-finder { gap: 8px; margin-bottom: 14px; }
+  .event-finder .vrat-link { flex: 1 1 calc(50% - 4px); min-height: 56px; margin-top: 0; padding: 8px 6px; font-size: 16px; }
+  .event-finder .vrat-link svg { display: none; }
+  .event-finder-note { display: none; }
+  .event-finder .open-calendar-link { flex: 1 1 100%; min-height: 46px; }
+
+  /* Cards: no empty icon row, so each countdown takes less room. */
+  .event-card { min-height: 0; padding: 14px 14px 12px; }
+  .event-card-topline { display: none; }
+  .event-heading-row { margin-top: 0; }
+  .event-card h3 { font-size: 24px; }
+  .event-subtitle { font-size: 14px; }
+}
+
+/* Calendar page on phones: the same calm sizes as the home page. */
+@media (max-width: 640px) {
+  .calendar-intro { padding: 18px 0 14px; }
+  main .calendar-intro > .eyebrow, .calendar-year-stamp, main .calendar-heading-row .eyebrow { display: none; }
+  .calendar-intro-row { margin-top: 0; }
+  .calendar-intro h1 { font-size: 28px; line-height: 1.15; }
+  main .calendar-intro-row p { margin: 6px 0 0; font-size: 15px; line-height: 1.5; }
+  .calendar-quick-links { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .calendar-quick-links .vrat-link { min-height: 56px; padding: 8px 6px; font-size: 16px; }
+  .calendar-quick-links .vrat-link svg { display: none; }
+  .calendar-section { padding-top: 20px; }
+  .calendar-heading-row h2 { margin-top: 0; font-size: 20px; }
+}
+
+/* Festival, Panchang and Vrat pages on phones: smaller headings, no extra label above them. */
+@media (max-width: 640px) {
+  .festival-hero > .eyebrow, .panchang-hero > .eyebrow, .vrat-hero > .eyebrow { display: none; }
+  main .festival-hero h1, main .panchang-hero h1, main .vrat-hero h1 { margin-top: 0; font-size: 28px; line-height: 1.15; }
+  .festival-hero, .panchang-hero, .vrat-hero { padding-top: 18px; }
+}

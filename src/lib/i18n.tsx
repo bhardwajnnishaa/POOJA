@@ -84,7 +84,7 @@ const HI: Record<string, string> = {
   "It's almost here! 🔥": "बस आ ही गया! 🔥",
   "Going on now 🎉": "चल रहा है 🎉",
   "This week! 🔥": "इसी हफ़्ते! 🔥",
-  "Loading… ⏳": "आने वाला है… ⏳",
+  "Coming soon ⏳": "जल्द आ रहा है ⏳",
   "Save the date 📌": "तारीख याद रखें 📌",
   "India": "भारत",
   "Days": "दिन",
