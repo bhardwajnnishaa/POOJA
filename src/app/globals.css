@@ -1333,3 +1333,10 @@ button.remind-me-set:disabled { opacity: .75; cursor: progress; }
   .countdown-grid .card-action-row { grid-template-columns: 1fr; gap: 6px; }
   .countdown-grid .card-action-row .write-quote-link { padding: 0 4px; }
 }
+
+/* Hindi: Devanagari has no true slanted style, so a tilted word looks broken. Colour alone marks it. */
+:root:lang(hi-IN) em { font-style: normal; }
+/* Hindi headings use Tiro Devanagari Hindi, which comes in one weight; avoid a smeared fake bold. */
+:root:lang(hi-IN) h1, :root:lang(hi-IN) h2, :root:lang(hi-IN) h3 { font-weight: 400; }
+/* Very heavy Hindi text looks crowded; 600 reads cleaner on buttons and labels. */
+:root:lang(hi-IN) button, :root:lang(hi-IN) .nav-link, :root:lang(hi-IN) .vrat-link, :root:lang(hi-IN) .open-calendar-link, :root:lang(hi-IN) .write-quote-link, :root:lang(hi-IN) .vibe-pill { font-weight: 600; }

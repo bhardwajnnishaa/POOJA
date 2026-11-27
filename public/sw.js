@@ -1,7 +1,7 @@
 // Festive Clock service worker: opens the app instantly and works offline.
 // Pages saved today show at once and refresh in the background. A page saved on an earlier day
 // waits briefly for today's copy, so dates and panchang never open a day behind.
-const CACHE = "festive-clock-v3";
+const CACHE = "festive-clock-v4";
 const START_PAGES = ["/", "/calendar"];
 const HERO_HOST = "images.unsplash.com";
 const SAVED_AT = "/__offline-saved-at";
