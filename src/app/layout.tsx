@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { DM_Sans, Noto_Sans_Devanagari, Noto_Serif_Devanagari, Playfair_Display } from "next/font/google";
+import { DM_Sans, Hind, Playfair_Display, Tiro_Devanagari_Hindi } from "next/font/google";
 import Script from "next/script";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
@@ -19,8 +19,10 @@ const sans = DM_Sans({ subsets: ["latin"], variable: "--font-sans", display: "sw
 const serif = Playfair_Display({ subsets: ["latin"], style: ["normal", "italic"], variable: "--font-serif", display: "swap" });
 // Hindi text. Neither font above has Devanagari letters, so these fill in for them.
 // Not preloaded: the browser fetches them only when a page shows Hindi.
-const sansHi = Noto_Sans_Devanagari({ subsets: ["devanagari"], variable: "--font-sans-hi", display: "swap", preload: false });
-const serifHi = Noto_Serif_Devanagari({ subsets: ["devanagari"], variable: "--font-serif-hi", display: "swap", preload: false });
+// Hind for text and buttons (clear at small sizes); Tiro Devanagari Hindi for headings, a classic
+// Devanagari serif that sits well next to Playfair Display.
+const sansHi = Hind({ subsets: ["devanagari"], weight: ["400", "600", "700"], variable: "--font-sans-hi", display: "swap", preload: false });
+const serifHi = Tiro_Devanagari_Hindi({ subsets: ["devanagari"], weight: "400", variable: "--font-serif-hi", display: "swap", preload: false });
 
 const DESCRIPTION =
   "Live countdowns to Diwali, Holi, Eid, Rakhi, Independence Day and New Year. Check Indian festival dates, days left, wishes and gift ideas.";
