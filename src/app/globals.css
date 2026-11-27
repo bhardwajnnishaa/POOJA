@@ -1310,6 +1310,30 @@ button.remind-me-set:disabled { opacity: .75; cursor: progress; }
   .festival-hero, .panchang-hero, .vrat-hero { padding-top: 18px; }
 }
 
+/* Home page on phones: festival cards two to a row, like the wider layout.
+   The shop and star buttons sit in the icon row so each name gets the full card width. */
+@media (max-width: 640px) {
+  .countdown-layout { grid-template-columns: minmax(0, 1fr); }
+  .countdown-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; width: 100%; }
+  .countdown-grid .event-card { min-height: 0; padding: 12px 10px 11px; }
+  /* Two cards side by side: the small icons go up beside the festival icon so the name gets the full width. */
+  .countdown-grid .event-card-topline { display: flex; min-height: 44px; }
+  .countdown-grid .event-icon { width: 30px; height: 30px; }
+  .countdown-grid .event-heading-row { display: block; margin-top: 8px; }
+  .countdown-grid .event-card-controls { position: absolute; top: 12px; right: 4px; gap: 0; }
+  .countdown-grid .event-calendar { display: none; }
+  .countdown-grid .event-heading-row h3 { font-size: 22px; }
+  .countdown-grid .event-subtitle { font-size: 15px; line-height: 1.4; }
+  .countdown-grid .vibe-pill { margin-top: 8px; }
+  .countdown-grid .event-date-line { display: block; margin-top: 10px; font-size: 15px; line-height: 1.4; }
+  .countdown-grid .event-date-line .live-dot { display: inline-block; margin-right: 6px; vertical-align: middle; }
+  .countdown-grid .event-date-note { display: none; }
+  .countdown-grid .timer { grid-template-columns: repeat(2, 1fr); row-gap: 10px; margin-top: 10px; padding: 10px 0; }
+  .countdown-grid .timer-value { font-size: 26px; }
+  .countdown-grid .card-action-row { grid-template-columns: 1fr; gap: 6px; }
+  .countdown-grid .card-action-row .write-quote-link { padding: 0 4px; }
+}
+
 /* Hindi: Devanagari has no true slanted style, so a tilted word looks broken. Colour alone marks it. */
 :root:lang(hi-IN) em { font-style: normal; }
 /* Hindi headings use Tiro Devanagari Hindi, which comes in one weight; avoid a smeared fake bold. */
