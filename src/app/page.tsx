@@ -84,7 +84,7 @@ function vibeLabel(remainingMs: number) {
   if (days <= 0) return "Going on now 🎉";
   if (days <= 1) return "It's almost here! 🔥";
   if (days <= 7) return "This week! 🔥";
-  if (days <= 30) return "Loading… ⏳";
+  if (days <= 30) return "Coming soon ⏳";
   return "Save the date 📌";
 }
 
