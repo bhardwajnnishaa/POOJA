@@ -224,7 +224,7 @@ function MonthCard({
         })}
       </div>
       {monthEvents.length === 0 ? (
-        <div className="month-events"><p className="month-empty">No marked holidays this month.</p></div>
+        <div className="month-events"><p className="month-empty">{year === Number(today.slice(0, 4)) && month === Number(today.slice(5, 7)) ? "No more marked days this month." : "No marked holidays this month."}</p></div>
       ) : (
         // Closed by default, so the months stay clean; tap the bar to see the list.
         <details className="month-events-toggle">
