@@ -45,6 +45,8 @@ export function PanchangView({ days, events, cities }: { days: Record<CityId, Pa
   const name = (value: Named) => (lang === "hi" ? value.hi : value.en);
   const time = (ms: number | null) => (ms === null ? "—" : TIME[lang].format(ms));
   const till = (ms: number) => (INDIA_DATE.format(ms) === day.date ? time(ms) : DAY_TIME[lang].format(ms));
+  // "till 3:58 am, then Shashthi"; Hindi puts तक after the time: "3:58 am तक, फिर षष्ठी".
+  const until = (end: number, next: string) => (lang === "hi" ? `${till(end)} ${t("till")}, ${t("then")} ${next}` : `${t("till")} ${till(end)}, ${t("then")} ${next}`);
   const range = (value: Span) => `${time(value.start)} – ${time(value.end)}`;
   const isNow = (value: Span) => now !== null && now >= value.start && now < value.end;
   const dayLabel = index === todayIndex ? t("Today") : index === todayIndex + 1 ? t("Tomorrow") : index === todayIndex - 1 ? t("Yesterday") : name(day.weekday);
@@ -90,9 +92,9 @@ export function PanchangView({ days, events, cities }: { days: Record<CityId, Pa
       <div className="panchang-grid" suppressHydrationWarning>
         <div className="panchang-card"><span>🌅 {t("Sunrise")}</span><b>{time(day.sunrise)}</b><span>🌇 {t("Sunset")}</span><b>{time(day.sunset)}</b></div>
         <div className="panchang-card"><span>🌙 {t("Moonrise")}</span><b>{time(day.moonrise)}</b><span>🌘 {t("Moonset")}</span><b>{time(day.moonset)}</b></div>
-        <div className="panchang-card"><span>{t("Tithi")}</span><b>{name(day.tithi)}</b><small>{t("till")} {till(day.tithi.end)}, {t("then")} {name(day.tithi.next)}</small></div>
-        <div className="panchang-card"><span>{t("Nakshatra")}</span><b>{name(day.nakshatra)}</b><small>{t("till")} {till(day.nakshatra.end)}, {t("then")} {name(day.nakshatra.next)}</small></div>
-        <div className="panchang-card"><span>{t("Yoga")}</span><b>{name(day.yoga)}</b><small>{t("till")} {till(day.yoga.end)}, {t("then")} {name(day.yoga.next)}</small></div>
+        <div className="panchang-card"><span>{t("Tithi")}</span><b>{name(day.tithi)}</b><small>{until(day.tithi.end, name(day.tithi.next))}</small></div>
+        <div className="panchang-card"><span>{t("Nakshatra")}</span><b>{name(day.nakshatra)}</b><small>{until(day.nakshatra.end, name(day.nakshatra.next))}</small></div>
+        <div className="panchang-card"><span>{t("Yoga")}</span><b>{name(day.yoga)}</b><small>{until(day.yoga.end, name(day.yoga.next))}</small></div>
       </div>
 
       <div className="panchang-times" suppressHydrationWarning>

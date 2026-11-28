@@ -1316,3 +1316,21 @@ button.remind-me-set:disabled { opacity: .75; cursor: progress; }
 :root:lang(hi-IN) h1, :root:lang(hi-IN) h2, :root:lang(hi-IN) h3 { font-weight: 400; }
 /* Very heavy Hindi text looks crowded; 600 reads cleaner on buttons and labels. */
 :root:lang(hi-IN) button, :root:lang(hi-IN) .nav-link, :root:lang(hi-IN) .vrat-link, :root:lang(hi-IN) .open-calendar-link, :root:lang(hi-IN) .write-quote-link, :root:lang(hi-IN) .vibe-pill { font-weight: 600; }
+
+/* Today's Panchang: one clean style for every time and value, with even (lining) digits,
+   and every text size one step up for easier reading. */
+.panchang { font-variant-numeric: lining-nums; }
+.panchang .panchang-daynav span { font-size: 20px; }
+.panchang .panchang-tithi { font-size: 23px; }
+.panchang .panchang-tithi b { font-size: clamp(32px, 7vw, 38px); }
+.panchang .panchang-month { font-size: 19px; }
+.panchang .panchang-events { font-size: 21px; font-weight: 700; }
+.panchang .panchang-card span { font-size: 20px; font-weight: 600; }
+.panchang .panchang-card b { font-family: var(--sans); font-size: 26px; font-weight: 700; font-variant-numeric: lining-nums tabular-nums; }
+.panchang .panchang-card small { font-size: 18px; }
+.panchang .panchang-times h2 { font-size: 28px; }
+.panchang .panchang-time span { font-size: 21px; font-weight: 600; }
+.panchang .panchang-time span small { font-size: 17px; }
+.panchang .panchang-time b { font-size: 24px; font-weight: 700; }
+.panchang .panchang-time em { font-size: 15px; }
+.panchang .panchang-note { font-size: 18px; }
