@@ -55,8 +55,9 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: "#fbf5e9",
-  width: "device-width",
-  initialScale: 1,
+  // Every phone shows the full desktop layout (like Chrome's "Desktop site"), shrunk to fit the screen.
+  // Desktop browsers ignore this; pinch-to-zoom still works on phones.
+  width: 980,
 };
 
 export default function RootLayout({
