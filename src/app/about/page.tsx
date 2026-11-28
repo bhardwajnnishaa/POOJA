@@ -28,7 +28,7 @@ export default function AboutPage() {
       <p>Some festivals can fall a day earlier or later in different regions. Eid depends on the moon sighting. Please confirm the date with your local temple, mosque, gurdwara or panchang for religious observances.</p>
 
       <h2>How the site is funded</h2>
-      <p>{SITE_NAME} is free to use. Some shopping links are affiliate links.</p>
+      <p>{SITE_NAME} is free to use. It is funded by Google ads and by affiliate shopping links.</p>
       <p>If you buy something after clicking one, the store may pay us a small commission. You pay the same price. We never show fake discounts, and gift ideas are chosen to be useful, not because of commission rates.</p>
 
       <h2>Get in touch</h2>

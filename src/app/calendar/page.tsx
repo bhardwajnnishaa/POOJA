@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { AdUnit } from "@/components/AdUnit";
+import { AD_SLOT_BANNER } from "@/lib/ads";
 import { ArrowDownRight, CalendarDays, ChevronDown, ChevronRight, Clock3 } from "lucide-react";
 import { QuoteMaker } from "@/components/QuoteMaker";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -251,19 +253,6 @@ function MonthCard({
   );
 }
 
-// Hidden until real ads are set up, matching the home page.
-function AdBanner() {
-  if (process.env.NEXT_PUBLIC_SHOW_AD_SLOTS !== "true") return null;
-  return (
-    <div className="top-ad-wrap">
-      <aside aria-label="Advertisement" className="ad-slot ad-slot-banner">
-        <span className="ad-slot-label">GOOGLE-ADSENSE-BANNER</span>
-        <span className="ad-slot-note">Advertisement</span>
-      </aside>
-    </div>
-  );
-}
-
 export default async function CalendarPage() {
   let calendarData: CalendarData = { dates: {}, events: [] };
   let calendarAvailable = true;
@@ -292,7 +281,7 @@ export default async function CalendarPage() {
 
   return (
     <main>
-      <AdBanner />
+      <AdUnit slot={AD_SLOT_BANNER} />
       <SiteHeader active="calendar" />
       <RenderedDay day={todayString} />
 

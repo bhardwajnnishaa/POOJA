@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { AdUnit } from "@/components/AdUnit";
+import { AD_SLOT_BANNER } from "@/lib/ads";
 import { notFound } from "next/navigation";
 import { ArrowUpRight, ShoppingBag, WandSparkles } from "lucide-react";
 import { GiftIdeas } from "@/components/GiftIdeas";
@@ -276,6 +278,8 @@ export default async function FestivalPage({ params }: PageProps) {
           Amazon links open with your budget already applied. On other stores, sort by price. Delivery apps show what is available near you. We may earn a small commission when you buy through these links, at no extra cost to you.
         </p>
       </section>
+
+      <AdUnit slot={AD_SLOT_BANNER} />
 
       <section className="festival-details">
         <article>

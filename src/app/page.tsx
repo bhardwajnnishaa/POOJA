@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState, type ReactNode } from "react";
+import { AdUnit } from "@/components/AdUnit";
+import { AD_SLOT_BANNER, AD_SLOT_IN_FEED } from "@/lib/ads";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -218,22 +220,6 @@ function Icon({ icon }: { icon: Festival["icon"] }) {
     return <Music aria-hidden="true" />;
   }
   return <span className="flag-mark" aria-hidden="true">✳</span>;
-}
-
-// Ad placeholders stay hidden until real ads are set up, so the page is not cluttered with empty boxes.
-const SHOW_AD_SLOTS = process.env.NEXT_PUBLIC_SHOW_AD_SLOTS === "true";
-
-function AdSlot({ square = false }: { square?: boolean }) {
-  if (!SHOW_AD_SLOTS) return null;
-  return (
-    <aside
-      aria-label="Advertisement"
-      className={`ad-slot ${square ? "ad-slot-square" : "ad-slot-banner"}`}
-    >
-      <span className="ad-slot-label">GOOGLE-ADSENSE-BANNER</span>
-      <span className="ad-slot-note">Advertisement</span>
-    </aside>
-  );
 }
 
 function CountdownCard({ event, now, calendarDates, isFavorite, isShoppingEvent, onToggleFavorite, onSelectShop }: {
@@ -518,12 +504,13 @@ export default function Home() {
         }
       }}
     />,
-    ...(SHOW_AD_SLOTS && (index + 1) % 2 === 0 && index < shownEvents.length - 1 ? [<AdSlot key={`ad-${index}`} square />] : []),
+    // One ad after every fourth card, never after the last one.
+    ...(AD_SLOT_IN_FEED && (index + 1) % 4 === 0 && index < shownEvents.length - 1 ? [<AdUnit key={`ad-${index}`} slot={AD_SLOT_IN_FEED} variant="square" />] : []),
   ]);
 
   return (
     <main>
-      {SHOW_AD_SLOTS ? <div className="top-ad-wrap"><AdSlot /></div> : null}
+      <AdUnit slot={AD_SLOT_BANNER} />
       <SiteHeader active="countdown" />
       <InstallBanner />
       <NavratriToday />
